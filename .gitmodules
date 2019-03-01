@@ -4,3 +4,6 @@
 [submodule "Libs/MessageClient"]
 	path = Libs/MessageClient
 	url = https://github.com/outlawdesigns-io/MessageClient
+[submodule "Libs/Mp3Reader"]
+	path = Libs/Mp3Reader
+	url = https://github.com/outlawdesigns-io/Mp3Reader
