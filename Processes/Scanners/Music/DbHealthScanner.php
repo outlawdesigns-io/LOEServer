@@ -54,20 +54,14 @@ class DbHealthScanner extends \MessageClient{
   protected function _fillMessageBody(){
     $files = array();
     foreach($this->missing as $song){
-      if(!preg_match(self::ASCIPATTERN,$song->file_path)){
-        $files[] = $song->file_path;
-      }
+      $files[] = $song->file_path;
+      // if(!preg_match(self::ASCIPATTERN,$song->file_path)){}
     }
     sort($files);
     $str = "A database consitency test has been completed for:<br>";
     $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
     $str .= "The following files could not be located:<br>";
-    $str .= print_r($files,true);
-    // $str .= "<table>";
-    // for($i = 0; $i < count($files); $i++){
-    //   $str .= "<tr><td>" . $i . "</td><td>" . $files[$i] . "</td></tr>";
-    // }
-    // $str .= "</table>";
+    $str .= "<pre>" . print_r($files,true) . "</pre>";
     return $str;
   }
 
