@@ -1,6 +1,6 @@
 <?php namespace LOE;
 
-require_once __DIR__ . '/libs/record/record.php';
+require_once __DIR__ . '/Libs/Record/Record.php';
 
 
 class LoeBase extends \Record{
