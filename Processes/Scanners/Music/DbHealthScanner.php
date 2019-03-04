@@ -22,9 +22,8 @@ class DbHealthScanner extends \MessageClient{
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
-    $msg = serialize($this->_buildMessage());
-    print_r(unserialize($msg));
-    exit;
+    $msg = base64_encode(serialize($this->_buildMessage()));
+    print_r(base64_decode(unserialize($msg)));
     try{
       self::send($this->_buildMessage(),$token);
     }catch(\Exception $e){
@@ -46,7 +45,7 @@ class DbHealthScanner extends \MessageClient{
   protected function _buildMessage(){
     return array(
       "msg_name"=>self::MSGNAME,
-      "to"=>array($this->_msgTo),
+      "to"=>$this->_msgTo,
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m'),
@@ -62,9 +61,7 @@ class DbHealthScanner extends \MessageClient{
     $str = "A database consitency test has been completed for:<br>";
     $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
     $str .= "The following files could not be located:<br>";
-    foreach($files as $file){
-      $str .= $file . "<br>";
-    }
+    $str .= "<pre>" . print_r($files,true) . "</pre>";
     return $str;
   }
 
