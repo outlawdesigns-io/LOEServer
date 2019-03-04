@@ -46,7 +46,7 @@ class DbHealthScanner extends \MessageClient{
     return array(
       "to"=>array(self::MSGTO),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
-      "body"=>$this->_fillMessageBody(),
+      "body"=>nl2br($this->_fillMessageBody()),
       "msg_name"=>self::MSGNAME,
       "flag"=>date('Y-m'),
       "sent_by"=>"LOE3:" . __FILE__
@@ -60,11 +60,11 @@ class DbHealthScanner extends \MessageClient{
       }
     }
     sort($files);
-    $str = "A database consitency test has been completed for:<br>";
-    $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
-    $str .= "The following files could not be located:<br>";
+    $str = "A database consitency test has been completed for:\n";
+    $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "\n";
+    $str .= "The following files could not be located:\n";
     foreach($files as $file){
-      $str .= $file . "<br>";
+      $str .= $file . "\n";
     }
     return $str;
   }
