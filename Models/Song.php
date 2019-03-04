@@ -8,7 +8,8 @@ class Song extends LoeBase{
     const TABLE = 'music';
     const DB = 'LOE';
     const PRIMARYKEY = 'UID';
-
+    
+    public $UID;
     public $title;
     public $artist;
     public $album;
