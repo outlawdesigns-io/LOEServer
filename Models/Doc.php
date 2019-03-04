@@ -8,6 +8,7 @@ class Doc extends LoeBase{
     const TABLE = 'docs';
     const PRIMARYKEY = 'UID';
 
+    public $UID;
     public $title;
     public $subTitle;
     public $author;

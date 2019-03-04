@@ -8,6 +8,7 @@ class Anime extends LoeBase{
     const DB = 'LOE';
     const PRIMARYKEY = 'id';
 
+    public $id;
     public $show_title;
     public $japanese_title;
     public $type;
