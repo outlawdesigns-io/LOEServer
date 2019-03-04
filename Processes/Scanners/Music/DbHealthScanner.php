@@ -44,7 +44,7 @@ class DbHealthScanner extends \MessageClient{
   protected function _buildMessage(){
     return array(
       "msg_name"=>self::MSGNAME,
-      "to"=>$this->_msgTo,
+      "to"=>array($this->_msgTo),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m'),
@@ -55,7 +55,7 @@ class DbHealthScanner extends \MessageClient{
     $files = array();
     foreach($this->missing as $song){
       if(!preg_match(self::ASCIPATTERN,$song->file_path)){
-        $files[] = $song->file_path;  
+        $files[] = $song->file_path;
       }
     }
     sort($files);
