@@ -12,7 +12,7 @@ class DbHealthScanner extends \MessageClient{
   protected $_recordCount;
 
   public function __construct(){
-    $this->_songs = Song::getAll();
+    $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
     echo "DataBase health is: " . $this->_calculateHealth() . "%\n";
