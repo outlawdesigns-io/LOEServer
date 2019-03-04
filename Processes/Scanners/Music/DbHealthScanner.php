@@ -59,7 +59,7 @@ class DbHealthScanner extends \MessageClient{
     $str = "A database consitency test has been completed for:<br>";
     $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
     $str .= "The following files could not be located:<br>";
-    $str .= "<pre>" . print_r($files,ture) . "</pre>";
+    $str .= "<pre>" . print_r($files,true) . "</pre>";
     return $str;
   }
 
