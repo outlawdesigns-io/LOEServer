@@ -8,7 +8,6 @@ class DbHealthScanner extends \MessageClient{
   const MSGNAME = "LOE_MUSIC_HEALTH_CHECK";
   const MSGSUBJ = "Library of Everything Database Check";
   const ASCIPATTERN = '/[^[:ascii:]]/';
-  const MSGTO = 'j.watson@militaryshipment.com';
   const USERNAME = 'test';
   const PASSWORD = 'test';
 
@@ -44,7 +43,7 @@ class DbHealthScanner extends \MessageClient{
   }
   protected function _buildMessage(){
     return array(
-      "to"=>array(self::MSGTO),
+      "to"=>array($this->_msgTo),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>nl2br($this->_fillMessageBody()),
       "msg_name"=>self::MSGNAME,
@@ -63,9 +62,7 @@ class DbHealthScanner extends \MessageClient{
     $str = "A database consitency test has been completed for:\n";
     $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "\n";
     $str .= "The following files could not be located:\n";
-    foreach($files as $file){
-      $str .= $file . "\n";
-    }
+    $str .= print_r($files,true);
     return $str;
   }
 
