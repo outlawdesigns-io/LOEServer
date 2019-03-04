@@ -22,7 +22,7 @@ class DbHealthScanner extends \MessageClient{
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
-    $msg = "message=" . base64_encode(serialize($this->_buildMessage()));
+    $msg = base64_encode(serialize($this->_buildMessage()));
     print_r(unserialize(base64_decode($msg['message'])));
     exit;
     try{
@@ -56,7 +56,7 @@ class DbHealthScanner extends \MessageClient{
   protected function _fillMessageBody(){
     $files = array();
     foreach($this->missing as $song){
-      $files[] = $song->file_path;
+      $files[] = utf8_encode($song->file_path);
     }
     sort($files);
     $str = "A database consitency test has been completed for:<br>";
