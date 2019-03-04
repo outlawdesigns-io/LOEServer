@@ -5,21 +5,32 @@ require_once __DIR__ . '/../../../Libs/MessageClient/MessageClient.php';
 
 class DbHealthScanner extends \MessageClient{
 
-  const PREFIX = '/var/www/html';
+  const MSGNAME = "LOE_MUSIC_HEALTH_CHECK";
+  const MSGSUBJ = "Library of Everything Database Check";
+  const USERNAME = 'test';
+  const PASSWORD = 'test';
+
   public $missing = array();
   protected $_songs = array();
+  protected $_msgTo;
   protected $_fileCount;
   protected $_recordCount;
 
-  public function __construct(){
+  public function __construct($msgTo){
+    $token = self::authenticate(self::USERNAME,self::PASSWORD)->token;
+    $this->$_msgTo = $msgTo;
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
-    echo "DataBase health is: " . $this->_calculateHealth() . "%\n";
+    try{
+      self::send($this->_buildMessage(),$token);
+    }catch(\Exception $e){
+      echo $e->getMessage();
+    }
   }
   protected function _scan(){
     foreach($this->_songs as $song){
-      if(!file_exists(self::PREFIX . $song->file_path)){
+      if(!file_exists(\LOE\LoeBase::WEBROOT . $song->file_path)){
         $this->missing[] = $song;
       }
     }
@@ -28,6 +39,28 @@ class DbHealthScanner extends \MessageClient{
   }
   protected function _calculateHealth(){
     return ($this->_fileCount / $this->_recordCount) * 100;
+  }
+  protected function _buildMessage(){
+    return array(
+      "msg_name"=>self::MSGNAME,
+      "to"=>$this->$_msgTo,
+      "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
+      "body"=>$this->_fillMessageBody(),
+      "flag"=>date('Y-m'),
+      "sent_by"=>"LOE3:" . __FILE__,
+    );
+  }
+  protected function _fillMessageBody(){
+    $files = array();
+    foreach($this->missing as $song){
+      $files[] = $song->file_path;
+    }
+    sort($files);
+    $str = "A database consitency test has been completed for:<br>";
+    $str .= Song::DB . "." . Song::TABLE . "<br>";
+    $str .= "The following files could not be located:<br>";
+    $str .= "<pre>" . print_r($files,ture) . "</pre>";
+    return $str;
   }
 
 }
