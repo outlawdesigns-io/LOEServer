@@ -18,7 +18,7 @@ class DbHealthScanner extends \MessageClient{
 
   public function __construct($msgTo){
     $token = self::authenticate(self::USERNAME,self::PASSWORD)->token;
-    $this->$_msgTo = $msgTo;
+    $this->_msgTo = $msgTo;
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
@@ -43,7 +43,7 @@ class DbHealthScanner extends \MessageClient{
   protected function _buildMessage(){
     return array(
       "msg_name"=>self::MSGNAME,
-      "to"=>$this->$_msgTo,
+      "to"=>$this->_msgTo,
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m'),
@@ -57,7 +57,7 @@ class DbHealthScanner extends \MessageClient{
     }
     sort($files);
     $str = "A database consitency test has been completed for:<br>";
-    $str .= Song::DB . "." . Song::TABLE . "<br>";
+    $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
     $str .= "The following files could not be located:<br>";
     $str .= "<pre>" . print_r($files,ture) . "</pre>";
     return $str;
