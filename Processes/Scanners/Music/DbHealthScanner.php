@@ -24,7 +24,7 @@ class DbHealthScanner extends \MessageClient{
     $this->_recordCount = count($this->_songs);
     $this->_scan();
     try{
-      self::send($this->_buildMessage(),$token);
+      print_r(json_decode(self::send($this->_buildMessage(),$token)));
     }catch(\Exception $e){
       echo $e->getMessage();
     }
