@@ -8,6 +8,7 @@ class DbHealthScanner extends \MessageClient{
   const MSGNAME = "LOE_MUSIC_HEALTH_CHECK";
   const MSGSUBJ = "Library of Everything Database Check";
   const ASCIPATTERN = '/[^[:ascii:]]/';
+  const MSGTO = 'j.watson@militaryshipment.com';
   const USERNAME = 'test';
   const PASSWORD = 'test';
 
@@ -43,12 +44,12 @@ class DbHealthScanner extends \MessageClient{
   }
   protected function _buildMessage(){
     return array(
-      "to"=>array($this->_msgTo),
+      "to"=>array(self::MSGTO),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "msg_name"=>self::MSGNAME,
       "flag"=>date('Y-m'),
-      "sent_by"=>"LOE3:" . __FILE__,
+      "sent_by"=>"LOE3:" . __FILE__
     );
   }
   protected function _fillMessageBody(){
