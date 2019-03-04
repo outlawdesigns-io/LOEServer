@@ -4,7 +4,7 @@ require_once __DIR__ . '/../LoeBase.php';
 
 class Doc extends LoeBase{
 
-    const DB = 'loe';
+    const DB = 'LOE';
     const TABLE = 'docs';
     const PRIMARYKEY = 'UID';
 
