@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../../Factory.php';
 
-ini_set(max_execution_time, 300);
+ini_set('max_execution_time', 300);
 
 class MusicScanner{
 
