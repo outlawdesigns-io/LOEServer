@@ -1,6 +1,7 @@
 <?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../../Factory.php';
+require_once __DIR__ . '/../../../Libs/MessageClient/MessageClient.php';
 
 class DbHealthScanner extends \MessageClient{
 
