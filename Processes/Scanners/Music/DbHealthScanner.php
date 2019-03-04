@@ -43,10 +43,10 @@ class DbHealthScanner extends \MessageClient{
   }
   protected function _buildMessage(){
     return array(
-      "msg_name"=>self::MSGNAME,
       "to"=>array($this->_msgTo),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
+      "msg_name"=>self::MSGNAME,
       "flag"=>date('Y-m'),
       "sent_by"=>"LOE3:" . __FILE__,
     );
