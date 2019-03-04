@@ -22,8 +22,9 @@ class DbHealthScanner extends \MessageClient{
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
-    $msg = base64_encode(serialize($this->_buildMessage()));
-    print_r(base64_decode(unserialize($msg)));
+    $msg = "message=" . base64_encode(serialize($this->_buildMessage()));
+    print_r(unserialize(base64_decode($msg['message'])));
+    exit;
     try{
       self::send($this->_buildMessage(),$token);
     }catch(\Exception $e){
