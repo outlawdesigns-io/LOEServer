@@ -45,7 +45,8 @@ class DbHealthScanner extends \MessageClient{
     return array(
       "to"=>array($this->_msgTo),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
-      "body"=>$this->_fillMessageBody(),
+      // "body"=>$this->_fillMessageBody(),
+      "body"=>"a sample body",
       "msg_name"=>self::MSGNAME,
       "flag"=>date('Y-m'),
       "sent_by"=>"LOE3:" . __FILE__
@@ -64,7 +65,7 @@ class DbHealthScanner extends \MessageClient{
     $str .= "The following files could not be located:<br>";
     $str .= "<table>";
     for($i = 0; $i < count($files); $i++){
-      $str .= "<tr><td>" $i . "</td><td>" . $files[$i] . "</td></tr>";
+      $str .= "<tr><td>" . $i . "</td><td>" . $files[$i] . "</td></tr>";
     }
     $str .= "</table>";
     return $str;
