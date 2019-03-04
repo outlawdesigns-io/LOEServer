@@ -14,6 +14,7 @@ class DbHealthScanner extends \MessageClient{
     $this->_songs = Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
+    echo "DataBase health is: " . $this->_calculateHealth() . "%\n";
   }
   protected function _scan(){
     foreach($this->_songs as $song){
