@@ -56,10 +56,12 @@ class DbHealthScanner extends \MessageClient{
       $files[] = $song->file_path;
     }
     sort($files);
-    $str = "A database consitency test has been completed for:\n";
-    $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "\n";
-    $str .= "The following files could not be located:\n";
-    $str .= "" . print_r($files,true) . "";
+    $str = "A database consitency test has been completed for:<br>";
+    $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
+    $str .= "The following files could not be located:<br>";
+    foreach($files as $file){
+      $str .= $file . "<br>";
+    }
     return $str;
   }
 
