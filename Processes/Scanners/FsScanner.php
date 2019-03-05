@@ -1,6 +1,6 @@
 <?php namespace LOE;
 
-require_once __DIR__ . '/../../../Libs/MessageClient/MessageClient.php';
+require_once __DIR__ . '/../../Libs/MessageClient/MessageClient.php';
 
 abstract class FsScanner extends \MessageClient{
   abstract protected function _scanForever($dir);
