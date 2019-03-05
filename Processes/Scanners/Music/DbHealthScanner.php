@@ -3,12 +3,12 @@
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . '/../../../Libs/MessageClient/MessageClient.php';
 
+//todo check for outreach
+
 class DbHealthScanner extends \MessageClient{
 
   const MSGNAME = "LOE_MUSIC_HEALTH_CHECK";
   const MSGSUBJ = "Library of Everything Database Check";
-  const USERNAME = 'test';
-  const PASSWORD = 'test';
 
   public $missing = array();
   protected $_songs = array();
@@ -16,8 +16,12 @@ class DbHealthScanner extends \MessageClient{
   protected $_fileCount;
   protected $_recordCount;
 
-  public function __construct($msgTo){
-    $token = self::authenticate(self::USERNAME,self::PASSWORD)->token;
+  public function __construct($username,$password,$msgTo){
+    try{
+      $token = self::authenticate($username,$password)->token;
+    }catch(\Exception $e){
+      throw new \Exception($e->getMessage());
+    }
     $this->_msgTo = $msgTo;
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
@@ -25,7 +29,7 @@ class DbHealthScanner extends \MessageClient{
     try{
       print_r(json_decode(self::send($this->_buildMessage(),$token)));
     }catch(\Exception $e){
-      echo $e->getMessage();
+      throw new \Exception($e->getMessage());
     }
   }
   protected function _scan(){
