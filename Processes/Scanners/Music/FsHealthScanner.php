@@ -47,7 +47,7 @@ class FsHealthScanner extends \MessageClient{
   protected function _verifyDatabase(){
     foreach($this->_files as $file){
       if(!$this->_recordExists($file)){
-        $this->missing[] = $absolutePath;
+        $this->missing[] = $file;
       }
     }
     return $this;
