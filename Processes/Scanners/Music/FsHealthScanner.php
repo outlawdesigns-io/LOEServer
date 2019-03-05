@@ -55,12 +55,19 @@ class FsHealthScanner extends \LOE\FsScanner{
     return $this;
   }
   protected function _recordExists($absolutePath){
-    $results = $GLOBALS['db']
+    $GLOBALS['db']
                 ->database(\LOE\Song::DB)
                 ->table(\LOE\Song::TABLE)
                 ->select(\LOE\Song::PRIMARYKEY)
-                ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'")
-                ->get();
+                ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'");
+    try{
+      $results = $GLOBALS['db']->get();
+    }catch(\Exception $e){
+      echo $e->getMessage() . "\n";
+      echo $absolutePath . "\n";
+      echo $GLOBALS['db']->query . "\n";
+      exit;
+    }
     if(!mysqli_num_rows($results)){
       return false;
     }
