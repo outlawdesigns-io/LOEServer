@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../Factory.php';
 //todo scan LOE for all mp3s
 //todo foreach mp3 is this mp3 in the database?
 
-class FsHealthScanner extends \MessageClient{
+class FsHealthScanner extends \MessageClient implements \LOE\FsInterface{
 
   const ROOTDIR = '/LOE/Music/';
   const MSGNAME = "LOE_MUSIC_FS_CHECK";
@@ -57,7 +57,7 @@ class FsHealthScanner extends \MessageClient{
                 ->database(\LOE\Song::DB)
                 ->table(\LOE\Song::TABLE)
                 ->select(\LOE\Song::PRIMARYKEY)
-                ->where("file_path","=","'" . html_entity_decode(preg_replace("/'/","",$absolutePath)) . "'")
+                ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'")
                 ->get();
     if(!mysqli_num_rows($results)){
       return false;
