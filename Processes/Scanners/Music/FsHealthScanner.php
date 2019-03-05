@@ -65,6 +65,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     }catch(\Exception $e){
       echo $e->getMessage() . "\n";
       echo $absolutePath . "\n";
+      return false;
     }
     if(!mysqli_num_rows($results)){
       return false;
