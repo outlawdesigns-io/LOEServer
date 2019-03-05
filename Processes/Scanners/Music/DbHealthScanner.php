@@ -7,7 +7,6 @@ class DbHealthScanner extends \MessageClient{
 
   const MSGNAME = "LOE_MUSIC_HEALTH_CHECK";
   const MSGSUBJ = "Library of Everything Database Check";
-  const ASCIPATTERN = '/[^[:ascii:]]/';
   const USERNAME = 'test';
   const PASSWORD = 'test';
 
@@ -55,7 +54,6 @@ class DbHealthScanner extends \MessageClient{
     $files = array();
     foreach($this->missing as $song){
       $files[] = $song->file_path;
-      // if(!preg_match(self::ASCIPATTERN,$song->file_path)){}
     }
     sort($files);
     $str = "A database consitency test has been completed for:<br>";
