@@ -57,7 +57,7 @@ class FsHealthScanner extends \MessageClient{
                 ->database(\LOE\Song::DB)
                 ->table(\LOE\Song::TABLE)
                 ->select(\LOE\Song::PRIMARYKEY)
-                ->where("file_path","=","'" . $absolutePath . "'")
+                ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'")
                 ->get();
     if(!mysqli_num_rows($results)){
       return false;
