@@ -1,13 +1,13 @@
 <?php namespace LOE\Music;
 
-require_once __DIR__ . '/../FsInterface.php';
+require_once __DIR__ . '/../FsScanner.php';
 require_once __DIR__ . '/../../../Factory.php';
-require_once __DIR__ . '/../../../Libs/MessageClient/MessageClient.php';
+
 
 //todo scan LOE for all mp3s
 //todo foreach mp3 is this mp3 in the database?
 
-class FsHealthScanner extends \MessageClient implements \LOE\FsInterface{
+class FsHealthScanner extends \LOE\FsScanner{
 
   const ROOTDIR = '/LOE/Music/';
   const MSGNAME = "LOE_MUSIC_FS_CHECK";
