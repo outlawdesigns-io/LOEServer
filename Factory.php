@@ -8,9 +8,9 @@ require_once __DIR__ . '/Models/Anime.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/MovieScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/TvScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/MusicScanner.php';
-require_once __DIR__ . '/Processes/Processors/SongProcessor.php';
-require_once __DIR__ . '/Processes/Processors/MovieProcessor.php';
-require_once __DIR__ . '/Processes/Processors/EpisodeProcessor.php';
+require_once __DIR__ . '/Processes/Processors/HoldingBay/SongProcessor.php';
+require_once __DIR__ . '/Processes/Processors/HoldingBay/MovieProcessor.php';
+require_once __DIR__ . '/Processes/Processors/HoldingBay/EpisodeProcessor.php';
 
 class LoeFactory{
 

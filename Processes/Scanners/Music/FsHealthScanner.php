@@ -3,10 +3,6 @@
 require_once __DIR__ . '/../FsScanner.php';
 require_once __DIR__ . '/../../../Factory.php';
 
-
-//todo scan LOE for all mp3s
-//todo foreach mp3 is this mp3 in the database?
-
 class FsHealthScanner extends \LOE\FsScanner{
 
   const ROOTDIR = '/LOE/Music/';
@@ -14,7 +10,8 @@ class FsHealthScanner extends \LOE\FsScanner{
   const MSGSUBJ = "Library of Everything File System Check";
 
   public $missing = array();
-  protected $_files = array();
+  public $files = array();
+  //protected $_files = array();
 
   public function __construct(){
     $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
@@ -42,12 +39,12 @@ class FsHealthScanner extends \LOE\FsScanner{
   protected function _interpretFile($absolutePath){
     $fileInfo = pathinfo($absolutePath);
     if($fileInfo['extension'] == "mp3"){
-      $this->_files[] = $absolutePath;
+      $this->files[] = $absolutePath;
     }
     return $this;
   }
   protected function _verifyDatabase(){
-    foreach($this->_files as $file){
+    foreach($this->files as $file){
       if(!$this->_recordExists($file)){
         $this->missing[] = $file;
       }
