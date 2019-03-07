@@ -79,10 +79,13 @@ class FsHealthScanner extends \LOE\FsScanner{
     }
     return true;
   }
+  protected function _calculateHealth(){
+    return ((count($this->files) - count($this->missing)) / 100) * 100;
+  }
   protected function _buildMessage(){
     return array(
       "to"=>$this->_msgTo,
-      "subject"=>self::MSGSUBJ,
+      "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "msg_name"=>self::MSGNAME,
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m-d'),
