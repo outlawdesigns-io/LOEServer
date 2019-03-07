@@ -10,26 +10,26 @@ class DbHealthScanner extends \MessageClient{
   const MSGNAME = "LOE_MUSIC_HEALTH_CHECK";
   const MSGSUBJ = "Library of Everything Database Check";
 
+  public $msgResponse;
   public $missing = array();
   protected $_songs = array();
   protected $_msgTo;
   protected $_fileCount;
   protected $_recordCount;
 
-  public function __construct($username,$password,$msgTo){
-    try{
-      $token = self::authenticate($username,$password)->token;
-    }catch(\Exception $e){
-      throw new \Exception($e->getMessage());
-    }
+  public function __construct($msgTo = null,$authToken = null){
     $this->_msgTo = $msgTo;
     $this->_songs = \LOE\Song::getAll();
     $this->_recordCount = count($this->_songs);
     $this->_scan();
-    try{
-      print_r(json_decode(self::send($this->_buildMessage(),$token)));
-    }catch(\Exception $e){
-      throw new \Exception($e->getMessage());
+    if(is_null($authToken) && !is_null($msgTo)){
+      throw new \Exception(self::AUTHERR);
+    }elseif(!is_null($authToken) && !is_null($msgTo)){
+      try{
+        $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
+      }catch(\Exception $e){
+        throw new \Exception($e->getMessage());
+      }
     }
   }
   protected function _scan(){
@@ -50,7 +50,7 @@ class DbHealthScanner extends \MessageClient{
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "msg_name"=>self::MSGNAME,
-      "flag"=>date('Y-m'),
+      "flag"=>date('Y-m-d'),
       "sent_by"=>"LOE3:" . __FILE__
     );
   }
@@ -60,7 +60,7 @@ class DbHealthScanner extends \MessageClient{
       $files[] = $song->file_path;
     }
     sort($files);
-    $str = "A database consitency test has been completed for:<br>";
+    $str = "A database consitency test has been completed for:";
     $str .= \LOE\Song::DB . "." . \LOE\Song::TABLE . "<br>";
     $str .= "The following files could not be located:<br>";
     $str .= "<pre>" . print_r($files,true) . "</pre>";

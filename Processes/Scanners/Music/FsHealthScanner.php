@@ -11,11 +11,21 @@ class FsHealthScanner extends \LOE\FsScanner{
 
   public $missing = array();
   public $files = array();
-  //protected $_files = array();
+  public $msgResponse;
+  protected $_msgTo;
 
-  public function __construct(){
+  public function __construct($msgTo = null,$authToken = null){
     $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
          ->_verifyDatabase();
+    if(is_null($authToken) && !is_null($msgTo)){
+      throw new \Exception(self::AUTHERR);
+    }elseif(is_null($authToken) && !is_null($msgTo)){
+      try{
+        $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
+      }catch(\Exception $e){
+        throw new \Exception($e->getMessage());
+      }
+    }
   }
 
   protected function _scanForever($dir){
@@ -68,5 +78,21 @@ class FsHealthScanner extends \LOE\FsScanner{
       return false;
     }
     return true;
+  }
+  protected function _buildMessage(){
+    return array(
+      "to"=>$this->_msgTo,
+      "subject"=>self::MSGSUBJ,
+      "msg_name"=>self::MSGNAME
+      "body"=>$this->_fillMessageBody(),
+      "flag"=>date('Y-m-d'),
+      "sent_by"=>"LOE3:" . __FILE__
+    );
+  }
+  protected function _fillMessageBody(){
+    $str = "A file system consitency test has been completed for: ";
+    $str .= self::ROOTDIR . "<br>";
+    $str .= "The following files cannot be accounted for:<br>";
+    $str .= print_r($this->missing,true);
   }
 }
