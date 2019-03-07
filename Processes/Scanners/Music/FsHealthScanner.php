@@ -57,7 +57,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   protected function _verifyDatabase(){
     foreach($this->files as $file){
       if(!$this->_recordExists($file)){
-        $this->missing[] = $file;
+        $this->missing[] = preg_replace("/'/","",$file);
       }
     }
     return $this;
