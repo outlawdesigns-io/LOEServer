@@ -83,7 +83,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     return array(
       "to"=>$this->_msgTo,
       "subject"=>self::MSGSUBJ,
-      "msg_name"=>self::MSGNAME
+      "msg_name"=>self::MSGNAME,
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m-d'),
       "sent_by"=>"LOE3:" . __FILE__
