@@ -20,6 +20,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     if(is_null($authToken) && !is_null($msgTo)){
       throw new \Exception(self::AUTHERR);
     }elseif(is_null($authToken) && !is_null($msgTo)){
+      $this->_msgTo = $msgTo;
       try{
         $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
       }catch(\Exception $e){
@@ -84,7 +85,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   }
   protected function _buildMessage(){
     return array(
-      "to"=>$this->_msgTo,
+      "to"=>array($this->_msgTo),
       "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "msg_name"=>self::MSGNAME,
       "body"=>$this->_fillMessageBody(),
