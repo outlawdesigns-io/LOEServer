@@ -81,7 +81,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     return true;
   }
   protected function _calculateHealth(){
-    return ((count($this->files) - count($this->missing)) / $files) * 100;
+    return ((count($this->files) - count($this->missing)) / count($this->files)) * 100;
   }
   protected function _buildMessage(){
     return array(
@@ -97,7 +97,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     $str = "A file system consitency test has been completed for: ";
     $str .= self::ROOTDIR . "<br>";
     $str .= "The following files cannot be accounted for:<br>";
-    $str .= print_r($this->missing,true);
+    $str .= "<pre>" . print_r($this->missing,true) . "</pre>";
     return $str;
   }
 }
