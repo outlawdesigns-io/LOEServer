@@ -81,7 +81,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     return true;
   }
   protected function _calculateHealth(){
-    return ((count($this->files) - count($this->missing)) / 100) * 100;
+    return ((count($this->files) - count($this->missing)) / $files) * 100;
   }
   protected function _buildMessage(){
     return array(
@@ -98,5 +98,6 @@ class FsHealthScanner extends \LOE\FsScanner{
     $str .= self::ROOTDIR . "<br>";
     $str .= "The following files cannot be accounted for:<br>";
     $str .= print_r($this->missing,true);
+    return $str;
   }
 }
