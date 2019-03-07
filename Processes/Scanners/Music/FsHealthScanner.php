@@ -19,7 +19,7 @@ class FsHealthScanner extends \LOE\FsScanner{
          ->_verifyDatabase();
     if(is_null($authToken) && !is_null($msgTo)){
       throw new \Exception(self::AUTHERR);
-    }elseif(is_null($authToken) && !is_null($msgTo)){
+    }elseif(!is_null($authToken) && !is_null($msgTo)){
       $this->_msgTo = $msgTo;
       try{
         $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
