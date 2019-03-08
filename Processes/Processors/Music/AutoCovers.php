@@ -45,13 +45,12 @@ class AutoCovers extends \LOE\FsScanner{
     }
     protected function _interpretFile($absolutePath){
       $fileInfo = pathinfo($absolutePath);
-      $dir = dirname($absolutePath);
-      if($fileInfo["basename"] == "cover.jpg" && !in_array($dir,$this->_hasCover)){
+      if($fileInfo["basename"] == "cover.jpg" && !in_array($fileInfo['dirname'],$this->_hasCover)){
         $this->_hasCover[] = $dir;
       }elseif($fileInfo['extension'] == 'jpg'){
         $this->possibleCovers[] = $absolutePath;
       }
-      if(!in_array($dir,$this->_hasCover) && !in_array($dir,$this->missing) && preg_match(self::OPENPATTERN,$dir)){
+      if(!in_array($fileInfo['dirname'],$this->_hasCover) && !in_array($fileInfo['dirname'],$this->missing) && preg_match(self::OPENPATTERN,$fileInfo['dirname'])){
         $this->missing[] = $dir;
       }
       return $this;
