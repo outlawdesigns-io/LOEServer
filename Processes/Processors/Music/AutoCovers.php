@@ -52,7 +52,6 @@ class AutoCovers extends \LOE\FsScanner{
         $this->possibleCovers[] = $absolutePath;
       }
       if(!in_array($fileInfo['dirname'],$this->_hasCover) && !in_array($fileInfo['dirname'],$this->missing) && preg_match(self::OPENPATTERN,$fileInfo['dirname'])){
-        echo $absolutePath . "\n";
         $this->missing[] = $fileInfo['dirname'];
       }
       return $this;
