@@ -19,7 +19,8 @@ class FsHealthScanner extends \LOE\FsScanner{
          ->_verifyDatabase();
     if(is_null($authToken) && !is_null($msgTo)){
       throw new \Exception(self::AUTHERR);
-    }elseif(is_null($authToken) && !is_null($msgTo)){
+    }elseif(!is_null($authToken) && !is_null($msgTo)){
+      $this->_msgTo = $msgTo;
       try{
         $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
       }catch(\Exception $e){
@@ -37,7 +38,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   protected function _verifyDatabase(){
     foreach($this->files as $file){
       if(!$this->_recordExists($file)){
-        $this->missing[] = $file;
+        $this->missing[] = preg_replace("/'/","",$file);
       }
     }
     return $this;
@@ -60,10 +61,13 @@ class FsHealthScanner extends \LOE\FsScanner{
     }
     return true;
   }
+  protected function _calculateHealth(){
+    return ((count($this->files) - count($this->missing)) / count($this->files)) * 100;
+  }
   protected function _buildMessage(){
     return array(
-      "to"=>$this->_msgTo,
-      "subject"=>self::MSGSUBJ,
+      "to"=>array($this->_msgTo),
+      "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
       "msg_name"=>self::MSGNAME,
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m-d'),
@@ -74,6 +78,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     $str = "A file system consitency test has been completed for: ";
     $str .= self::ROOTDIR . "<br>";
     $str .= "The following files cannot be accounted for:<br>";
-    $str .= print_r($this->missing,true);
+    $str .= "<pre>" . print_r($this->missing,true) . "</pre>";
+    return $str;
   }
 }
