@@ -27,25 +27,6 @@ class FsHealthScanner extends \LOE\FsScanner{
       }
     }
   }
-
-  protected function _scanForever($dir){
-    $results = scandir($dir);
-    foreach($results as $result){
-      if($result == '.' || $result == '..'){
-        continue;
-      }else{
-        $tester = ($dir == \LOE\LoeBase::WEBROOT . self::ROOTDIR) ? $tester = $dir . $result : $tester = $dir . "/" . $result;
-      }
-      if(is_file($tester)){
-        $this->_interpretFile($tester);
-      }elseif(is_dir($tester)){
-        $this->_scanForever($tester);
-      }else{
-        continue;
-      }
-    }
-    return $this;
-  }
   protected function _interpretFile($absolutePath){
     $fileInfo = pathinfo($absolutePath);
     if($fileInfo['extension'] == "mp3"){
