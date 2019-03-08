@@ -35,6 +35,7 @@ class AutoCovers extends \LOE\FsScanner{
     public $missing = array();
     public $fixedDirs = array();
     public $autoFixCount;
+    protected $_hasCover = array();
     protected $altNames = array('00-cover.jpg','Cover.jpg');
 
     public function __construct(){
@@ -45,12 +46,12 @@ class AutoCovers extends \LOE\FsScanner{
     protected function _interpretFile($absolutePath){
       $fileInfo = pathinfo($absolutePath);
       $dir = dirname($absolutePath);
-      if($fileInfo["basename"] == "cover.jpg"){
-        $hasCover = true;
+      if($fileInfo["basename"] == "cover.jpg" && !in_array($dir,$this->_hasCover)){
+        $this->_hasCover[] = $dir;
       }elseif($fileInfo['extension'] == 'jpg'){
         $this->possibleCovers[] = $absolutePath;
       }
-      if(!$hasCover && !in_array($dir,$this->missing) && preg_match(self::OPENPATTERN,$dir)){
+      if(!in_array($dir,$this->_hasCover) && !in_array($dir,$this->missing) && preg_match(self::OPENPATTERN,$dir)){
         $this->missing[] = $dir;
       }
       return $this;
