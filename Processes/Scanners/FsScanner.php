@@ -13,7 +13,8 @@ abstract class FsScanner extends \MessageClient{
       if($result == '.' || $result == '..'){
         continue;
       }else{
-        $tester = ($dir == \LOE\LoeBase::WEBROOT . self::ROOTDIR) ? $tester = $dir . $result : $tester = $dir . "/" . $result;
+        echo self::ROOTDIR . "\n";
+        $tester = ($dir == \LOE\LoeBase::WEBROOT . self::ROOTDIR) ? $dir . $result : $dir . "/" . $result;
       }
       if(is_file($tester)){
         $this->_interpretFile($tester);
