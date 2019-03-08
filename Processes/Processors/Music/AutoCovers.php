@@ -38,22 +38,34 @@ class AutoCovers extends \LOE\FsScanner{
     protected $_hasCover = array();
     protected $altNames = array('00-cover.jpg','Cover.jpg');
 
-    public function __construct(){
+    public function __construct($attempt = false){
         $this->autoFixCount = 0;
         $this->_root(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
              ->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
-        // ->_autoFix();
+        if($attempt){
+          $this->_autoFix();
+        }
     }
     protected function _interpretFile($absolutePath){
       $fileInfo = pathinfo($absolutePath);
-      if($fileInfo["basename"] == "cover.jpg" && !in_array($fileInfo['dirname'],$this->_hasCover)){
-        $this->_hasCover[] = $fileInfo['dirname'];
+      $dir = $fileInfo['dirname'];
+      if($fileInfo["basename"] == "cover.jpg" && !in_array($dir,$this->_hasCover)){
+        $this->_hasCover[] = $dir;
+        $this->_pruneMissing($dir);
       }elseif($fileInfo['extension'] == 'jpg'){
         $this->possibleCovers[] = $absolutePath;
       }
-      if(!in_array($fileInfo['dirname'],$this->_hasCover) && !in_array($fileInfo['dirname'],$this->missing) && preg_match(self::OPENPATTERN,$fileInfo['dirname'])){
-        $this->missing[] = $fileInfo['dirname'];
+      if(!in_array($dir,$this->_hasCover) && !in_array($dir,$this->missing) && preg_match(self::OPENPATTERN,$dir)){
+        $this->missing[] = $dir;
       }
+      return $this;
+    }
+    protected function _pruneMissing($dir){
+      if(!$index = array_search($dir,$this->missing)){
+        return false;
+      }
+      unest($this->missing[$index]);
+      $this->missing = array_values($this->missing);
       return $this;
     }
     protected function _autoFix(){
