@@ -4,11 +4,14 @@ require_once __DIR__ . '/../../Libs/MessageClient/MessageClient.php';
 
 abstract class FsScanner extends \MessageClient{
 
+  const ROOTERR = 'call _root(rootdir) to begin forever scan';
   protected $_scanForeverRoot;
   abstract protected function _interpretFile($absolutePath);
 
   protected function _scanForever($dir){
-    $this->_scanForeverRoot = $dir;
+    if(!empty($this->_scanForeverRoot)){
+      throw new \Exception(self::ROOTERR);
+    }
     $results = scandir($dir);
     foreach($results as $result){
       if($result == '.' || $result == '..'){
@@ -24,6 +27,10 @@ abstract class FsScanner extends \MessageClient{
         continue;
       }
     }
+    return $this;
+  }
+  protected function _root($dir){
+    $this->_scanForeverRoot = $dir;
     return $this;
   }
   //abstract protected function _recordExists($absolutePath);
