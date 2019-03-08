@@ -4,17 +4,17 @@ require_once __DIR__ . '/../../Libs/MessageClient/MessageClient.php';
 
 abstract class FsScanner extends \MessageClient{
 
-  const ROOTDIR = 'abstract'; //make abstract
+  protected $_scanForeverRoot;
   abstract protected function _interpretFile($absolutePath);
 
   protected function _scanForever($dir){
+    $this->_scanForeverRoot = $dir;
     $results = scandir($dir);
     foreach($results as $result){
       if($result == '.' || $result == '..'){
         continue;
       }else{
-        echo self::ROOTDIR . "\n";
-        $tester = ($dir == \LOE\LoeBase::WEBROOT . self::ROOTDIR) ? $dir . $result : $dir . "/" . $result;
+        $tester = ($dir == $this->_scanForeverRoot) ? $dir . $result : $dir . "/" . $result;
       }
       if(is_file($tester)){
         $this->_interpretFile($tester);
