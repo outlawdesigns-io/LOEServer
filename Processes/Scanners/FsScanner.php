@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../Libs/MessageClient/MessageClient.php';
 
 abstract class FsScanner extends \MessageClient{
 
-  abstract const ROOTDIR;
+  const ROOTDIR = 'abstract'; //make abstract
   abstract protected function _interpretFile($absolutePath);
 
   protected function _scanForever($dir){
