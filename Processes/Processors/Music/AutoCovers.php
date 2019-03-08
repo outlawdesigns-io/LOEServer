@@ -64,7 +64,7 @@ class AutoCovers extends \LOE\FsScanner{
       if(!$index = array_search($dir,$this->missing)){
         return false;
       }
-      unest($this->missing[$index]);
+      unset($this->missing[$index]);
       $this->missing = array_values($this->missing);
       return $this;
     }
