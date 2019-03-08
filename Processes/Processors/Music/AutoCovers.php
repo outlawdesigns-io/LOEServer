@@ -39,7 +39,7 @@ class AutoCovers extends \LOE\FsScanner{
 
     public function __construct(){
         $this->autoFixCount = 0;
-        $this->_scanForever(self::ROOTDIR);
+        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
         // ->_autoFix();
     }
     protected function _interpretFile($absolutePath){
