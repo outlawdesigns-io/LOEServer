@@ -9,7 +9,7 @@ abstract class FsScanner extends \MessageClient{
   abstract protected function _interpretFile($absolutePath);
 
   protected function _scanForever($dir){
-    if(!empty($this->_scanForeverRoot)){
+    if(empty($this->_scanForeverRoot)){
       throw new \Exception(self::ROOTERR);
     }
     $results = scandir($dir);
