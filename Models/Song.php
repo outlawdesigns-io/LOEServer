@@ -56,8 +56,8 @@ class Song extends LoeBase{
             throw new \Exception('Unknown Property: ' . $property);
           }
           if($this->$property != $value){
-            echo $key . "\n";
-            echo "Tag: " . $value . "\nDB: " . $this->$key . "\n";
+            echo $property . "\n";
+            echo "Tag: " . $value . "\nDB: " . $this->$property . "\n";
           }
         }
         return $this;
