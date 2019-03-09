@@ -34,7 +34,7 @@ class DbHealthScanner extends \MessageClient{
   }
   protected function _scan(){
     foreach($this->_songs as $song){
-      if(!file_exists(\LOE\LoeBase::WEBROOT . $song->file_path)){
+      if(!$song->verifyLocation()){
         $this->missing[] = $song;
       }
     }
