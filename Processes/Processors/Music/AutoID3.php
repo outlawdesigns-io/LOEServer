@@ -13,10 +13,12 @@ class AutoID3 extends \LOE\FsScanner{
     //$this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
     $songs = \LOE\Song::getAll();
     foreach($songs as $song){
-      try{
-        $id3Data = $song->getMp3Tags();
-      }catch(\Exception $e){
-        $this->_unreadable[] = $song->file_path;
+      if($song->verifyLocation()){
+        try{
+          $id3Data = $song->getMp3Tags();
+        }catch(\Exception $e){
+          $this->_unreadable[] = $song->file_path;
+        }  
       }
     }
     print_r($this->_unreadable);
