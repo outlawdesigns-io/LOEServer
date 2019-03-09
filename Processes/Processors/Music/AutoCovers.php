@@ -2,20 +2,6 @@
 
 require_once __DIR__ . "/../../Scanners/FsScanner.php";
 
-// $exceptions = array();
-// try{
-//     $m = new MissingAlbumCovers();
-// }catch(Exception $e){
-//     $exceptions[] = $e->getMessage();
-// }
-// echo "Auto Fix Complete\n";
-// echo "Dirs Auto Fixed: " . $m->autoFixCount . "\n";
-// echo "Dirs Remaining: " . count($m->missingCovers) . "\n";
-// print_r($m->missingCovers);
-// if(count($exceptions)){
-//     echo "Exception Dirs: " . count($exceptions) . "\n";
-//     print_r($exceptions);
-// }
 
 class AutoCovers extends \LOE\FsScanner{
 

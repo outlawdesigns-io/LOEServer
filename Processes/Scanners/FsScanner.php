@@ -20,7 +20,6 @@ abstract class FsScanner extends \MessageClient{
         continue;
       }else{
         $tester = $dir . "/" . $result;
-        //$tester = ($dir == $this->_scanForeverRoot) ? $dir . $result : $dir . "/" . $result;
       }
       if(is_file($tester)){
         $this->_interpretFile($tester);
