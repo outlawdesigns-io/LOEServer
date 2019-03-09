@@ -17,13 +17,19 @@ class AutoID3 extends \MessageClient{
     foreach($songs as $song){
       if($song->verifyLocation()){
         try{
-          $data = $song->validateTags();
-          print_r($data);
+          if(count($song->validateTags())){
+            $this->_autoFix($song);
+          }
         }catch(\Exception $e){
           $this->_unreadable[] = $song->file_path;
         }
       }
     }
     return $this;
+  }
+  protected function _autoFix($song){
+    $id3 = $song->validateTags();
+    echo $song->file_path . "\n";
+    print_r($id3);
   }
 }
