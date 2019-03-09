@@ -41,7 +41,8 @@ class AutoCovers extends \LOE\FsScanner{
     public function __construct($attempt = false){
         $this->autoFixCount = 0;
         $this->_root(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
-             ->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
+             ->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
+             ->_prunePossible();
         if($attempt){
           $this->_autoFix();
         }
@@ -66,6 +67,15 @@ class AutoCovers extends \LOE\FsScanner{
       }
       unset($this->missing[$index]);
       $this->missing = array_values($this->missing);
+      return $this;
+    }
+    protected function _prunePossible(){
+      foreach($this->possibleCovers as $possible){
+        if(!in_array(pathinfo($possible)['dirname'],$this->missing)){
+          unset($this->possibleCovers[array_search($possible,$this->possibleCovers)]);
+        }
+      }
+      $this->possibleCovers = array_values($this->possibleCovers);
       return $this;
     }
     protected function _autoFix(){
