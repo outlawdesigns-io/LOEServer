@@ -49,6 +49,15 @@ class Song extends LoeBase{
         }
         return $reader->tagData;
     }
+    public function validateTags(){
+        $id3Data = $this->getMp3Tags();
+        foreach($id3Data as $key=>$value){
+          if($this->$key != $value){
+            echo "Tag: " . $value . "\nDB: " . $this->$key . "\n";
+          }
+        }
+        return $this;
+    }
     protected function _writeMp3Tags(){
         $path = self::WEBROOT . $this->file_path;
         $reader = new \Mp3Reader();
