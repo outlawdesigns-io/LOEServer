@@ -7,13 +7,19 @@ class AutoID3 extends \LOE\FsScanner{
 
   const ROOTDIR = '/LOE/Music';
 
+  protected $_unreadable = array();
+
   public function __construct(){
     //$this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
     $songs = \LOE\Song::getAll();
     foreach($songs as $song){
-      $id3Data = $song->getMp3Tags();
-      print_r($id3Data);
+      try{
+        $id3Data = $song->getMp3Tags();
+      }catch(\Exception $e){
+        $this->_unreadable[] = $song->file_path;
+      }
     }
+    print_r($this->_unreadable);
   }
   protected function _interpretFile($absolutePath){
     return $this;
