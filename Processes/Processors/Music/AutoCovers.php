@@ -27,7 +27,7 @@ class AutoCovers extends \LOE\FsScanner{
     NOTE IS AUTO FIX ATTEMPTS TO FIX A FILE AND FAILS IT WILL THROW AN EXCEPTION CONTAINING THE DIR IN QUESTION
     */
 
-    const ROOTDIR = '/LOE/Music/';
+    const ROOTDIR = '/LOE/Music';
     const OPENPATTERN = '/\(/';
     const CLOSEPATTERN = '/\)/';
 
@@ -40,8 +40,7 @@ class AutoCovers extends \LOE\FsScanner{
 
     public function __construct($attempt = false){
         $this->autoFixCount = 0;
-        $this->_root(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
-             ->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
+        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
              ->_prunePossible();
         if($attempt){
           $this->_autoFix();

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../Factory.php';
 
 class FsHealthScanner extends \LOE\FsScanner{
 
-  const ROOTDIR = '/LOE/Music/';
+  const ROOTDIR = '/LOE/Music';
   const MSGNAME = "LOE_MUSIC_FS_CHECK";
   const MSGSUBJ = "Library of Everything File System Check";
 
@@ -15,8 +15,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   protected $_msgTo;
 
   public function __construct($msgTo = null,$authToken = null){
-    $this->_root(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
-         ->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
+    $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
          ->_verifyDatabase();
     if(is_null($authToken) && !is_null($msgTo)){
       throw new \Exception(self::AUTHERR);

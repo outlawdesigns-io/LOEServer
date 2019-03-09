@@ -8,16 +8,21 @@ abstract class FsScanner extends \MessageClient{
   protected $_scanForeverRoot;
   abstract protected function _interpretFile($absolutePath);
 
-  protected function _scanForever($dir){
-    if(empty($this->_scanForeverRoot)){
-      throw new \Exception(self::ROOTERR);
+  public static function isDirShortcut($relativePath){
+    if($relativePath == '.' || $relativePath = '..'){
+      return true;
     }
+    return false;
+  }
+
+  protected function _scanForever($dir){
     $results = scandir($dir);
     foreach($results as $result){
-      if($result == '.' || $result == '..'){
+      if(self::isDirShortcut($result)){
         continue;
       }else{
-        $tester = ($dir == $this->_scanForeverRoot) ? $dir . $result : $dir . "/" . $result;
+        $tester = $dir . DIRECTORY_SEPARATOR . $result;
+        //$tester = ($dir == $this->_scanForeverRoot) ? $dir . $result : $dir . "/" . $result;
       }
       if(is_file($tester)){
         $this->_interpretFile($tester);
@@ -27,10 +32,6 @@ abstract class FsScanner extends \MessageClient{
         continue;
       }
     }
-    return $this;
-  }
-  protected function _root($dir){
-    $this->_scanForeverRoot = $dir;
     return $this;
   }
   //abstract protected function _recordExists($absolutePath);
