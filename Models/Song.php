@@ -51,8 +51,12 @@ class Song extends LoeBase{
     }
     public function validateTags(){
         $id3Data = $this->getMp3Tags();
-        foreach($id3Data as $key=>$value){
-          if($this->$key != $value){
+        foreach($id3Data as $property=>$value){
+          if(!property_exists($this,$property)){
+            throw new \Exception('Unknown Property: ' . $property);
+          }
+          if($this->$property != $value){
+            echo $key . "\n";
             echo "Tag: " . $value . "\nDB: " . $this->$key . "\n";
           }
         }
