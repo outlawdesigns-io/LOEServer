@@ -4,12 +4,10 @@ require_once __DIR__ . '/../../Libs/MessageClient/MessageClient.php';
 
 abstract class FsScanner extends \MessageClient{
 
-  const ROOTERR = 'call _root(rootdir) to begin forever scan';
-  protected $_scanForeverRoot;
   abstract protected function _interpretFile($absolutePath);
 
   public static function isDirShortcut($relativePath){
-    if($relativePath == '.' || $relativePath = '..'){
+    if($relativePath == '.' || $relativePath == '..'){
       return true;
     }
     return false;
