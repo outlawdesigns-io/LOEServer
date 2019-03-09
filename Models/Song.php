@@ -50,17 +50,17 @@ class Song extends LoeBase{
         return $reader->tagData;
     }
     public function validateTags(){
+        $data = array();
         $id3Data = $this->getMp3Tags();
         foreach($id3Data as $property=>$value){
           if(!property_exists($this,$property)){
             throw new \Exception('Unknown Property: ' . $property);
           }
           if($this->$property != $value){
-            echo $property . "\n";
-            echo "Tag: " . $value . "\nDB: " . $this->$property . "\n";
+            $data[$property] = $value;
           }
         }
-        return $this;
+        return $data;
     }
     protected function _writeMp3Tags(){
         $path = self::WEBROOT . $this->file_path;

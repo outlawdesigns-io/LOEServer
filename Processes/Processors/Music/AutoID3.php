@@ -17,7 +17,8 @@ class AutoID3 extends \MessageClient{
     foreach($songs as $song){
       if($song->verifyLocation()){
         try{
-          $song->validateTags();
+          $data = $song->validateTags();
+          print_r($data);
         }catch(\Exception $e){
           $this->_unreadable[] = $song->file_path;
         }
