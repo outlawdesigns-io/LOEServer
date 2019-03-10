@@ -79,10 +79,13 @@ class AutoCovers extends \LOE\FsScanner{
       }
       return $this;
     }
+    protected function _calculateHealth(){
+      return ($this->missing / ($this->missing + $this->_hasCover)) * 100;
+    }
     protected function _buildMessage(){
       return array(
         "to"=>array($this->_msgTo),
-        "subject"=>self::MSGSUBJ,
+        "subject"=>self::MSGSUBJ . round($this->_calculateHealth(),2) . "%",
         "msg_name"=>self::MSGNAME,
         "body"=>$this->_fillMessageBody(),
         "flag"=>date('Y-m-d'),

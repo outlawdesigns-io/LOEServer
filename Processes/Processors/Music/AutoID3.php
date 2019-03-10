@@ -9,7 +9,7 @@ class AutoID3 extends \MessageClient{
 
   protected $_unreadable = array();
 
-  public function __construct(){
+  public function __construct($msgTo = null,$authToken = null){
     $this->_scan();
   }
   protected function _scan(){
