@@ -22,7 +22,7 @@ class AutoCovers extends \LOE\FsScanner{
     public $fixedDirs = array();
     public $autoFixCount;
     protected $_hasCover = array();
-    protected $altNames = array('00-cover.jpg','Cover.jpg');
+    public static $altNames = array('00-cover.jpg','Cover.jpg');
 
     public function __construct($attempt = false){
         $this->autoFixCount = 0;
@@ -64,23 +64,12 @@ class AutoCovers extends \LOE\FsScanner{
       return $this;
     }
     protected function _autoFix(){
-        foreach($this->missingCovers as $dir){
-            foreach($this->possibleCovers as $imgPath){
-                $pattern = "~" . preg_quote($dir) . "~";
-                if(preg_match($pattern,$imgPath)){
-                    $pathInfo = pathinfo($imgPath);
-                    if(in_array($pathInfo["basename"],$this->altNames) && !in_array($dir,$this->fixedDirs)){
-                        $newName = dirname($imgPath) . "/cover.jpg";
-                        if(!rename($imgPath,$newName)){
-                            throw new \Exception($dir);
-                        }else{
-                            $this->fixedDirs[] = $dir;
-                            $this->autoFixCount++;
-                        }
-                    }
-                }
-            }
+      foreach($this->possibleCovers as $possible){
+        $pathInfo = pathinfo($possible);
+        if(in_array($pathInfo['dirname'],$this->missing) && !in_array($pathInfo['dirname'],$this->fixedDirs) && in_array($pathInfo['basename'],self::$altNames) && copy($possible,$pathInfo['dirname'] . "/cover.jpg")){
+          $this->_unlink($possible);
         }
-        return $this;
+      }
+      return $this;
     }
 }

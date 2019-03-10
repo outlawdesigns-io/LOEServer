@@ -31,6 +31,33 @@ abstract class FsScanner extends \MessageClient{
     }
     return $this;
   }
+  protected function _cleanup($dir){
+      if(is_dir($dir)){
+          $results = scandir($dir);
+          foreach($results as $result){
+              if(!self::isDirShortcut($result)){
+                  if(is_dir($dir . "/". $result)){
+                      $this->_cleanup($dir . "/" . $result);
+                  }elseif(!unlink($dir . "/" . $result)){
+                      $error = error_get_last()['message'];
+                      throw new \Exception($error);
+                  }
+              }
+          }
+      }
+      if(!rmdir($dir)){
+          $error = error_get_last()['message'];
+          throw new \Exception($error);
+      }
+      return $this;
+  }
+  protected function _unlink($absolutePath){
+      if(!unlink($absolutePath)){
+          $error = error_get_last()['message'];
+          throw new \Exception($error);
+      }
+      return $this;
+  }
   //abstract protected function _recordExists($absolutePath);
   //abstract protected function _verifyDatabase();
 }
