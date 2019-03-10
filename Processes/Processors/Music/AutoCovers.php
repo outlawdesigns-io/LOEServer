@@ -67,6 +67,8 @@ class AutoCovers extends \LOE\FsScanner{
       foreach($this->possibleCovers as $possible){
         $pathInfo = pathinfo($possible);
         if(in_array($pathInfo['dirname'],$this->missing) && !in_array($pathInfo['dirname'],$this->fixedDirs) && in_array($pathInfo['basename'],self::$altNames) && copy($possible,$pathInfo['dirname'] . "/cover.jpg")){
+          $this->fixedDirs[] = $pathInfo['dirname'];
+          $this->autoFixCount++;
           $this->_unlink($possible);
         }
       }
