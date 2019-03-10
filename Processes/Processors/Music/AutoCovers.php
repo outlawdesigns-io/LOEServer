@@ -90,10 +90,10 @@ class AutoCovers extends \LOE\FsScanner{
     protected function _fillMessageBody(){
       $str = "An AutoCovers attempt has been made for " . self::ROOTDIR . "<br>";
       $str .= "The following directories were determined to be missing cover files:<br>";
-      $str .= print_r($this->missing,true) . "<br><br>";
+      $str .= preg_replace("/\'/","",print_r($this->missing,true)) . "<br><br>";
       if($this->attempted){
         $str .= "The following directories were automatically fixed:<br>";
-        $str .= print_r($this->fixedDirs,true) . "<br>";
+        $str .= preg_replace("/\'/","",print_r($this->fixedDirs,true)) . "<br>";
       }else{
         $str .= "No correction attempt has been made.<br>";
       }
