@@ -17,6 +17,7 @@ class AutoCovers extends \LOE\FsScanner{
     public $msgResponse;
     public $autoFixCount = 0;
     public $attempted = false;
+    protected $_msgTo;
     protected $_hasCover = array();
     public static $altNames = array('00-cover.jpg','Cover.jpg');
 
@@ -91,10 +92,10 @@ class AutoCovers extends \LOE\FsScanner{
     protected function _fillMessageBody(){
       $str = "An AutoCovers attempt has been made for " . self::ROOTDIR . "<br>";
       $str .= "The following directories were determined to be missing cover files:<br>";
-      $str .= preg_replace("/\'/","",print_r($this->missing,true)) . "<br><br>";
+      $str .= "<pre>" . preg_replace("/\'/","",print_r($this->missing,true)) . "</pre><br><br>";
       if($this->attempted){
         $str .= "The following directories were automatically fixed:<br>";
-        $str .= preg_replace("/\'/","",print_r($this->fixedDirs,true)) . "<br>";
+        $str .= "<pre>" . preg_replace("/\'/","",print_r($this->fixedDirs,true)) . "</pre><br>";
       }else{
         $str .= "No correction attempt has been made.<br>";
       }
