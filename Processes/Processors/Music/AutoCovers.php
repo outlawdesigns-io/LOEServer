@@ -5,31 +5,33 @@ require_once __DIR__ . "/../../Scanners/FsScanner.php";
 
 class AutoCovers extends \LOE\FsScanner{
 
-    /*RECURSIVE SCAN OF ROOT MUSIC DIR TO IDENTIFY ALBUM DIRS WITH NO 'cover.jpg'
-    1) IDENTIFY DIRS
-    2) ATTEMPT TO AUTO FIX DIRS WITH IMAGE FILES MATCHING A KNOWN FORMAT
-    3) RETURN USER UNFIXED DIRS WITH ANY POSSIBLE IMAGES
-
-    NOTE IS AUTO FIX ATTEMPTS TO FIX A FILE AND FAILS IT WILL THROW AN EXCEPTION CONTAINING THE DIR IN QUESTION
-    */
-
     const ROOTDIR = '/LOE/Music';
     const OPENPATTERN = '/\(/';
     const CLOSEPATTERN = '/\)/';
+    const MSGNAME = "LOE_MUSIC_AUTO_COVER";
+    const MSGSUBJ = "Library of Everything Auto Covers";
 
     public $possibleCovers = array();
     public $missing = array();
     public $fixedDirs = array();
-    public $autoFixCount;
+    public $msgResponse;
+    public $autoFixCount = 0;
+    public $attempted = false;
     protected $_hasCover = array();
     public static $altNames = array('00-cover.jpg','Cover.jpg');
 
-    public function __construct($attempt = false){
-        $this->autoFixCount = 0;
+    public function __construct($msgTo = null,$authToken = null){
         $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
              ->_prunePossible();
-        if($attempt){
-          $this->_autoFix();
+        if(is_null($authToken) && !is_null($msgTo)){
+          throw new \Exception(self::AUTHERR);
+        }elseif(!is_null($authToken) && !is_null($msgTo)){
+          try{
+            $this->_autoFix();
+            $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
+          }catch(\Exception $e){
+            throw new \Exception($e->getMessage());
+          }
         }
     }
     protected function _interpretFile($absolutePath){
@@ -64,6 +66,7 @@ class AutoCovers extends \LOE\FsScanner{
       return $this;
     }
     protected function _autoFix(){
+      $this->attempted = true;
       foreach($this->possibleCovers as $possible){
         $pathInfo = pathinfo($possible);
         if(in_array($pathInfo['dirname'],$this->missing) && !in_array($pathInfo['dirname'],$this->fixedDirs) && in_array($pathInfo['basename'],self::$altNames) && copy($possible,$pathInfo['dirname'] . "/cover.jpg")){
@@ -73,5 +76,30 @@ class AutoCovers extends \LOE\FsScanner{
         }
       }
       return $this;
+    }
+    protected function _buildMsg(){
+      return array(
+        "to"=>array(),
+        "subject"=>self::MSGSUBJ,
+        "msg_name"=>self::MSGNAME,
+        "body"=>$this->_fillMessageBody(),
+        "flag"=>date('Y-m-d'),
+        "sent_by"=>"LOE3:" . __FILE__
+      );
+    }
+    protected function _fillMessageBody(){
+      $str = "An AutoCovers attempt has been made for " . self::ROOTDIR . "<br>";
+      $str .= "The following directories were determined to be missing cover files:<br>";
+      $str .= print_r($this->missing,true) . "<br><br>";
+      if($this->attempted){
+        $str .= "The following directories were automatically fixed:<br>";
+        $str .= print_r($this->fixedDirs,true) . "<br>";
+      }else{
+        $str .= "No correction attempt has been made.<br>";
+      }
+      return $str;
+    }
+    public function autoFix(){
+      return $this->_autoFix();
     }
 }
