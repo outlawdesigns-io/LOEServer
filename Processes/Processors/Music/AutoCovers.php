@@ -80,7 +80,7 @@ class AutoCovers extends \LOE\FsScanner{
       return $this;
     }
     protected function _calculateHealth(){
-      return (count($this->missing) / (count($this->missing) + count($this->_hasCover))) * 100;
+      return (count($this->_hasCover) / (count($this->missing) + count($this->_hasCover))) * 100;
     }
     protected function _buildMessage(){
       return array(
