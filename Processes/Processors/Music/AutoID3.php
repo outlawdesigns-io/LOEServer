@@ -35,6 +35,5 @@ class AutoID3 extends \MessageClient{
       echo $song->$key . "\n";
       echo $value . "\n";
     }
-    print_r($id3);
   }
 }
