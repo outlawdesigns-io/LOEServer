@@ -77,7 +77,7 @@ class AutoCovers extends \LOE\FsScanner{
       }
       return $this;
     }
-    protected function _buildMsg(){
+    protected function _buildMessage(){
       return array(
         "to"=>array(),
         "subject"=>self::MSGSUBJ,
