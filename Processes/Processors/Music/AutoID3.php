@@ -30,6 +30,11 @@ class AutoID3 extends \MessageClient{
   protected function _autoFix($song){
     $id3 = $song->validateTags();
     echo $song->file_path . "\n";
+    foreach($id3 as $key=>$value){
+      echo $key . "\n";
+      echo $song->$key . "\n";
+      echo $value . "\n";
+    }
     print_r($id3);
   }
 }
