@@ -26,6 +26,7 @@ class AutoCovers extends \LOE\FsScanner{
         if(is_null($authToken) && !is_null($msgTo)){
           throw new \Exception(self::AUTHERR);
         }elseif(!is_null($authToken) && !is_null($msgTo)){
+          $this->_msgTo = $msgTo;
           try{
             $this->_autoFix();
             $this->msgResponse = json_decode(self::send($this->_buildMessage(),$authToken));
@@ -79,7 +80,7 @@ class AutoCovers extends \LOE\FsScanner{
     }
     protected function _buildMessage(){
       return array(
-        "to"=>array(),
+        "to"=>array($this->_msgTo),
         "subject"=>self::MSGSUBJ,
         "msg_name"=>self::MSGNAME,
         "body"=>$this->_fillMessageBody(),
