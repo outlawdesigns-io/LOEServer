@@ -20,6 +20,11 @@ class AutoCovers extends \LOE\FsScanner{
     protected $_msgTo;
     protected $_hasCover = array();
     public static $altNames = array('00-cover.jpg','Cover.jpg');
+    public static $altPatterns = array(
+      "/AlbumArt_.*?_Large\.jpg/",
+      "/00-.*?-cover/",
+      "/00-.*?-front/"
+    );
 
     public function __construct($msgTo = null,$authToken = null){
         $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
@@ -71,10 +76,13 @@ class AutoCovers extends \LOE\FsScanner{
       $this->attempted = true;
       foreach($this->possibleCovers as $possible){
         $pathInfo = pathinfo($possible);
-        if(in_array($pathInfo['dirname'],$this->missing) && !in_array($pathInfo['dirname'],$this->fixedDirs) && in_array($pathInfo['basename'],self::$altNames) && copy($possible,$pathInfo['dirname'] . "/cover.jpg")){
-          $this->fixedDirs[] = $pathInfo['dirname'];
-          $this->autoFixCount++;
-          $this->_unlink($possible);
+        if(in_array($pathInfo['dirname'],$this->missing) && !in_array($pathInfo['dirname'],$this->fixedDirs)){
+          //todo perhaps to reveserse this (isAltName || isAltMatch) && !copy{throw exception}else{ficedDirs;autoCount++;_unlink}
+          if(($this->isAltName($pathInfo['basename']) || $this->isAltMatch($pathInfo['basename'])) && copy($possible,$pathInfo['dirname'] . "/cover.jpg")){
+            $this->fixedDirs[] = $pathInfo['dirname'];
+            $this->autoFixCount++;
+            $this->_unlink($possible);
+          }
         }
       }
       return $this;
@@ -106,5 +114,16 @@ class AutoCovers extends \LOE\FsScanner{
     }
     public function autoFix(){
       return $this->_autoFix();
+    }
+    public function isAltName($filename){
+      return in_array($filename,self::$altNames);
+    }
+    public function isAltMatch($filename){
+      foreach(self::$altPatterns as $pattern){
+        if(preg_match($pattern,$filename)){
+          return true;
+        }
+      }
+      return false;
     }
 }
