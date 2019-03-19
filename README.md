@@ -166,6 +166,7 @@ class MyNewModel extends LoeBase{
   const TABLE = 'myModel';
   const PRIMARYKEY = 'UID';
 
+  public $UID;
   public $firstName;
   public $secondName;
   public $file_path;
