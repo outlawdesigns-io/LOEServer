@@ -158,17 +158,48 @@ foreach($scanner->fixedDirs as $fixedDir){
 ## Usage
 
 ```
-require_once __DIR__ . '/factory.php';
+<?php namespace \LOE;
 
-//initialize an empty domain object
+class MyNewModel extends LoeBase{
 
-$movie = LoeFactory::create('movies');
+  const DB = 'LOE';
+  const TABLE = 'myModel';
+  const PRIMARYKEY = 'UID';
 
-$movie->title = 'Titanic';
+  public $firstName;
+  public $secondName;
+  public $file_path;
+  public $tags = array();
 
-//initialize an existing domain object
+  public function __construct($UID = null){
+    parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
+    $this->file_path = $this->_cleanFilePath($this->file_path);
+  }
+}
 
-$song = LoeFactory::create('music',6661);
-print_r($song);
+class MynewScanner extends FsScanner{
+
+  const ROOTDIR = '/LOE/myModel';
+  public $files = array();
+
+  public function __construct($msgTo = null,$authToken = null){
+    $this->_scanForever(LoeBase::WEBROOT . self::ROOTDIR);
+  }
+  protected function _interpretFile($absolutePath){
+    if(in_array(pathinfo($absolutePath)['extension'],self::$validExtensions)){
+      $this->files[] = $absolutePath;
+    }
+    return $this;
+  }
+}
+
+$songs = Songs::getAll();
+foreach($songs as $song){
+  if(!$song->verifyLocation()){
+    //todo this song appears to be missing
+  }else{
+    $id3 = $song->validateTags();
+  }
+}
 
 ```
