@@ -18,7 +18,7 @@ class DbHealthScanner extends \MessageClient{
 
   public function __construct($msgTo = null,$authToken = null){
     $this->_msgTo = $msgTo;
-    $this->_episodes = \LOE\Episode::getAll();
+    $this->_episodes = \LOE\Anime::getAll();
     $this->_recordCount = count($this->_episodes);
     $this->_scan();
     if(is_null($authToken) && !is_null($msgTo)){
