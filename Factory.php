@@ -70,13 +70,13 @@ class LoeFactory{
         }
         return $obj;
     }
-//    public static function browse($table,$key){
-//        return Record::browse($table,$key);
-//    }
-//    public static function search($table,$key,$value){
-//        return Record::search($table,$key,$value);
-//    }
-//    public static function recent($table,$limit){
-//        return Record::getRecent($table,$limit);
-//    }
+   public static function browse($table,$key){
+       return Record::browse(LoeBase::DB,$table,$key);
+   }
+   public static function search($table,$key,$value){
+       return Record::search(LoeBase::DB,$table,$key,$value);
+   }
+   public static function recent($table,$limit){
+       return Record::getRecent(LoeBase::DB,$table,$limit);
+   }
 }

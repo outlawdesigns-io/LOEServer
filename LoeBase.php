@@ -8,6 +8,7 @@ class LoeBase extends \Record{
     const FILEPATT = '/^.*(?=(\/LOE))/';
     const WEBROOT = '/var/www/html';
     const FILEUNSETERR = 'File path must be set.';
+    const DB = 'LOE';
 
     public function __construct($database, $table, $primaryKey, $id)
     {

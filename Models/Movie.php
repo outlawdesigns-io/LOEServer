@@ -4,10 +4,9 @@ require_once __DIR__ . '/../LoeBase.php';
 
 class Movie extends LoeBase{
 
-    const DB = 'LOE';
     const PRIMARYKEY = 'UID';
     const TABLE = 'movies';
-    
+
     public $UID;
     public $title;
     public $relyear;

@@ -5,7 +5,6 @@ require_once __DIR__ . '/../LoeBase.php';
 class Anime extends LoeBase{
 
     const TABLE = 'anime';
-    const DB = 'LOE';
     const PRIMARYKEY = 'UID';
 
     public $UID;
