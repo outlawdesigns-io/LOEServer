@@ -5,10 +5,11 @@ require_once __DIR__ . '/Libs/Record/Record.php';
 
 class LoeBase extends \Record{
 
+    const DB = 'LOE';
+    const PRIMARYKEY = 'UID';
     const FILEPATT = '/^.*(?=(\/LOE))/';
     const WEBROOT = '/var/www/html';
     const FILEUNSETERR = 'File path must be set.';
-    const DB = 'LOE';
 
     public function __construct($database, $table, $primaryKey, $id)
     {

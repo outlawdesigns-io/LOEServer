@@ -6,7 +6,6 @@ require_once __DIR__ . '/../Libs/Mp3Reader/Mp3Reader.php';
 class Song extends LoeBase{
 
     const TABLE = 'music';
-    const PRIMARYKEY = 'UID';
 
     public $UID;
     public $title;

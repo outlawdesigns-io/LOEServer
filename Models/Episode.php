@@ -4,7 +4,6 @@ require_once __DIR__ . '/../LoeBase.php';
 
 class Episode extends LoeBase{
 
-    const PRIMARYKEY = 'UID';
     const TABLE = 'tv';
 
     public $UID;

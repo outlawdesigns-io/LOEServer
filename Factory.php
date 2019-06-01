@@ -71,12 +71,23 @@ class LoeFactory{
         return $obj;
     }
    public static function browse($table,$key){
-       return \Record::browse(LoeBase::DB,$table,$key);
+       $data = array();
+       $ids = \Record::browse(LoeBase::DB,$table,$key);
    }
    public static function search($table,$key,$value){
-       return \Record::search(LoeBase::DB,$table,$key,$value);
+       $data = array();
+       $ids = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$key,$value);
+       foreach($ids as $id){
+         $data[] = self::create($table,$id);
+       }
+       return $data;
    }
    public static function recent($table,$limit){
-       return \Record::getRecent(LoeBase::DB,$table,$limit);
+       $data = array();
+       $ids = \Record::getRecent(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$limit);
+       foreach($ids as $id){
+         $data[] = self::create($table,$id);
+       }
+       return $data;
    }
 }
