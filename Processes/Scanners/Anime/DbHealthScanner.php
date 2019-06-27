@@ -46,7 +46,7 @@ class DbHealthScanner extends \MessageClient{
   protected function _buildMessage(){
     return array(
       "to"=>array($this->_msgTo),
-      "subject"=>self::MSGSUBJ . " " . round($this->_calculateHealth(),2) . "%",
+      "subject"=>self::MSGSUBJ . ": " . strtoupper(\LOE\Anime::TABLE) . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "msg_name"=>self::MSGNAME,
       "flag"=>date('Y-m-d'),
@@ -58,11 +58,15 @@ class DbHealthScanner extends \MessageClient{
     foreach($this->missing as $episode){
       $files[] = $episode->file_path;
     }
-    sort($files);
     $str = "A database consitency test has been completed for:";
     $str .= \LOE\Anime::DB . "." . \LOE\Anime::TABLE . "<br>";
-    $str .= "The following files could not be located:<br>";
-    $str .= "<pre>" . print_r($files,true) . "</pre>";
+    if(count($files)){
+      sort($files);
+      $str .= "The following files could not be located:<br>";
+      $str .= "<pre>" . print_r($files,true) . "</pre>";
+    }else{
+      $str .= "Congratulations! " . \LOE\Anime::TABLE . " is at 100% health!";
+    }
     return $str;
   }
 
