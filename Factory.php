@@ -5,6 +5,7 @@ require_once __DIR__ . '/Models/Episode.php';
 require_once __DIR__ . '/Models/Song.php';
 require_once __DIR__ . '/Models/Doc.php';
 require_once __DIR__ . '/Models/Anime.php';
+require_once __DIR__ . '/Models/Comic.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/MovieScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/TvScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/MusicScanner.php';
