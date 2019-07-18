@@ -30,7 +30,11 @@ class AutoInsert{
       $newSeries->series = $seriesTitle;
       $newSeries->year = $year;
       $newSeries->issues = $issueCount;
-      $this->_isNewSeries($seriesTitle) ? $series[] = $newSeries : continue;
+      if($this->_isNewSeries($seriesTitle)){
+        $series[] = $newSeries
+      }else{
+        continue;
+      }
     }
     return $this;
   }
