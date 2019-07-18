@@ -11,7 +11,7 @@ class AutoInsert{
   protected $series = array();
 
   public function __construct(){
-    $this->scanner = FsHealthScanner();
+    $this->scanner = new FsHealthScanner();
     $this->_parse();
     print_r($this->series);
   }
