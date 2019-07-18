@@ -32,6 +32,9 @@ class LoeFactory{
             case "anime":
                 $obj = new Anime($UID);
                 break;
+            case "comic":
+                $obj = new Comic($UID);
+                break;
             default:
                 throw new \Exception('Invalid Object Type');
         }
