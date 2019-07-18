@@ -26,7 +26,7 @@ class AutoInsert{
         $seriesTitle = trim($matches[1]);
       }
       $issueCount = count(scandir(dirname($file))) - 2;
-      $newSeries = new stdClass();
+      $newSeries = new \stdClass();
       $newSeries->series = $seriesTitle;
       $newSeries->year = $year;
       $newSeries->issues = $issueCount;
