@@ -7,3 +7,6 @@
 [submodule "Libs/Mp3Reader"]
 	path = Libs/Mp3Reader
 	url = https://github.com/outlawdesigns-io/Mp3Reader
+[submodule "Libs/ComicVine"]
+	path = Libs/ComicVine
+	url = https://github.com/outlawdesigns-io/ComicVine
