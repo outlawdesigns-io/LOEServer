@@ -13,6 +13,7 @@ class AutoInsert{
   public function __construct(){
     $this->scanner = FsHealthScanner();
     $this->_parse();
+    print_r($this->series);
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -29,7 +30,7 @@ class AutoInsert{
       $newSeries->series = $seriesTitle;
       $newSeries->year = $year;
       $newSeries->issues = $issueCount;
-      $this->_isNewSeries($seriesTitle) $series[] = $newSeries : continue;
+      $this->_isNewSeries($seriesTitle) ? $series[] = $newSeries : continue;
     }
     return $this;
   }
