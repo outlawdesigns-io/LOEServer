@@ -61,9 +61,8 @@ class AutoInsert{
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
           $issues = $volume->results->issues;
           $publisher = (string)$volume->results->publisher->name;
-          echo $series->series . " " . count($issues) . "\n";
+          //echo $series->series . " " . count($issues) . "\n";
           foreach($issues as $issue){
-            $issue->issue_number;
             if(in_array((int)$issue->issue_number,$series->issues)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               $comic = new \LOE\Comic();
@@ -98,7 +97,6 @@ class AutoInsert{
             $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
             $issues = $volume->results->issues->issue;
             $publisher = (string)$volume->results->publisher->name;
-            print_r($issues);
             foreach($issues as $issue){
               if(in_array((int)$issue->issue_number,$series->issues)){
                 $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
