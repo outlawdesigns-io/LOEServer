@@ -59,9 +59,9 @@ class AutoInsert{
         if($startYear == $series->year){
           $seriesDescription = $possibleVolume->description;
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
-          $issues = $volume->results->issues;
+          $issues = $volume->results->issues->issue;
           $publisher = (string)$volume->results->publisher->name;
-          //echo $series->series . " " . count($issues) . "\n";
+          echo $series->series . " " . count($issues) . "\n";
           foreach($issues as $issue){
             if(in_array((int)$issue->issue_number,$series->issues)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
