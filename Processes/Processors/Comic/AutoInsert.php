@@ -14,7 +14,9 @@ class AutoInsert{
     "Limited Series"
   );
   protected static $testSeries = array(
-    "New Mutants V3"
+    "New Mutants V3",
+    "X-23 Vol 1",
+    "Wolverine Vol. 4"
   );
 
   protected $scanner;
@@ -22,7 +24,7 @@ class AutoInsert{
 
   public function __construct(){
     $this->scanner = new FsHealthScanner();
-    $this->_parse()->_buildTest();
+    $this->_parse()->_build();
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -59,10 +61,29 @@ class AutoInsert{
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
           $issues = $volume->results->issues->issue;
           $publisher = (string)$volume->results->publisher->name;
-          foreach($issues as $issue){}
+          foreach($issues as $issue){
+            $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
+            if(in_array((int)$issueDetails->results->issue_number,$series->issues)){
+              $comic = new \LOE\Comic();
+              $comic->issue_number = (int)$issueDetails->results->issue_number;
+              $comic->issue_title = (string)$issueDetails->results->name;
+              $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
+              $comic->series_title = (string)$issueDetails->results->volume->name;
+              $comic->series_start_year = (string)$startYear;
+              $comic->series_end_year = "";
+              $comic->story_arc = (string)$issueDetails->results->story_arc_credits->story_arc->name;
+              $comic->issue_description = strip_tags((string)$issueDetails->results->description);
+              $comic->series_description = strip_tags((string)$seriesDescription);
+              $comic->issue_type = "";
+              $comic->publisher = $publisher;
+              $comic->file_path = $series->files[array_search($comic->issue_number,$series->files)];
+              $comic->create();
+            }
+          }
         }
       }
     }
+    return $this;
   }
   protected function _buildTest(){
     foreach($this->series as $series){
