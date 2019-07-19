@@ -22,7 +22,7 @@ class Comic extends LoeBase{
   public function __construct($UID = null){
       parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
       $this->file_path = $this->_cleanFilePath($this->file_path);
-      $this->cover_path = $this->_cleanFilePath($this->cover_path);
+      //$this->cover_path = $this->_cleanFilePath($this->cover_path);
       $this->_cleanProperties();
   }
   public static function getAll(){
