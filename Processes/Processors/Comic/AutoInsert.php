@@ -36,7 +36,7 @@ class AutoInsert{
       $newSeries = new \stdClass();
       $newSeries->series = $seriesTitle;
       $newSeries->year = $year;
-      $newSeries->issueCount = $issueCount;
+      //$newSeries->issueCount = $issueCount;
       $newSeries->issues = $this->_parseIssues($file);
       $newSeries->issueCount = count($series->issues);
       if($this->_isNewSeries($seriesTitle)){
@@ -73,7 +73,7 @@ class AutoInsert{
     $issues = array();
     $results = scandir(dirname($path));
     foreach($results as $file){
-      if(!FsScanner::isDirShortcut($file)){
+      if(!\LOE\FsScanner::isDirShortcut($file)){
         $issues[] = $file;
       }
     }
