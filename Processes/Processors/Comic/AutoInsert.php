@@ -41,7 +41,7 @@ class AutoInsert{
       if($this->_isNewSeries($seriesTitle) && $newSeries->issueCount){
         $this->series[] = $newSeries;
       }else{
-        continue;
+        $this->_addIssue($seriesTitle,$file);
       }
     }
     return $this;
