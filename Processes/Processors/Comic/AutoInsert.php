@@ -55,6 +55,7 @@ class AutoInsert{
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
           $issues = $volume->results->issues->issue;
           $publisher = (string)$volume->results->publisher->name;
+          foreach($issues as $issue){}
         }
       }
     }
@@ -71,8 +72,8 @@ class AutoInsert{
     $issues = array();
     $results = scandir(dirname($path));
     foreach($results as $file){
-      if(!\LOE\FsScanner::isDirShortcut($file)){
-        $issues[] = $file;
+      if(!\LOE\FsScanner::isDirShortcut($file) && (int)pathinfo($file)['filename']){
+        $issues[] = (int)pathinfo($file)['filename'];
       }
     }
     sort($issues);
