@@ -69,7 +69,7 @@ class AutoInsert{
     foreach($this->series as $series){
       if(in_array($series->series,self::$testSeries)){
         $results = \ComicVine::search($series->series);
-        foreach($results->result->volume as $possibleVolume){
+        foreach($results->results->volume as $possibleVolume){
           $startYear = (int)$possibleVolume->start_year;
           if($startYear == $series->year){
             $seriesDescription = $possibleVolume->description;
