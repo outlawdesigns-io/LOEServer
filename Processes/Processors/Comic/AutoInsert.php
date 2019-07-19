@@ -38,7 +38,7 @@ class AutoInsert{
       $newSeries->year = $year;
       //$newSeries->issueCount = $issueCount;
       $newSeries->issues = $this->_parseIssues($file);
-      $newSeries->issueCount = count($series->issues);
+      $newSeries->issueCount = count($newSeries->issues);
       if($this->_isNewSeries($seriesTitle)){
         $this->series[] = $newSeries;
       }else{
