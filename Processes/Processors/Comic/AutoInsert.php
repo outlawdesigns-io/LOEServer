@@ -39,6 +39,7 @@ class AutoInsert{
       $newSeries->issueCount = count($newSeries->issues);
       $newSeries->files = array();
       if($this->_isNewSeries($seriesTitle) && $newSeries->issueCount){
+        $newSeries->files[] = $file;
         $this->series[] = $newSeries;
       }else{
         $this->_addIssue($seriesTitle,$file);
