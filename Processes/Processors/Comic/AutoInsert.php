@@ -24,7 +24,7 @@ class AutoInsert{
 
   public function __construct(){
     $this->scanner = new FsHealthScanner();
-    $this->_parse()->_buildTest();
+    $this->_parse()->_build();
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
