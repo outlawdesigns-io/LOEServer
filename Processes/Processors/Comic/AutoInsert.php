@@ -24,7 +24,7 @@ class AutoInsert{
 
   public function __construct(){
     $this->scanner = new FsHealthScanner();
-    $this->_parse()->_buildTest();
+    $this->_parse()->_build();
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -76,7 +76,7 @@ class AutoInsert{
               $comic->series_description = strip_tags((string)$seriesDescription);
               $comic->issue_type = "";
               $comic->publisher = $publisher;
-              $comic->file_path = $series->files[array_search($comic->issue_number,$series->files)];
+              $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
               $comic->create();
             }
           }
@@ -111,7 +111,7 @@ class AutoInsert{
                 $comic->series_description = strip_tags((string)$seriesDescription);
                 $comic->issue_type = "";
                 $comic->publisher = $publisher;
-                $comic->file_path = $series->files[array_search($comic->issue_number,$series->files)];
+                $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
                 print_r($comic);
               }
             }
