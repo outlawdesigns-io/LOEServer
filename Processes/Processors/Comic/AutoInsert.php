@@ -1,7 +1,7 @@
 <?php namespace LOE\Comic;
 
 require_once __DIR__ . "/../../Scanners/Comic/FsHealthScanner.php";
-require_once __DIR__ . "/../../../Libs/ComicVine.php";
+require_once __DIR__ . "/../../../Libs/ComicVine/ComicVine.php";
 
 class AutoInsert{
 
