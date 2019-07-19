@@ -71,7 +71,7 @@ class AutoInsert{
   }
   protected function _parseIssues($path){
     $issues = array();
-    $results = scandir($path);
+    $results = scandir(dirname($path));
     foreach($results as $file){
       if(!FsScanner::isDirShortcut($file)){
         $issues[] = $file;
