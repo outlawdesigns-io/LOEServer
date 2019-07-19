@@ -20,7 +20,7 @@ class AutoInsert{
   public function __construct(){
     $this->scanner = new FsHealthScanner();
     $this->_parse();
-    //print_r($this->series);
+    print_r($this->series);
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -32,11 +32,9 @@ class AutoInsert{
       if(preg_match(self::SERIESPATT,$file,$matches)){
         $seriesTitle = trim($matches[1]);
       }
-      //$issueCount = count(scandir(dirname($file))) - 2;
       $newSeries = new \stdClass();
       $newSeries->series = $seriesTitle;
       $newSeries->year = $year;
-      //$newSeries->issueCount = $issueCount;
       $newSeries->issues = $this->_parseIssues($file);
       $newSeries->issueCount = count($newSeries->issues);
       if($this->_isNewSeries($seriesTitle)){
@@ -72,12 +70,12 @@ class AutoInsert{
   protected function _parseIssues($path){
     $issues = array();
     $results = scandir(dirname($path));
-    print_r($results);
     foreach($results as $file){
       if(!\LOE\FsScanner::isDirShortcut($file)){
         $issues[] = $file;
       }
     }
-    return sort($issues);
+    sort($issues);
+    return $issues;
   }
 }
