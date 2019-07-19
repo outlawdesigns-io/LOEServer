@@ -20,7 +20,7 @@ class AutoInsert{
   public function __construct(){
     $this->scanner = new FsHealthScanner();
     $this->_parse();
-    print_r($this->series);
+    //print_r($this->series);
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -72,6 +72,7 @@ class AutoInsert{
   protected function _parseIssues($path){
     $issues = array();
     $results = scandir(dirname($path));
+    print_r($results);
     foreach($results as $file){
       if(!\LOE\FsScanner::isDirShortcut($file)){
         $issues[] = $file;
