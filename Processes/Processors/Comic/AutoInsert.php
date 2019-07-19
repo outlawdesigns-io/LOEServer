@@ -24,7 +24,7 @@ class AutoInsert{
 
   public function __construct(){
     $this->scanner = new FsHealthScanner();
-    $this->_parse()->_build();
+    $this->_parse()->_buildTest();
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -59,12 +59,14 @@ class AutoInsert{
         if($startYear == $series->year){
           $seriesDescription = $possibleVolume->description;
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
-          $issues = $volume->results->issues->issue;
+          //$issues = $volume->results->issues->issue;
+          $issues = $volume->results->issues;
           $publisher = (string)$volume->results->publisher->name;
           echo $series->series . " " . count($issues) . "\n";
           foreach($issues as $issue){
-            $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
-            if(in_array((int)$issueDetails->results->issue_number,$series->issues)){
+            $issue->issue_number;
+            if(in_array((int)$issue->issue_number,$series->issues)){
+              $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               $comic = new \LOE\Comic();
               $comic->issue_number = (int)$issueDetails->results->issue_number;
               $comic->issue_title = (string)$issueDetails->results->name;
@@ -95,11 +97,12 @@ class AutoInsert{
           if($startYear == $series->year){
             $seriesDescription = $possibleVolume->description;
             $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
-            $issues = $volume->results->issues->issue;
+            //$issues = $volume->results->issues->issue;
+            $issues = $volume->results->issues;
             $publisher = (string)$volume->results->publisher->name;
             foreach($issues as $issue){
-              $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
-              if(in_array((int)$issueDetails->results->issue_number,$series->issues)){
+              if(in_array((int)$issue->issue_number,$series->issues)){
+                $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
                 $comic = new \LOE\Comic();
                 $comic->issue_number = (int)$issueDetails->results->issue_number;
                 $comic->issue_title = (string)$issueDetails->results->name;
