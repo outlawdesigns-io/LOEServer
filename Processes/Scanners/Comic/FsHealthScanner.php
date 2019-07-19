@@ -13,6 +13,7 @@ class FsHealthScanner extends \LOE\FsScanner{
     "cbz"
   );
   public $missing = array();
+  public $files = array();
 
   public function __construct($msgTo = null,$authToken = null){
     $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
