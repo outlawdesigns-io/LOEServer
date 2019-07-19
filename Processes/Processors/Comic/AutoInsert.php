@@ -13,6 +13,9 @@ class AutoInsert{
     "One-Shot",
     "Limited Series"
   );
+  protected static $testSeries = array(
+    "New Mutants V3"
+  );
 
   protected $scanner;
   protected $series = array();
@@ -20,7 +23,7 @@ class AutoInsert{
   public function __construct(){
     $this->scanner = new FsHealthScanner();
     $this->_parse();
-    print_r($this->series);
+    //print_r($this->series);
   }
   protected function _parse(){
     foreach($this->scanner->missing as $file){
@@ -61,6 +64,41 @@ class AutoInsert{
         }
       }
     }
+  }
+  protected function _buildTest(){
+    foreach($this->series as $series){
+      if(in_array($series->series,self::$testSeries)){
+        $searchResults = \ComicVine::search($series->series);
+        foreach($results->result->volume as $possibleVolume){
+          $startYear = (int)$possibleVolume->start_year;
+          if($startYear == $series->year){
+            $seriesDescription = $possibleVolume->description;
+            $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
+            $issues = $volume->results->issues->issue;
+            $publisher = (string)$volume->results->publisher->name;
+            foreach($issues as $issue){
+              if(in_array((int)$issueDetails->results->issue_number,$series->issues)){
+                $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
+                $comic = new \LOE\Comic();
+                $comic->issue_number = (int)$issueDetails->results->issue_number;
+                $comic->issue_title = (string)$issueDetails->results->name;
+                $comic->$issue_cover_date = (string)$issueDetails->results->cover_date;
+                $comic->series_title = (string)$issueDetails->results->volume->name;
+                $comic->series_start_year = (string)$startYear;
+                $comic->series_end_year = "";
+                $comic->story_arc = (string)$issueDetails->results->story_arc_credits->story_arc->name;
+                $comic->issue_description = strip_tags((string)$issueDetails->results->description);
+                $comic->series_description = strip_tags((string)$seriesDescription);
+                $comic->issue_type = "";
+                $comic->publisher = $publisher;
+                print_r($comic);
+              }
+            }
+          }
+        }
+      }
+    }
+    return $this;
   }
   protected function _isNewSeries($series){
     foreach($this->series as $existing){
