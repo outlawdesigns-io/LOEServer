@@ -77,8 +77,8 @@ class AutoInsert{
             $issues = $volume->results->issues->issue;
             $publisher = (string)$volume->results->publisher->name;
             foreach($issues as $issue){
+              $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               if(in_array((int)$issueDetails->results->issue_number,$series->issues)){
-                $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
                 $comic = new \LOE\Comic();
                 $comic->issue_number = (int)$issueDetails->results->issue_number;
                 $comic->issue_title = (string)$issueDetails->results->name;
