@@ -82,7 +82,7 @@ class AutoInsert{
                 $comic = new \LOE\Comic();
                 $comic->issue_number = (int)$issueDetails->results->issue_number;
                 $comic->issue_title = (string)$issueDetails->results->name;
-                $comic->$issue_cover_date = (string)$issueDetails->results->cover_date;
+                $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
                 $comic->series_title = (string)$issueDetails->results->volume->name;
                 $comic->series_start_year = (string)$startYear;
                 $comic->series_end_year = "";
