@@ -135,6 +135,7 @@ class AutoInsert{
       if($series == $this->series[$i]->series && !in_array($path,$this->series[$i]->files)){
         $this->series[$i]->files[] = $path;
       }
+      sort($this->series[$i]->files);
     }
     return $this;
   }

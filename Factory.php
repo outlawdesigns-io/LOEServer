@@ -80,7 +80,15 @@ class LoeFactory{
    }
    public static function search($table,$key,$value){
        $data = array();
-       $ids = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$key,$value);
+       if($table == Movie::TABLE && $key == "genre"){
+         $ids1 = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$key,$value);
+         $ids2 = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,"genre2",$value);
+         $ids3 = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,"genre3",$value);
+         $ids = array_merge($ids1,$ids2);
+         $ids = array_merge($ids3,$ids);
+       }else{
+         $ids = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$key,$value);
+       }
        foreach($ids as $id){
          $data[] = self::create($table,$id);
        }
