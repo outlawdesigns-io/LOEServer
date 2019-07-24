@@ -78,7 +78,8 @@ class AutoInsert{
               $comic->issue_type = "";
               $comic->publisher = $publisher;
               $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
-              $comic->create();
+              print_r($comic);
+              //$comic->create();
             }
           }
         }
