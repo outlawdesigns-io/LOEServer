@@ -50,7 +50,7 @@ class MusicScanner{
                 $fileInfo = pathinfo($tester);
                 if($fileInfo["extension"] == "mp3"){
                     $this->songs[$this->songCount] = new Song();
-                    $this->songs[$this->songCount]->file_path = $tester;
+                    $this->songs[$this->songCount]->file_path = $this->songs[$this->songCount]->cleanFilePath($tester);
                     $this->songCount++;
                 }elseif($fileInfo["basename"] == "cover.jpg"){
                     $this->covers[] = $tester;
