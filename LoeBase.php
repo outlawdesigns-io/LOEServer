@@ -18,6 +18,9 @@ class LoeBase extends \Record{
     protected function _cleanFilePath($path){
         return html_entity_decode(preg_replace(self::FILEPATT,"",$path));
     }
+    public function cleanFilePath($path){
+      return $this->_cleanFilePath($path);
+    }
     protected function _cleanProperties(){
         $reflection = new \ReflectionObject($this);
         $data = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
