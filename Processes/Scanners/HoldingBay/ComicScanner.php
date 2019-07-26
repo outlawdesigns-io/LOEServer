@@ -1,5 +1,7 @@
 <?php namespace LOE;
 
+require_once __DIR__ . "/../../../Libs/ComicVine/ComicVine.php";
+require_once __DIR__ . "/../../../Libs/Archive/Archive.php";
 require_once __DIR__ . '/../FsScanner.php';
 
 class ComicScanner extends FsScanner{
@@ -16,8 +18,11 @@ class ComicScanner extends FsScanner{
     $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
   }
   protected function _interpretFile($absolutePath){
-    if(in_array(pathinfo($absolutePath)['extension'],self::$acceptedFileTypes)){
+    $extension = pathinfo($absolutePath)['extension'];
+    if(in_array($extension,self::$acceptedFileTypes)){
       $this->comics[] = $absolutePath;
+    }elseif(in_array($extension,\Archive::$archiveTypes)){
+      //todo extract archive
     }
     return $this;
   }

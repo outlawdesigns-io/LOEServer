@@ -10,3 +10,9 @@
 [submodule "Libs/ComicVine"]
 	path = Libs/ComicVine
 	url = https://github.com/outlawdesigns-io/ComicVine
+[submodule "Libs/Archive"]
+	path = Libs/Archive
+	url = https://github.com/outlawdesigns-io/Archive
+[submodule "Libs/IMDB"]
+	path = Libs/IMDB
+	url = https://github.com/outlawdesigns-io/IMDB

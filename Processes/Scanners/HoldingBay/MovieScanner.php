@@ -1,6 +1,7 @@
 <?php namespace LOE;
 
 require_once __DIR__ . '/../../../Factory.php';
+require_once __DIR__ . "/../../../Libs/IMDB/Imdb.php";
 
 class MovieScanner{
 
