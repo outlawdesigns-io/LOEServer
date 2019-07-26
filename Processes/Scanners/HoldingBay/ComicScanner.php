@@ -21,12 +21,6 @@ class ComicScanner extends FsScanner{
     $extension = pathinfo($absolutePath)['extension'];
     if(in_array($extension,self::$acceptedFileTypes)){
       $this->comics[] = $absolutePath;
-    }elseif(in_array($extension,\Archive::$archiveTypes)){
-      try{
-        \Archive::extract($absolutePath,\LOE\LoeBase::WEBROOT . self::ROOTDIR);
-      }catch(\Exception $e){
-        throw new \Exception($e->getMessage());
-      }
     }
     return $this;
   }
