@@ -23,7 +23,7 @@ class ComicScanner extends FsScanner{
       $this->comics[] = $absolutePath;
     }elseif(in_array($extension,\Archive::$archiveTypes)){
       try{
-        \Archive::extract($absolutePath,self::ROOTDIR);
+        \Archive::extract($absolutePath,\LOE\LoeBase::WEBROOT . self::ROOTDIR);
       }catch(\Exception $e){
         throw new \Exception($e->getMessage());
       }
