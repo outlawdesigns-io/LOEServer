@@ -52,6 +52,9 @@ class LoeFactory{
             case 'music':
                 $obj = new MusicScanner();
                 break;
+            case 'comic':
+                $obj = new ComicScanner();
+                break;
             default:
                 throw new \Exception('Invalid Object Type');
         }

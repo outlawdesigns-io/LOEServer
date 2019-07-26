@@ -22,7 +22,11 @@ class ComicScanner extends FsScanner{
     if(in_array($extension,self::$acceptedFileTypes)){
       $this->comics[] = $absolutePath;
     }elseif(in_array($extension,\Archive::$archiveTypes)){
-      //todo extract archive
+      try{
+        \Archive::extract($absolutePath,self::ROOTDIR);
+      }catch(\Exception $e){
+        throw new \Exception($e->getMessage());
+      }
     }
     return $this;
   }
