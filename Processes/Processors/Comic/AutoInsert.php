@@ -62,6 +62,8 @@ class AutoInsert{
           $issues = $volume->results->issues->issue;
           $publisher = (string)$volume->results->publisher->name;
           echo $series->series . " " . count($issues) . "\n";
+          print_r($volume);
+          print_r($series);
           foreach($issues as $issue){
             if(in_array((int)$issue->issue_number,$series->issues)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
@@ -78,7 +80,7 @@ class AutoInsert{
               $comic->issue_type = "";
               $comic->publisher = $publisher;
               $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
-              $comic->create();
+              //$comic->create();
             }
           }
         }
