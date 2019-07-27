@@ -18,9 +18,6 @@ class LoeBase extends \Record{
     protected function _cleanFilePath($path){
         return html_entity_decode(preg_replace(self::FILEPATT,"",$path));
     }
-    public function cleanFilePath($path){
-      return $this->_cleanFilePath($path);
-    }
     protected function _cleanProperties(){
         $reflection = new \ReflectionObject($this);
         $data = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
@@ -30,6 +27,9 @@ class LoeBase extends \Record{
             $this->$key = utf8_encode($this->$key);
         }
         return $this;
+    }
+    public function cleanFilePath($path){
+      return $this->_cleanFilePath($path);
     }
     public function verifyLocation(){
         if(!isset($this->file_path)){
@@ -51,6 +51,18 @@ class LoeBase extends \Record{
             return $fileSize;
         }
         return false;
+    }
+    public function recordExists($path){
+      $results = $GLOBALS['db']
+          ->database(self::DB)
+          ->table(self::TABLE)
+          ->select(self::PRIMARYKEY)
+          ->where("file_path","=","'" . $path . "'")
+          ->get();
+      if(!mysqli_num_rows($results)){
+        return false;
+      }
+      return true;
     }
     public function backup(){
         //todo implement backup solution

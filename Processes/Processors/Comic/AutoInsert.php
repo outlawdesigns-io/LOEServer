@@ -45,7 +45,7 @@ class AutoInsert{
       $newSeries->issues = $this->_parseIssues($file);
       $newSeries->issueCount = count($newSeries->issues);
       $newSeries->files = array();
-      if($this->_isNewSeries($seriesTitle) && $newSeries->issueCount){
+      if($this->_isNewSeries($seriesTitle,$year) && $newSeries->issueCount){
         $newSeries->files[] = $file;
         $this->series[] = $newSeries;
       }else{
@@ -128,17 +128,17 @@ class AutoInsert{
     }
     return $this;
   }
-  protected function _isNewSeries($series){
+  protected function _isNewSeries($series,$year){
     foreach($this->series as $existing){
-      if($series == $existing->series){
+      if($series == $existing->series && $year == $existing->year){
         return false;
       }
     }
     return true;
   }
-  protected function _addIssue($series,$path){
+  protected function _addIssue($series,$year,$path){
     for($i = 0; $i < count($this->series); $i++){
-      if($series == $this->series[$i]->series && !in_array($path,$this->series[$i]->files)){
+      if($series == $this->series[$i]->series && $year == $this->series[$i]->year && !in_array($path,$this->series[$i]->files)){
         $this->series[$i]->files[] = $path;
       }
       sort($this->series[$i]->files);
