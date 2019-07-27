@@ -7,7 +7,10 @@ class AutoInsert{
 
   const YEARPATT = '/\(([0-9]{4})\)/';
   const SERIESPATT = '/.*(?<=\/)(.*?)(?=\()/';
-
+  public static $illegalTypes = array(
+    "HC",
+    "TPB"
+  );
   public static $issueTypes = array(
     "On-Going",
     "One-Shot",
@@ -60,12 +63,11 @@ class AutoInsert{
           $seriesDescription = $possibleVolume->description;
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
           $issues = $volume->results->issues->issue;
+          $name = $issues->name;
           $publisher = (string)$volume->results->publisher->name;
           echo $series->series . " " . count($issues) . "\n";
-          print_r($volume);
-          print_r($series);
           foreach($issues as $issue){
-            if(in_array((int)$issue->issue_number,$series->issues)){
+            if(in_array((int)$issue->issue_number,$series->issues) && !in_array($issue->name,self::$illegalTypes)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               $comic = new \LOE\Comic();
               $comic->issue_number = (int)$issueDetails->results->issue_number;
@@ -80,7 +82,7 @@ class AutoInsert{
               $comic->issue_type = "";
               $comic->publisher = $publisher;
               $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
-              //$comic->create();
+              $comic->create();
             }
           }
         }
