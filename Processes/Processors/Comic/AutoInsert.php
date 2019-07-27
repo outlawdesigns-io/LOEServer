@@ -49,7 +49,7 @@ class AutoInsert{
         $newSeries->files[] = $file;
         $this->series[] = $newSeries;
       }else{
-        $this->_addIssue($seriesTitle,$file);
+        $this->_addIssue($seriesTitle,$year,$file);
       }
     }
     return $this;
