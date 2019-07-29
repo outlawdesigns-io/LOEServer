@@ -11,7 +11,8 @@ class AutoInsert{
 
   public static $illegalTypes = array(
     "HC",
-    "TPB"
+    "TPB",
+    "HC/TPB"
   );
   public static $illegalDescPatts = array(
     "/Hardcover\scollection/"
