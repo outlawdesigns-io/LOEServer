@@ -64,7 +64,7 @@ class AutoInsert{
           $name = $issues->name;
           $publisher = (string)$volume->results->publisher->name;
           foreach($issues as $issue){
-            if(in_array((float)$issue->issue_number,$series->issues) && $this->_validateIssue($startYear,$seriesDescription)){
+            if(in_array((float)$issue->issue_number,$series->issues) && $this->_validateIssue($name,$seriesDescription)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               echo $publisher . " " .  $series->series . " " . (int)$issueDetails->results->issue_number . "\n";
               $comic = new \LOE\Comic();
@@ -109,8 +109,9 @@ class AutoInsert{
     $issues = array();
     $results = scandir(dirname($path));
     foreach($results as $file){
-      if(!\LOE\FsScanner::isDirShortcut($file) && (float)pathinfo($file)['filename']){
-        $issues[] = (float)pathinfo($file)['filename'];
+      $fileName = pathinfo($file)['filename'];
+      if(!\LOE\FsScanner::isDirShortcut($file) && ((float)$fileName || $fileName == "000")){
+        $issues[] = (float)$fileName;
       }
     }
     sort($issues);
@@ -127,7 +128,7 @@ class AutoInsert{
         $descriptionTest = false;
       }
     }
-    if(!$nameTest && !$descriptionTest){
+    if(!$nameTest || !$descriptionTest){
       return false;
     }
     return true;
