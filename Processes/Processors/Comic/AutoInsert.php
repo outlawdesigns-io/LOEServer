@@ -7,6 +7,8 @@ class AutoInsert{
 
   const YEARPATT = '/\(([0-9]{4})\)/';
   const SERIESPATT = '/.*(?<=\/)(.*?)(?=\()/';
+  const ALPHAPATT = '/([A-Za-z]+)/';
+
   public static $illegalTypes = array(
     "HC",
     "TPB"
@@ -57,14 +59,16 @@ class AutoInsert{
       $results = \ComicVine::search($series->series);
       foreach($results->results->volume as $possibleVolume){
         $startYear = (int)$possibleVolume->start_year;
-        if($startYear == $series->year){
+        $volumeName = (string)$possibleVolume->name;
+        $volumePattern = "/" . $this->_trim($volumeName) . "/";
+        if($startYear == $series->year && preg_match($volumePattern,$this->_trim($volumeName))){
           $seriesDescription = $possibleVolume->description;
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
           $issues = $volume->results->issues->issue;
-          $name = $issues->name;
+          $issueName = $issues->name;
           $publisher = (string)$volume->results->publisher->name;
           foreach($issues as $issue){
-            if(in_array((float)$issue->issue_number,$series->issues) && $this->_validateIssue($name,$seriesDescription)){
+            if(in_array((float)$issue->issue_number,$series->issues) && $this->_validateIssue($issueName,$seriesDescription)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               echo $publisher . " " .  $series->series . " " . (int)$issueDetails->results->issue_number . "\n";
               $comic = new \LOE\Comic();
@@ -132,5 +136,14 @@ class AutoInsert{
       return false;
     }
     return true;
+  }
+  protected function _trim($string){
+    $newString = '';
+    if(preg_match_all(self::ALPHAPATT,$string,$matches)){
+      foreach($matches[0] as $match){
+        $newString .= $match;
+      }
+    }
+    return $newString;
   }
 }
