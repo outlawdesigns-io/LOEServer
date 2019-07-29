@@ -11,15 +11,13 @@ class AutoInsert{
     "HC",
     "TPB"
   );
+  public static $illegalDescPatts = array(
+    "/Hardcover\scollection/"
+  );
   public static $issueTypes = array(
     "On-Going",
     "One-Shot",
     "Limited Series"
-  );
-  protected static $testSeries = array(
-    "New Mutants V3",
-    "X-23 Vol 1",
-    "Wolverine Vol. 4"
   );
 
   protected $scanner;
@@ -56,8 +54,6 @@ class AutoInsert{
   }
   protected function _build(){
     foreach($this->series as $series){
-      print_r($series);
-      continue;
       $results = \ComicVine::search($series->series);
       foreach($results->results->volume as $possibleVolume){
         $startYear = (int)$possibleVolume->start_year;
@@ -68,11 +64,11 @@ class AutoInsert{
           $name = $issues->name;
           $publisher = (string)$volume->results->publisher->name;
           foreach($issues as $issue){
-            if(in_array((int)$issue->issue_number,$series->issues) && !in_array($issue->name,self::$illegalTypes)){
+            if(in_array((float)$issue->issue_number,$series->issues) && $this->_validateIssue($startYear,$seriesDescription)){
               $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
               echo $publisher . " " .  $series->series . " " . (int)$issueDetails->results->issue_number . "\n";
               $comic = new \LOE\Comic();
-              $comic->issue_number = (int)$issueDetails->results->issue_number;
+              $comic->issue_number = (float)$issueDetails->results->issue_number;
               $comic->issue_title = (string)$issueDetails->results->name;
               $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
               $comic->series_title = (string)$issueDetails->results->volume->name;
@@ -85,42 +81,6 @@ class AutoInsert{
               $comic->publisher = $publisher;
               $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
               $comic->create();
-            }
-          }
-        }
-      }
-    }
-    return $this;
-  }
-  protected function _buildTest(){
-    foreach($this->series as $series){
-      if(in_array($series->series,self::$testSeries)){
-        $results = \ComicVine::search($series->series);
-        foreach($results->results->volume as $possibleVolume){
-          $startYear = (int)$possibleVolume->start_year;
-          if($startYear == $series->year){
-            $seriesDescription = $possibleVolume->description;
-            $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
-            $issues = $volume->results->issues->issue;
-            $publisher = (string)$volume->results->publisher->name;
-            foreach($issues as $issue){
-              if(in_array((int)$issue->issue_number,$series->issues)){
-                $issueDetails  = \ComicVine::followURI($issue->api_detail_url);
-                $comic = new \LOE\Comic();
-                $comic->issue_number = (int)$issueDetails->results->issue_number;
-                $comic->issue_title = (string)$issueDetails->results->name;
-                $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
-                $comic->series_title = (string)$issueDetails->results->volume->name;
-                $comic->series_start_year = (string)$startYear;
-                $comic->series_end_year = "";
-                $comic->story_arc = (string)$issueDetails->results->story_arc_credits->story_arc->name;
-                $comic->issue_description = strip_tags((string)$issueDetails->results->description);
-                $comic->series_description = strip_tags((string)$seriesDescription);
-                $comic->issue_type = "";
-                $comic->publisher = $publisher;
-                $comic->file_path = $series->files[array_search($comic->issue_number,$series->issues)];
-                print_r($comic);
-              }
             }
           }
         }
@@ -149,11 +109,27 @@ class AutoInsert{
     $issues = array();
     $results = scandir(dirname($path));
     foreach($results as $file){
-      if(!\LOE\FsScanner::isDirShortcut($file) && (int)pathinfo($file)['filename']){
-        $issues[] = (int)pathinfo($file)['filename'];
+      if(!\LOE\FsScanner::isDirShortcut($file) && (float)pathinfo($file)['filename']){
+        $issues[] = (float)pathinfo($file)['filename'];
       }
     }
     sort($issues);
     return $issues;
+  }
+  protected function _validateIssue($name,$description){
+    $nameTest = true;
+    $descriptionTest = true;
+    if(in_array($name,self::$illegalTypes)){
+      $nameTest = false;
+    }
+    foreach(self::$illegalDescPatts as $pattern){
+      if(preg_match($pattern,$description)){
+        $descriptionTest = false;
+      }
+    }
+    if(!$nameTest && !$descriptionTest){
+      return false;
+    }
+    return true;
   }
 }
