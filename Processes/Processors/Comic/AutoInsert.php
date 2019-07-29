@@ -60,8 +60,7 @@ class AutoInsert{
       foreach($results->results->volume as $possibleVolume){
         $startYear = (int)$possibleVolume->start_year;
         $volumeName = (string)$possibleVolume->name;
-        $volumePattern = "/" . $this->_trim($volumeName) . "/";
-        if($startYear == $series->year && preg_match($volumePattern,$this->_trim($volumeName))){
+        if($startYear == $series->year && $this->_trim($volumeName) == $this->_trim($series->series)){
           $seriesDescription = $possibleVolume->description;
           $volume = \ComicVine::followURI($possibleVolume->api_detail_url);
           $issues = $volume->results->issues->issue;
