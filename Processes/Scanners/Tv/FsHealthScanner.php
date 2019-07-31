@@ -38,8 +38,9 @@ class FsHealthScanner extends \LOE\FsScanner{
     return $this;
   }
   protected function _verifyDatabase(){
+    $episode = \LOE\LoeFactory::create("tv");
     foreach($this->files as $file){
-      if(!\LOE\LoeBase::recordExists($file)){
+      if($episode->recordExists($file)){
         $this->missing[] = preg_replace("/'/","",$file);
       }
     }
