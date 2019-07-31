@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../Factory.php';
 
 class FsHealthScanner extends \LOE\FsScanner{
 
-  const ROOTDIR = '/LOE/Tv';
+  const ROOTDIR = '/LOE/Video/Tv';
   const MSGNAME = "LOE_TV_FS_CHECK";
   const MSGSUBJ = "Library of Everything File System Check";
 
@@ -51,7 +51,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   protected function _buildMessage(){
     return array(
       "to"=>array($this->_msgTo),
-      "subject"=>self::MSGSUBJ . ": " . self::ROOTDIR . round($this->_calculateHealth(),2) . "%",
+      "subject"=>self::MSGSUBJ . ": " . self::ROOTDIR . " " . round($this->_calculateHealth(),2) . "%",
       "msg_name"=>self::MSGNAME,
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m-d'),
