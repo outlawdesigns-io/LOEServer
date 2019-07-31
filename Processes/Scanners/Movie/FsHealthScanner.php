@@ -8,7 +8,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   const ROOTDIR = '/LOE/Video/Movies';
   const MSGNAME = "LOE_MOVIE_FS_CHECK";
   const MSGSUBJ = "Library of Everything File System Check";
-  const PATHPATTERN = "\/var\/www\/";
+  const PATHPATTERN = "/\/var\/www\//";
   const PATHREPLACE = "/var/www/html/";
 
   public static $knownExtensions = array("mp4","MP4","avi","AVI","mkv","MKV");
