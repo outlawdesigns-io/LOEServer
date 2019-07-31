@@ -8,8 +8,8 @@ class FsHealthScanner extends \LOE\FsScanner{
   const ROOTDIR = '/LOE/Video/Movies';
   const MSGNAME = "LOE_MOVIE_FS_CHECK";
   const MSGSUBJ = "Library of Everything File System Check";
-  const PATHPATTERN = "/\/var\/www\//";
-  const PATHREPLACE = "/var/www/html/";
+  const PATHPATTERN = "/\/var\/www\/html\//";
+  const PATHREPLACE = "/var/www/";
 
   public static $knownExtensions = array("mp4","MP4","avi","AVI","mkv","MKV");
 
@@ -41,7 +41,8 @@ class FsHealthScanner extends \LOE\FsScanner{
   }
   protected function _verifyDatabase(){
     foreach($this->files as $file){
-      if(!$this->_recordExists(preg_replace(self::PATHPATTERN,self::PATHREPLACE,$file))){
+      $file = preg_replace(self::PATHPATTERN,self::PATHREPLACE,$file);
+      if(!$this->_recordExists($file)){
         $this->missing[] = preg_replace("/'/","",$file);
       }
     }
