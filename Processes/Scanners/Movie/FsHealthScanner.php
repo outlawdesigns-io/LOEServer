@@ -1,4 +1,4 @@
-<?php namespace LOE\Tv;
+<?php namespace LOE\Movie;
 
 require_once __DIR__ . '/../FsScanner.php';
 require_once __DIR__ . '/../../../Factory.php';
