@@ -38,13 +38,30 @@ class FsHealthScanner extends \LOE\FsScanner{
     return $this;
   }
   protected function _verifyDatabase(){
-    $episode = \LOE\LoeFactory::create("tv");
     foreach($this->files as $file){
-      if($episode->recordExists($file)){
+      if($this->_recordExists($file)){
         $this->missing[] = preg_replace("/'/","",$file);
       }
     }
     return $this;
+  }
+  protected function _recordExists($absolutePath){
+    $GLOBALS['db']
+                ->database(\LOE\Song::DB)
+                ->table(\LOE\Song::TABLE)
+                ->select(\LOE\Song::PRIMARYKEY)
+                ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'");
+    try{
+      $results = $GLOBALS['db']->get();
+    }catch(\Exception $e){
+      echo $e->getMessage() . "\n";
+      echo $absolutePath . "\n";
+      return false;
+    }
+    if(!mysqli_num_rows($results)){
+      return false;
+    }
+    return true;
   }
   protected function _calculateHealth(){
     return ((count($this->files) - count($this->missing)) / count($this->files)) * 100;
