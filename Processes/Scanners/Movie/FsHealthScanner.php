@@ -5,8 +5,8 @@ require_once __DIR__ . '/../../../Factory.php';
 
 class FsHealthScanner extends \LOE\FsScanner{
 
-  const ROOTDIR = '/LOE/Video/Tv';
-  const MSGNAME = "LOE_TV_FS_CHECK";
+  const ROOTDIR = '/LOE/Video/Movies';
+  const MSGNAME = "LOE_MOVIE_FS_CHECK";
   const MSGSUBJ = "Library of Everything File System Check";
 
   public static $knownExtensions = array("mp4","MP4","avi","AVI","mkv","MKV");
@@ -47,9 +47,9 @@ class FsHealthScanner extends \LOE\FsScanner{
   }
   protected function _recordExists($absolutePath){
     $GLOBALS['db']
-                ->database(\LOE\Episode::DB)
-                ->table(\LOE\Episode::TABLE)
-                ->select(\LOE\Episode::PRIMARYKEY)
+                ->database(\LOE\Movie::DB)
+                ->table(\LOE\Movie::TABLE)
+                ->select(\LOE\Movie::PRIMARYKEY)
                 ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'");
     try{
       $results = $GLOBALS['db']->get();
