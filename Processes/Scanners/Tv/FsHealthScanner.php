@@ -79,8 +79,8 @@ class FsHealthScanner extends \LOE\FsScanner{
   protected function _fillMessageBody(){
     $str = "A file system consitency test has been completed for: ";
     $str .= self::ROOTDIR . "<br>";
-    if(count($files)){
-      sort($files);
+    if(count($this->missing)){
+      sort($this->missing);
       $str .= "The following files cannot be accounted for:<br>";
       $str .= "<pre>" . print_r($this->missing,true) . "</pre>";
     }else{
