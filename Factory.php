@@ -6,6 +6,14 @@ require_once __DIR__ . '/Models/Song.php';
 require_once __DIR__ . '/Models/Doc.php';
 require_once __DIR__ . '/Models/Anime.php';
 require_once __DIR__ . '/Models/Comic.php';
+require_once __DIR__ . '/Processes/Scanners/Anime/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Movie/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Music/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Tv/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Comic/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Movie/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Music/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Tv/FsHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/MovieScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/TvScanner.php';
 require_once __DIR__ . '/Processes/Scanners/HoldingBay/MusicScanner.php';
@@ -60,6 +68,44 @@ class LoeFactory{
                 throw new \Exception('Invalid Object Type');
         }
         return $obj;
+    }
+    public static function createFsScanner($type,$msgTo = null, $authToken = null){
+      switch(strtolower($type)){
+        case Movie::TABLE:
+            $obj = new \LOE\Movie\FsHealthScanner($msgTo,$authToken);
+            break;
+        case Episode::TABLE:
+            $obj = new \LOE\Tv\FsHealthScanner($msgTo,$authToken);
+            break;
+        case Song::TABLE:
+            $obj = new \LOE\Music\FsHealthScanner($msgTo,$authToken);
+            break;
+        case Comic::TABLE:
+            $obj = new \LOE\Comic\FsHealthScanner($msgTo,$authToken);
+            break;
+        default:
+            throw new \Exception('Invalid Object Type');
+      }
+      return $obj;
+    }
+    public static function createDbScanner($tpye,$msgTo = null, $authToken = null){
+      switch(strtolower($type)){
+        case Movie::TABLE:
+            $obj = new \LOE\Movie\DbHealthScanner($msgTo,$authToken);
+            break;
+        case Episode::TABLE:
+            $obj = new \LOE\Tv\DbHealthScanner($msgTo,$authToken);
+            break;
+        case Song::TABLE:
+            $obj = new \LOE\Music\DbHealthScanner($msgTo,$authToken);
+            break;
+        case Anime::TABLE:
+            $obj = new \LOE\Anime\DbHealthScanner($msgTo,$authToken);
+            break;
+        default:
+            throw new \Exception('Invalid Object Type');
+      }
+      return $obj;
     }
     public static function createProcessor($type,$inputObj){
         $obj = null;
