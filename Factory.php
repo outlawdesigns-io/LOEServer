@@ -88,7 +88,7 @@ class LoeFactory{
       }
       return $obj;
     }
-    public static function createDbScanner($tpye,$msgTo = null, $authToken = null){
+    public static function createDbScanner($type,$msgTo = null, $authToken = null){
       switch(strtolower($type)){
         case Movie::TABLE:
             $obj = new \LOE\Movie\DbHealthScanner($msgTo,$authToken);
