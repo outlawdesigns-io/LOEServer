@@ -2,10 +2,11 @@
 
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . "/../../../Libs/IMDB/Imdb.php";
+require_once __DIR__ . '/../FsScanner.php';
 
-class MovieScanner{
+class MovieScanner extends FsScanner{
 
-    const ROOTDIR = "/var/www/html/LOE/holding_bay/movies";
+    const ROOTDIR = '/LOE/holding_bay/movies';
     const WEBROOTPATTERN = "/\/var\/www\/html/";
     const MOVIES = 'movies';
     const YEARPATTERN1 = "/\(/";
@@ -21,30 +22,13 @@ class MovieScanner{
     private $knownExtensions = array("mp4","MP4","avi","AVI","mkv","MKV");
 
     public function __construct(){
-        $this->_scanForever(self::ROOTDIR);
+        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
     }
-    private function _openPermissions(){
-        $cmd = "sudo chmod 777 -R " . self::ROOTDIR;
-        $results = shell_exec($cmd);
-        if($results){
-            throw new \Exception($results);
-        }
-        return $this;
-    }
-    protected function _scanForever($dir){
-        $results = scandir($dir);
-        foreach($results as $result){
-            if($result == '.' || $result == '..'){
-                continue;
-            }
-            $testPath = $dir . '/' . $result;
-            if(is_file($testPath) && in_array(pathinfo($testPath)['extension'],$this->knownExtensions)){
-                $this->_parseResult($testPath);
-            }elseif(is_dir($testPath)){
-                $this->_scanForever($testPath);
-            }
-        }
-        return $this;
+    protected function _interpretFile($absolutePath){
+      if(in_array(pathinfo($absolutePath)['extension'],$this->knownExtensions)){
+        $this->_parseResult($absolutePath);
+      }
+      return $this;
     }
     protected function _parseResult($result){
         $titleStr = pathinfo(pathinfo($result)['dirname'])['basename'];
@@ -53,7 +37,12 @@ class MovieScanner{
         }elseif(preg_match(self::YEARPATTERN2,$titleStr,$matches)){
             $titleStr = preg_replace(self::YEARREPLACEMENT2,'',$titleStr);
         }
-        $searchResult = \Imdb::search($titleStr);
+        try{
+          $searchResult = \Imdb::search($titleStr);
+        }catch(\Exception $e){
+          $this->exceptions[] = $titleStr . " " . $e->getMessage();
+          $searchResult = false;
+        }
         if(!$searchResult){
             $this->exceptions[] = $titleStr;
         }else{

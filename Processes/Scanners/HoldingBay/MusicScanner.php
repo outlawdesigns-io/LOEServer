@@ -22,19 +22,10 @@ class MusicScanner{
 
     public function __construct(){
         $this->songCount = 0;
-        $this->_openPermissions()
-            ->_scanForever(self::ROOTDIR)
+        $this->_scanForever(self::ROOTDIR)
             ->_getTags()
             ->_sortAlbums()
             ->_sortArtists();
-    }
-    private function _openPermissions(){
-        $cmd = "sudo chmod 777 -R " . self::ROOTDIR;
-        $results = shell_exec($cmd);
-        if($results){
-            die($results);
-        }
-        return $this;
     }
     private function _scanForever($dir){
         $results = scandir($dir);
