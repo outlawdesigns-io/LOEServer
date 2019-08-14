@@ -51,7 +51,7 @@ class TvScanner{
         return $this;
     }
     private function _buildEpisodeData($path){
-        $e = LoeFactory::create('tv');
+        $e = Factory::create('tv');
         $e->file_path= $path;
         $e->UID = $this->episodeCount++;
         if(preg_match(self::LASTSLASHPAT,dirname(dirname($path)),$matches)){

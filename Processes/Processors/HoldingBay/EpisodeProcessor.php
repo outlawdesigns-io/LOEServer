@@ -13,7 +13,7 @@ class EpisodeProcessor{
     private $targetFile;
 
     public function __construct($episode){
-        $this->episode = LoeFactory::create('tv');
+        $this->episode = Factory::create('tv');
         $this->episode->setFields($episode);
         $this->genreDir = self::DESTDIR . $this->episode->genre . '/';
         $this->showDir = $this->genreDir . $this->episode->show_title . '/';

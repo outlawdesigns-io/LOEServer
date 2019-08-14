@@ -22,7 +22,7 @@ require_once __DIR__ . '/Processes/Processors/HoldingBay/SongProcessor.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/MovieProcessor.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/EpisodeProcessor.php';
 
-class LoeFactory{
+class Factory{
 
     public static function create($type,$UID = null){
         switch (strtolower($type)){

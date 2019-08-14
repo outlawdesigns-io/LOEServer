@@ -18,7 +18,7 @@ class MovieProcessor{
     public function __construct($movie){
         $movie->title = preg_replace("/\'/","",$movie->title);
         $movie->description = preg_replace("/\'/","",$movie->description);
-        $this->movie = LoeFactory::create(self::MOVIES);
+        $this->movie = Factory::create(self::MOVIES);
         $this->movie->setFields($movie);
         $this->targetDir = self::ROOTDIR . $this->_cleanDirPath($this->movie->title) . "/";
         $this->dbDir = self::DBROOT . $this->_cleanDirPath($this->movie->title) . "/";

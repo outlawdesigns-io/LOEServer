@@ -47,7 +47,7 @@ class MovieScanner extends FsScanner{
             $this->exceptions[] = $titleStr;
         }else{
             $genres = explode(",",$searchResult->Genre);
-            $movie = LoeFactory::create(self::MOVIES);
+            $movie = Factory::create(self::MOVIES);
             $movie->title = $searchResult->Title;
             $movie->relyear = $searchResult->Year;
             $movie->rating = $searchResult->Rated;

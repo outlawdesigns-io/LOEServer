@@ -14,7 +14,7 @@ class SongProcessor{
     private $targetFile;
 
     public function __construct($song){
-        $this->song = LoeFactory::create('music');
+        $this->song = Factory::create('music');
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
         $this->artistDir = self::DESTDIR . $this->song->artist . "/";
