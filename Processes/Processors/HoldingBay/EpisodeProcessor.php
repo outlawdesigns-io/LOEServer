@@ -49,7 +49,7 @@ class EpisodeProcessor{
         return $this;
     }
     private function _transfer(){
-        if(!copy($this->sourceFile,$this->targetFile)){
+        if(!rename($this->sourceFile,$this->targetFile)){
             $error = error_get_last();
             $exceptionStr = 'Failed to copy: ' . $error['message'];
             throw new \Exception($exceptionStr);
@@ -61,10 +61,10 @@ class EpisodeProcessor{
                 $this->episode->cover_path = $this->showDir . 'covers/S' . $this->episode->season_number . 'cover.jpg';
             }
             $this->episode->create();
-            if(!unlink($this->sourceFile)){
-                $error = error_get_last();
-                $exceptionStr = 'Failed to cleanup: ' . $error['message'];
-            }
+            // if(!unlink($this->sourceFile)){
+            //     $error = error_get_last();
+            //     $exceptionStr = 'Failed to cleanup: ' . $error['message'];
+            // }
         }
         return $this;
     }

@@ -65,10 +65,11 @@ class MovieProcessor{
         if(!mkdir($this->targetDir)){
             $error = error_get_last();
             throw new \Exception($error['message']);
-        }elseif(!chmod($this->targetDir,0777)){
-            $error = error_get_last();
-            throw new \Exception($error['message']);
         }
+        // elseif(!chmod($this->targetDir,0777)){
+        //     $error = error_get_last();
+        //     throw new \Exception($error['message']);
+        // }
         return $this;
     }
     private function _isCrashRecovery(){
