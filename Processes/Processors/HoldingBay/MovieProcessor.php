@@ -57,7 +57,7 @@ class MovieProcessor{
                 if(!$UID){
                     throw new \Exception('Target Dir Exists. Operation appears to not be recovery or remake');
                 }else{
-                    $this->movie = LoeFactory::create(self::MOVIES,$UID);
+                    $this->movie = Factory::create(self::MOVIES,$UID);
                     return $this;
                 }
             }
@@ -66,10 +66,6 @@ class MovieProcessor{
             $error = error_get_last();
             throw new \Exception($error['message']);
         }
-        // elseif(!chmod($this->targetDir,0777)){
-        //     $error = error_get_last();
-        //     throw new \Exception($error['message']);
-        // }
         return $this;
     }
     private function _isCrashRecovery(){

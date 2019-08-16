@@ -51,7 +51,7 @@ class EpisodeProcessor{
     private function _transfer(){
         if(!rename($this->sourceFile,$this->targetFile)){
             $error = error_get_last();
-            $exceptionStr = 'Failed to copy: ' . $error['message'];
+            $exceptionStr = 'Failed to move: ' . $error['message'];
             throw new \Exception($exceptionStr);
         }else{
             $this->episode->file_path = $this->targetFile;
