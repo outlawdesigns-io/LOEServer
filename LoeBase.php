@@ -22,9 +22,11 @@ class LoeBase extends \Record{
         $reflection = new \ReflectionObject($this);
         $data = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
         foreach($data as $obj){
-            $key = $obj->name;
-            $this->$key = html_entity_decode($this->$key);
-            $this->$key = utf8_encode($this->$key);
+            if($obj->name != self::PRIMARYKEY){
+              $key = $obj->name;
+              $this->$key = html_entity_decode($this->$key);
+              $this->$key = utf8_encode($this->$key);  
+            }
         }
         return $this;
     }
