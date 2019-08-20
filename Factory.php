@@ -156,4 +156,7 @@ class Factory{
    public static function updateSongCounts($username,$password){
        return new \LOE\Music\PlayCount($username,$password);
    }
+   public static function authenticate($username,$password){
+     return \LOE\Movie\DbHealthScanner::authenticate($username,$password);
+   }
 }
