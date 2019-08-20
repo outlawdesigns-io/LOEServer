@@ -20,7 +20,7 @@ class PlayCount{
   protected function _updateCounts(){
     $songCounts = $this->_webClient->getLoeSongCounts();
     foreach($songCounts as $obj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query));
+      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query))[0];
       $song->play_count = $obj->listens;
       $song->update();
     }
