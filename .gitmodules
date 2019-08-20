@@ -16,3 +16,6 @@
 [submodule "Libs/IMDB"]
 	path = Libs/IMDB
 	url = https://github.com/outlawdesigns-io/IMDB
+[submodule "Libs/WebAccessClient"]
+	path = Libs/WebAccessClient
+	url = https://github.com/outlawdesigns-io/WebAccessClient
