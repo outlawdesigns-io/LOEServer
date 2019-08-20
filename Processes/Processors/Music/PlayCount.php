@@ -24,6 +24,7 @@ class PlayCount{
       $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query));
       if(!count($song)){
         $this->exceptions[] = $this->_buildPath($obj->query);
+        continue;
       }else{
         $song = $song[0];
       }
