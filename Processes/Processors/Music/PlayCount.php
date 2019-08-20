@@ -5,20 +5,28 @@ require_once __DIR__ . '/../../../Libs/WebAccessClient/WebAccessClient.php';
 
 class PlayCount{
 
+  const SPACEPATT = "/%20/";
+
   protected $_webClient;
-  protected $_songCounts = array();
 
   public function __construct($username,$password){
-    $this->_webClient = new WebAccessClient(WebAccessClient::authenticate($username,$password)->token);
-    $this->_getCounts();
-  }
-  protected function _getCounts(){
-    $this->_songCounts = $this->_webClient->getLoeSongCounts();
-    return $this;
+    try{
+      $this->_webClient = new WebAccessClient(WebAccessClient::authenticate($username,$password)->token);
+      $this->_updateCounts();
+    }catch(\Exception $e){
+      throw new \Exception $e->getMessage();
+    }
   }
   protected function _updateCounts(){
-    foreach($this->_songCounts as $obj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$obj->query);
+    $songCounts = $this->_webClient->getLoeSongCounts();
+    foreach($songCounts as $obj){
+      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query));
+      $song->play_count = $obj->listens;
+      $song->update();
     }
+    return $this;
+  }
+  protected function _buildPath($query){
+    return \LOE\LoeBase::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
   }
 }
