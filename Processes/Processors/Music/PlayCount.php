@@ -8,6 +8,7 @@ class PlayCount{
   const SPACEPATT = "/%20/";
 
   protected $_webClient;
+  public $exceptions = array();
 
   public function __construct($username,$password){
     try{
@@ -20,7 +21,14 @@ class PlayCount{
   protected function _updateCounts(){
     $songCounts = $this->_webClient->getLoeSongCounts();
     foreach($songCounts as $obj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query))[0];
+      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query));
+      if(!count($song)){
+        $this->exceptions[] = $this->_buildPath($obj->query);
+      }else{
+        $song = $song[0];
+      }
+      $song->file_path = \LOE\LoeBase::WEBROOT . $song->file_path;
+      $song->cover_path = \LOE\LoeBase::WEBROOT . $song->cover_path;
       $song->play_count = $obj->listens;
       $song->update();
     }
