@@ -14,7 +14,7 @@ class ArchiveExtractor extends \LOE\FsScanner{
     $this->_scanForever($this->_rootDir)->_extract();
   }
   protected function _interpretFile($absolutePath){
-    if(in_array(pathinfo($result)['extension'],Archive::$archiveTypes)){
+    if(in_array(pathinfo($absolutePath)['extension'],\Archive::$archiveTypes)){
       $this->_archives[] = $absolutePath;
     }
   }
