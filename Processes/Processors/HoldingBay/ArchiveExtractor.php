@@ -1,9 +1,9 @@
-<?php namespace \LOE\HoldingBay;
+<?php namespace LOE\HoldingBay;
 
 require_once __DIR__ . "/../../../Libs/Archive/Archive.php";
 require_once __DIR__ . '/../../Scanners/FsScanner.php';
 
-class ArchiveExtractor extends FsScanner{
+class ArchiveExtractor extends \LOE\FsScanner{
 
   public $exceptions = array();
   protected $_rootDir;
