@@ -13,3 +13,4 @@
 0 0 * * * php /var/www/html/LoeServer/Processes/Jobs/UpdateSongCounts.php > /tmp/songCount
 0 0 1 * * php /var/www/html/LoeServer/Processes/Jobs/DbHealthCheck.php {msgRecipient} > /tmp/dbCheck
 0 1 1 * * php /var/www/html/LoeServer/Processes/Jobs/FsHealthCheck.php {msgRecipient} > /tmp/fsCheck
+*/5 * * * * php /var/www/html/LoeServer/Processes/Jobs/extractArchives.php > /tmp/archiveErrors

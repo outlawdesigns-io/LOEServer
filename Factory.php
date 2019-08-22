@@ -21,6 +21,7 @@ require_once __DIR__ . '/Processes/Scanners/HoldingBay/ComicScanner.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/SongProcessor.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/MovieProcessor.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/EpisodeProcessor.php';
+require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayCount.php';
 
 class Factory{
@@ -158,5 +159,8 @@ class Factory{
    }
    public static function authenticate($username,$password){
      return \LOE\Movie\DbHealthScanner::authenticate($username,$password);
+   }
+   public static function extractArchives($rootDir){
+     return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
 }
