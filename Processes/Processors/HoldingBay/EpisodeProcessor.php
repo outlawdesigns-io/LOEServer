@@ -22,7 +22,8 @@ class EpisodeProcessor{
         $this->_buildTargetFile()
             ->_verifyDestination()
             ->_transfer()
-            ->_tryCover();
+            ->_tryCover()
+            ->_cleanUp();
     }
     private function _buildTargetFile(){
         $pathInfo = pathinfo($this->sourceFile);
@@ -61,10 +62,6 @@ class EpisodeProcessor{
                 $this->episode->cover_path = $this->showDir . 'covers/S' . $this->episode->season_number . 'cover.jpg';
             }
             $this->episode->create();
-            // if(!unlink($this->sourceFile)){
-            //     $error = error_get_last();
-            //     $exceptionStr = 'Failed to cleanup: ' . $error['message'];
-            // }
         }
         return $this;
     }
@@ -91,6 +88,14 @@ class EpisodeProcessor{
         return $this;
     }
     private function _cleanUp(){
+        $seasonDir = dirname($this->sourceFile);
+        $showDir = dirname($seasonDir);
+        if(count(scandir($dir)) == 2 && !rmdir($seasonDir)){
+          throw new \Exception(error_get_last()['message']);
+        }
+        if(count(scandir($dir)) == 2 && !rmdir($showDir)){
+          throw new \Exception(error_get_last()['message']);
+        }
         return $this;
     }
 }
