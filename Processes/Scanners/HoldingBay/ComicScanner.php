@@ -31,7 +31,7 @@ class ComicScanner extends FsScanner{
       if(!preg_match(self::YEARPATT,$file,$matches)){
         $this->exceptions[] = $file;
       }else{
-        $year = $matches[1]
+        $year = $matches[1];
         //todo something
       }
     }
