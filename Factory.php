@@ -163,7 +163,7 @@ class Factory{
    }
    public static function updatePlayHistory($objType,$username,$password){
        switch(strtolower($objType)){
-         case strtolower(Song::TABLE):
+         case Song::TABLE:
            $obj = new \LOE\Music\PlayHistory($username,$password);
          break;
          default:
