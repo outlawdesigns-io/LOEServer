@@ -27,9 +27,9 @@ class PlayHistory{
   protected function _updatePlayHistory(){
     $results = $this->_webClient->search(self::REQEND,self::REQKEY,self::REQVAL);
     foreach($results as $reqObj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query));
+      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($reqObj->query));
       if(!count($song)){
-        $this->exceptions[] = $this->_buildPath($obj->query);
+        $this->exceptions[] = $this->_buildPath($reqObj->query);
         continue;
       }else{
         $song = $song[0];
