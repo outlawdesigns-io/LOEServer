@@ -16,7 +16,7 @@ class PlayHistory{
   public function __construct($username,$password){
     try{
       $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
-      $this->__updatePlayHistory();
+      $this->_updatePlayHistory();
     }catch(\Exception $e){
       throw new \Exception($e->getMessage());
     }
