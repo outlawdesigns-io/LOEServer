@@ -6,6 +6,7 @@ require_once __DIR__ . '/Models/Song.php';
 require_once __DIR__ . '/Models/Doc.php';
 require_once __DIR__ . '/Models/Anime.php';
 require_once __DIR__ . '/Models/Comic.php';
+require_once __DIR__ . '/Models/PlayedSong.php';
 require_once __DIR__ . '/Processes/Scanners/Anime/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Movie/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Music/DbHealthScanner.php';
@@ -23,6 +24,7 @@ require_once __DIR__ . '/Processes/Processors/HoldingBay/MovieProcessor.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/EpisodeProcessor.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayCount.php';
+require_once __DIR__ . '/Processes/Processors/Music/PlayHistory.php';
 
 class Factory{
 
@@ -46,6 +48,8 @@ class Factory{
             case "comic":
                 $obj = new Comic($UID);
                 break;
+            case "playedsong";
+                $obj = new PlayedSong($UID);
             default:
                 throw new \Exception('Invalid Object Type');
         }
@@ -156,6 +160,16 @@ class Factory{
    }
    public static function updateSongCounts($username,$password){
        return new \LOE\Music\PlayCount($username,$password);
+   }
+   public static function updatePlayHistory($objType,$username,$password){
+       switch(strtolower($objType)){
+         case strtolower(\LOE\Song::TABLE):
+           $obj = new \LOE\Music\PlayHistory($username,$password);
+         break;
+         default:
+           throw new \Exception('Invalid Object Type');
+       }
+       return $obj;
    }
    public static function authenticate($username,$password){
      return \LOE\Movie\DbHealthScanner::authenticate($username,$password);
