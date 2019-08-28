@@ -34,10 +34,12 @@ class PlayHistory{
       }else{
         $song = $song[0];
       }
-      $playedSong = \LOE\Factory::create(\LOE\PlayedSong::TABLE);
-      $playedSong->songId = $song->UID;
-      $playedSong->playDate = $reqObj->requestDate;
-      $playedSong->create();
+      if(!\LOE\PlayedSong::recordExists($song->UID,$reqObj->requestDate)){
+        $playedSong = \LOE\Factory::create(\LOE\PlayedSong::TABLE);
+        $playedSong->songId = $song->UID;
+        $playedSong->playDate = $reqObj->requestDate;
+        $playedSong->create();  
+      }
     }
     return $this;
   }
