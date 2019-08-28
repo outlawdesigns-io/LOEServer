@@ -34,7 +34,7 @@ class PlayHistory{
       }else{
         $song = $song[0];
       }
-      $playedSong = \LOE\Factory::create(\LOE\PlayedSong::TABLE);
+      $playedSong = \LOE\Factory::create(strtolower(\LOE\PlayedSong::TABLE));
       $playedSong->songId = $song->UID;
       $playedSong->playDate = $reqObj->requestDate;
       $playedSong->create();
