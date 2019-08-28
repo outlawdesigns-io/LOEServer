@@ -50,6 +50,7 @@ class Factory{
                 break;
             case "playedsong";
                 $obj = new PlayedSong($UID);
+                break;
             default:
                 throw new \Exception('Invalid Object Type');
         }
