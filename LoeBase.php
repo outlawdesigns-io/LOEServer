@@ -25,7 +25,7 @@ class LoeBase extends \Record{
             if($obj->name != self::PRIMARYKEY){
               $key = $obj->name;
               $this->$key = html_entity_decode($this->$key);
-              $this->$key = utf8_encode($this->$key);  
+              $this->$key = utf8_encode($this->$key);
             }
         }
         return $this;
@@ -54,18 +54,18 @@ class LoeBase extends \Record{
         }
         return false;
     }
-    public function recordExists($path){
-      $results = $GLOBALS['db']
-          ->database(self::DB)
-          ->table(self::TABLE)
-          ->select(self::PRIMARYKEY)
-          ->where("file_path","=","'" . $path . "'")
-          ->get();
-      if(!mysqli_num_rows($results)){
-        return false;
-      }
-      return true;
-    }
+    // public function recordExists($path){
+    //   $results = $GLOBALS['db']
+    //       ->database(self::DB)
+    //       ->table(self::TABLE)
+    //       ->select(self::PRIMARYKEY)
+    //       ->where("file_path","=","'" . $path . "'")
+    //       ->get();
+    //   if(!mysqli_num_rows($results)){
+    //     return false;
+    //   }
+    //   return true;
+    // }
     public function backup(){
         //todo implement backup solution
     }
