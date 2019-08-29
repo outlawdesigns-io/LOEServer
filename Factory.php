@@ -188,7 +188,7 @@ class Factory{
      }elseif(strtolower($type) == 'tv'){
        $type = 'episode';
      }
-     $key = ucwords($type);
+     $key = __NAMESPACE__ . "\\" . ucwords($type);
      return $key::count();
    }
    public static function countOf($type,$key){
@@ -201,7 +201,7 @@ class Factory{
      }elseif(strtolower($type) == 'tv'){
        $type = 'episode';
      }
-     $type = ucwords($type);
+     $type = __NAMESPACE__ . "\\" . ucwords($type);
      return $type::countOf($key);
    }
 }
