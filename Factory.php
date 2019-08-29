@@ -179,11 +179,29 @@ class Factory{
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
    public static function count($type){
+     if(strtolower($type) == 'movies'){
+       $type = 'movie';
+     }elseif(strtolower($type) == 'docs'){
+       $type = 'doc';
+     }elseif(strtolower($type) == 'music'){
+       $type = 'song';
+     }elseif(strtolower($type) == 'tv'){
+       $type = 'episode';
+     }
      $key = ucwords($type);
-     return $key::count();
+     return \LOE\$key::count();
    }
    public static function countOf($ype,$key){
+     if(strtolower($type) == 'movies'){
+       $type = 'movie';
+     }elseif(strtolower($type) == 'docs'){
+       $type = 'doc';
+     }elseif(strtolower($type) == 'music'){
+       $type = 'song';
+     }elseif(strtolower($type) == 'tv'){
+       $type = 'episode';
+     }
      $type = ucwords($type);
-     return $type::countOf($keyval);
+     return \LOE\$type::countOf($keyval);
    }
 }
