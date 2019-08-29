@@ -54,18 +54,12 @@ class LoeBase extends \Record{
         }
         return false;
     }
-    // public function recordExists($path){
-    //   $results = $GLOBALS['db']
-    //       ->database(self::DB)
-    //       ->table(self::TABLE)
-    //       ->select(self::PRIMARYKEY)
-    //       ->where("file_path","=","'" . $path . "'")
-    //       ->get();
-    //   if(!mysqli_num_rows($results)){
-    //     return false;
-    //   }
-    //   return true;
-    // }
+    public static function count($objType){
+      return parent::count(self::DB,$objType);
+    }
+    public static function countOf($objType,$key){
+      return parent::countOf(self::DB,$objType,$key);
+    }
     public function backup(){
         //todo implement backup solution
     }

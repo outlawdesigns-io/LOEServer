@@ -189,9 +189,9 @@ class Factory{
        $type = 'episode';
      }
      $key = ucwords($type);
-     return \LOE\$key::count();
+     return $key::count();
    }
-   public static function countOf($ype,$key){
+   public static function countOf($type,$key){
      if(strtolower($type) == 'movies'){
        $type = 'movie';
      }elseif(strtolower($type) == 'docs'){
@@ -202,6 +202,6 @@ class Factory{
        $type = 'episode';
      }
      $type = ucwords($type);
-     return \LOE\$type::countOf($keyval);
+     return $type::countOf($key);
    }
 }
