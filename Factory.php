@@ -178,4 +178,12 @@ class Factory{
    public static function extractArchives($rootDir){
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
+   public static function count($type){
+     $key = ucwords($type);
+     return $key::count();
+   }
+   public static function countOf($ype,$key){
+     $type = ucwords($type);
+     return $type::countOf($keyval);
+   }
 }

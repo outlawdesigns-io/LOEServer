@@ -31,6 +31,12 @@ class Doc extends LoeBase{
         }
         return $data;
     }
+    public static function count(){
+      return parent::count(self::DB,self::TABLE);
+    }
+    public static function countOf($key){
+      return parent::countOf(self::DB,self::TABLE,$key);
+    }
     protected function _parseTags(){
         $tagStr = '';
         for($i = 0; $i < count($this->tags);$i++){

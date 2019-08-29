@@ -5,7 +5,7 @@ require_once __DIR__ . '/../LoeBase.php';
 class Anime extends LoeBase{
 
     const TABLE = 'anime';
-    
+
     public $UID;
     public $show_title;
     public $japanese_title;
@@ -36,5 +36,11 @@ class Anime extends LoeBase{
             $data[] = new self($id);
         }
         return $data;
+    }
+    public static function count(){
+      return parent::count(self::DB,self::TABLE);
+    }
+    public static function countOf($key){
+      return parent::countOf(self::DB,self::TABLE,$key);
     }
 }
