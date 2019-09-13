@@ -8,6 +8,7 @@ class PlayedSong extends LoeBase{
 
   public $UID;
   public $songId;
+  public $ipAddress;
   public $playDate;
 
   public function __construct($UID = null){
