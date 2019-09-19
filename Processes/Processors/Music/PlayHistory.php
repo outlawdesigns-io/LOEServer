@@ -22,7 +22,7 @@ class PlayHistory{
     }
   }
   protected function _buildPath($query){
-    return \LOE\LoeBase::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
+    return \LOE\Base::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
   }
   protected function _updatePlayHistory(){
     $results = $this->_webClient->search(self::REQEND,self::REQKEY,self::REQVAL);

@@ -27,7 +27,7 @@ class AutoCovers extends \LOE\FsScanner{
     );
 
     public function __construct($msgTo = null,$authToken = null){
-        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
+        $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR)
              ->_prunePossible();
         if(is_null($authToken) && !is_null($msgTo)){
           throw new \Exception(self::AUTHERR);

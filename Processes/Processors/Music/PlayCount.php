@@ -28,14 +28,14 @@ class PlayCount{
       }else{
         $song = $song[0];
       }
-      $song->file_path = \LOE\LoeBase::WEBROOT . $song->file_path;
-      $song->cover_path = \LOE\LoeBase::WEBROOT . $song->cover_path;
+      $song->file_path = \LOE\Base::WEBROOT . $song->file_path;
+      $song->cover_path = \LOE\Base::WEBROOT . $song->cover_path;
       $song->play_count = $obj->listens;
       $song->update();
     }
     return $this;
   }
   protected function _buildPath($query){
-    return \LOE\LoeBase::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
+    return \LOE\Base::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
   }
 }

@@ -3,7 +3,7 @@
 require_once __DIR__ . '/Libs/Record/Record.php';
 
 
-class LoeBase extends \Record{
+class Base extends \Record{
 
     const DB = 'LOE';
     const PRIMARYKEY = 'UID';

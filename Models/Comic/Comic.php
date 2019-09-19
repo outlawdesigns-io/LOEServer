@@ -1,9 +1,10 @@
-<?php namespace LOE;
+<?php namespace LOE\Comic;
 
-require_once __DIR__ . '/../LoeBase.php';
+require_once __DIR__ . '/../../Base.php';
 
-class Comic extends LoeBase{
-  const TABLE = 'comic';
+class Comic extends \LOE\Base{
+  
+  const TABLE = 'Comic';
 
   public $UID;
   public $issue_number;

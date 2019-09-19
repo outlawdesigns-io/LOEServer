@@ -1,8 +1,8 @@
-<?php namespace LOE;
+<?php namespace LOE\Tv;
 
 require_once __DIR__ . '/../../../Factory.php';
 
-class EpisodeProcessor{
+class HoldingBayProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Video/Tv/';
 

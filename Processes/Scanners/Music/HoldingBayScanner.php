@@ -1,10 +1,10 @@
-<?php namespace LOE;
+<?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../../Factory.php';
 
 ini_set('max_execution_time', 300);
 
-class MusicScanner{
+class HoldingBayScanner{
 
     const ROOTDIR = "/var/www/html/LOE/holding_bay/music/";
     const ZIPDIR = "/var/www/html/LOE/holding_bay/music/zips/";

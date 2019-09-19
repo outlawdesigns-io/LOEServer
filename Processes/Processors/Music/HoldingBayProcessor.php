@@ -1,8 +1,8 @@
-<?php namespace LOE;
+<?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../../Factory.php';
 
-class SongProcessor{
+class HoldingBayProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Music/';
 

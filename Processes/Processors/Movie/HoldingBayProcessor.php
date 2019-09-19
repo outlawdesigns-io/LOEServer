@@ -1,8 +1,8 @@
-<?php namespace LOE;
+<?php namespace LOE\Movie;
 
 require_once __DIR__ . '/../../../Factory.php';
 
-class MovieProcessor{
+class HoldingBayProcessor{
 
     const LOE = 'LOE';
     const MOVIES = 'movies';

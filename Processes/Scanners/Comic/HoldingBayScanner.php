@@ -1,9 +1,9 @@
-<?php namespace LOE;
+<?php namespace LOE\Comic;
 
 require_once __DIR__ . "/../../../Libs/ComicVine/ComicVine.php";
 require_once __DIR__ . '/../FsScanner.php';
 
-class ComicScanner extends FsScanner{
+class HoldingBayScanner extends \LOE\FsScanner{
 
   const ROOTDIR = '/LOE/holding_bay/comics';
   const YEARPATT = '/\(([0-9]{4})\)/';
@@ -17,7 +17,7 @@ class ComicScanner extends FsScanner{
   protected $_files = array();
 
   public function __construct(){
-    $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
+    $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR);
   }
   protected function _interpretFile($absolutePath){
     $extension = pathinfo($absolutePath)['extension'];

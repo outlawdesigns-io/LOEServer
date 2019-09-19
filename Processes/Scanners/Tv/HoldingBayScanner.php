@@ -1,8 +1,8 @@
-<?php namespace LOE;
+<?php namespace LOE\Tv;
 
 require_once __DIR__ . '/../../../Factory.php';
 
-class TvScanner{
+class HoldingBayScanner{
 
     const ROOTDIR = "/var/www/html/LOE/holding_bay/tv/";
     const LASTSLASHPAT = '/[^\/]+$/';

@@ -16,7 +16,7 @@ class FsHealthScanner extends \LOE\FsScanner{
   public $files = array();
 
   public function __construct($msgTo = null,$authToken = null){
-    $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
+    $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR)
          ->_verifyDatabase();
     if(is_null($authToken) && !is_null($msgTo)){
       throw new \Exception(self::AUTHERR);
