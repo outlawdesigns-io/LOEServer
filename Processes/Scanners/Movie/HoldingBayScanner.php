@@ -8,7 +8,6 @@ class HoldingBayScanner extends \LOE\FsScanner{
 
     const ROOTDIR = '/LOE/holding_bay/movies';
     const WEBROOTPATTERN = "/\/var\/www\/html/";
-    const MOVIES = 'movies';
     const YEARPATTERN1 = "/\(/";
     const YEARREPLACEMENT1 = "/\((.*)/";
     const YEARREPLACEMENT2 = "/[0-9]{4}(.*)/";
@@ -47,7 +46,7 @@ class HoldingBayScanner extends \LOE\FsScanner{
             $this->exceptions[] = $titleStr;
         }else{
             $genres = explode(",",$searchResult->Genre);
-            $movie = \LOE\Factory::create(self::MOVIES);
+            $movie = \LOE\Factory::createModel(\LOE\Movie\Movie::TABLE);
             $movie->title = $searchResult->Title;
             $movie->relyear = $searchResult->Year;
             $movie->rating = $searchResult->Rated;
