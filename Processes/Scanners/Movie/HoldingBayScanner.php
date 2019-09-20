@@ -47,7 +47,7 @@ class HoldingBayScanner extends \LOE\FsScanner{
             $this->exceptions[] = $titleStr;
         }else{
             $genres = explode(",",$searchResult->Genre);
-            $movie = Factory::create(self::MOVIES);
+            $movie = \LOE\Factory::create(self::MOVIES);
             $movie->title = $searchResult->Title;
             $movie->relyear = $searchResult->Year;
             $movie->rating = $searchResult->Rated;

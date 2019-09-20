@@ -51,7 +51,7 @@ class HoldingBayScanner{
         return $this;
     }
     private function _buildEpisodeData($path){
-        $e = Factory::create('tv');
+        $e = \LOE\Factory::create('tv');
         $e->file_path= $path;
         $e->UID = $this->episodeCount++;
         if(preg_match(self::LASTSLASHPAT,dirname(dirname($path)),$matches)){
