@@ -12,6 +12,7 @@ class PlayHistory{
 
   protected $_webClient;
   public $exceptions = array();
+  public static $responseCodes = array(202,206,304);
 
   public function __construct($username,$password){
     try{
@@ -34,7 +35,7 @@ class PlayHistory{
       }else{
         $song = $song[0];
       }
-      if(!\LOE\PlayedSong::recordExists($song->UID,$reqObj->requestDate)){
+      if(!\LOE\PlayedSong::recordExists($song->UID,$reqObj->requestDate) && in_array($reqObj->responseCode,self::$responseCodes)){
         $playedSong = \LOE\Factory::create(\LOE\PlayedSong::TABLE);
         $playedSong->songId = $song->UID;
         $playedSong->playDate = $reqObj->requestDate;
