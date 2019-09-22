@@ -8,6 +8,7 @@ class HoldingBayCleaner{
   const BADFILEPATT = '/[\\\/\:"*?<>|]/';
   const PUNCTPATT = "/['!~`*^%$#@+]/";
 
+
   public $filesCleaned;
   public $songs;
 
@@ -22,7 +23,7 @@ class HoldingBayCleaner{
     foreach($this->_scanner->songs as $song){
       $updated = false;
       if(!self::isCleanPath($song->file_path)){
-        $source = \LOE\LoeBase::WEBROOT . $song->file_path;
+        $source = mb_convert_encoding(\LOE\LoeBase::WEBROOT . $song->file_path);
         $song->file_path = \LOE\LoeBase::WEBROOT . self::buildCleanPath($song->file_path);
         $updated = true;
       }
