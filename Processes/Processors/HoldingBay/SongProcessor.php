@@ -1,6 +1,7 @@
 <?php namespace LOE;
 
 require_once __DIR__ . '/../../../Factory.php';
+require_once __DIR__ . '/../Music/HoldingBayCleaner.php';
 
 class SongProcessor{
 
@@ -18,7 +19,7 @@ class SongProcessor{
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
         $this->artistDir = self::DESTDIR . $this->song->artist . "/";
-        $this->albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
+        $this->albumDir = $this->_buildAlbumDir();
         $this->sourceFile = $this->song->file_path;
         $this->coverPath = $this->albumDir . "cover.jpg";
         $this->targetFile = $this->albumDir . pathinfo($this->song->file_path,PATHINFO_BASENAME);
@@ -39,6 +40,10 @@ class SongProcessor{
             throw new \Exception($exceptionStr);
         }
         return $this;
+    }
+    private function _buildAlbumDir(){
+      $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
+      return preg_replace(HoldingBayCleaner::NONASCIIPATT,"",$albumDir);
     }
     private function _transfer(){
         if(!rename($this->sourceFile,$this->targetFile)){
