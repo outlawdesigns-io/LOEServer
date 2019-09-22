@@ -15,7 +15,7 @@ class HoldingBayCleaner{
   public function __construct(){
     $this->filesCleaned = 0;
     $this->_scanner = \LOE\Factory::createScanner(\LOE\Song::TABLE);
-    foreach($_scanner->songs as $song){
+    foreach($this->_scanner->songs as $song){
       $updated = false;
       if(preg_match(self::NONASCIIPATT,$song->file_path) || preg_match(self::BADFILEPATT,$song->file_path)){
         $source = $song->file_path;
