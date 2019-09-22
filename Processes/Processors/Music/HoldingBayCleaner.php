@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../Factory.php';
 class HoldingBayCleaner{
 
   const NONASCIIPATT = '/[^\x00-\x7F]/';
-  const BADFILEPATT = '/[\\\/:"*?<>|]+/';
+  const BADFILEPATT = '/[\\\/\:"*?<>|]+/';
 
   public $filesCleaned;
   public $songs;
@@ -24,7 +24,7 @@ class HoldingBayCleaner{
         $updated = true;
       }
       if($updated && !rename($source,$song->file_path)){
-        throw new \Exception(error_get_last());
+        throw new \Exception(error_get_last()['message']);
       }
       $this->filesCleaned++;
       $this->songs[] = $song;
