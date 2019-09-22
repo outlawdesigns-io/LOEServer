@@ -24,7 +24,7 @@ class HoldingBayCleaner{
     foreach($this->_scanner->songs as $song){
       $updated = false;
       if(!self::isCleanPath($song->file_path)){
-        $source = mb_convert_encoding(\LOE\LoeBase::WEBROOT . $song->file_path,self::FSENCODE);
+        $source = \LOE\LoeBase::WEBROOT . $song->file_path,self::FSENCODE;
         $song->file_path = \LOE\LoeBase::WEBROOT . self::buildCleanPath($song->file_path);
         $updated = true;
       }
@@ -38,7 +38,7 @@ class HoldingBayCleaner{
   }
   public static function buildCleanPath($absolutePath){
     $absolutePath = preg_replace(self::NONASCIIPATT,"",$absolutePath);
-    $absolutePath = preg_replace(self::BADFILEPATT,"",$absolutePath);
+    //$absolutePath = preg_replace(self::BADFILEPATT,"",$absolutePath);
     $absolutePath = preg_replace(self::PUNCTPATT,"",$absolutePath);
     return $absolutePath;
   }
