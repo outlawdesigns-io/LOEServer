@@ -24,7 +24,7 @@ class HoldingBayCleaner{
     foreach($this->_scanner->songs as $song){
       $updated = false;
       if(!self::isCleanPath($song->file_path)){
-        $source = \LOE\LoeBase::WEBROOT . $song->file_path,self::FSENCODE;
+        $source = \LOE\LoeBase::WEBROOT . $song->file_path;
         $song->file_path = \LOE\LoeBase::WEBROOT . self::buildCleanPath($song->file_path);
         $updated = true;
       }
