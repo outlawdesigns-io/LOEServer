@@ -26,6 +26,7 @@ class HoldingBayCleaner{
       if(!self::isCleanPath($song->file_path)){
         $source = \LOE\LoeBase::WEBROOT . $song->file_path;
         $song->file_path = \LOE\LoeBase::WEBROOT . self::buildCleanPath($song->file_path);
+        $this->_verifyPath(dirname($song->file_path));
         $updated = true;
       }
       if($updated && !rename($source,$song->file_path)){
@@ -35,6 +36,19 @@ class HoldingBayCleaner{
       $this->songs[] = $song;
     }
     return $this;
+  }
+  protected function _verifyPath($dir){
+    $pieces = explode(DIRECTORY_SEPARATOR,$dir);
+    $pathStr = "";
+    for($i = 0; $i < count($pieces); $i++){
+      if(!empty($pieces[$i]) && !is_null($pieces[$i])){
+        $pathStr .= DIRECTORY_SEPARATOR . $pieces[$i];
+        if(!is_dir($pathStr) && !mkdir($pathStr)){
+          throw new \Exception(error_get_last()['message']);
+        }
+      }
+    }
+    return true;
   }
   public static function buildCleanPath($absolutePath){
     $absolutePath = preg_replace(self::NONASCIIPATT,"",$absolutePath);
