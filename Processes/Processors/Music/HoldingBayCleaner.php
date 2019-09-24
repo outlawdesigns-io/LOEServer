@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../../Factory.php';
 class HoldingBayCleaner{
 
   const NONASCIIPATT = '/[^\x00-\x7F]/';
-  const BADFILEPATT = '/[\/\:"*?<>|]/';
+  const BADFILEPATT = '/[\:"*?<>|]/';
   const PUNCTPATT = "/['!~`*^%$#@+]/";
 
   public $cleanedFiles;
