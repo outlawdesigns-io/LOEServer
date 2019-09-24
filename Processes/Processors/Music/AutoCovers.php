@@ -19,7 +19,12 @@ class AutoCovers extends \LOE\FsScanner{
     public $attempted = false;
     protected $_msgTo;
     protected $_hasCover = array();
-    public static $altNames = array('00-cover.jpg','Cover.jpg');
+    public static $altNames = array(
+      '00-cover.jpg',
+      'Cover.jpg',
+      'Front.jpg',
+      'front.jpg'
+    );
     public static $altPatterns = array(
       "/AlbumArt_.*?_Large\.jpg/",
       "/00-.*?-cover/",

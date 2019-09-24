@@ -12,7 +12,15 @@ abstract class FsScanner extends \MessageClient{
     }
     return false;
   }
-
+  public static function isDirEmpty($absolutePath){
+    if(count(scandir($absolutePath)) == 2){
+      return true;
+    }
+    return false;
+  }
+  public function cleanUp($absolutePath){
+    return $this->_cleanUp($absolutePath);
+  }
   protected function _scanForever($dir){
     $results = scandir($dir);
     foreach($results as $result){

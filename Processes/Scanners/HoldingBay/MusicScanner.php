@@ -4,15 +4,13 @@ require_once __DIR__ . '/../../../Factory.php';
 
 ini_set('max_execution_time', 300);
 
-class MusicScanner{
+class MusicScanner extends FsScanner{
 
-    const ROOTDIR = "/var/www/html/LOE/holding_bay/music/";
-    const ZIPDIR = "/var/www/html/LOE/holding_bay/music/zips/";
+    const ROOTDIR = "/LOE/holding_bay/music";
 
     public $songs = array();
-    private $songCount;
     private $zips = array();
-    private $covers = array();
+    private $possibleCovers = array();
     public $albums = array();
     public $artists = array();
     private $unknownAlbum = array();
@@ -21,38 +19,20 @@ class MusicScanner{
     private $results = array();
 
     public function __construct(){
-        $this->songCount = 0;
-        $this->_scanForever(self::ROOTDIR)
+        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
             ->_getTags()
             ->_sortAlbums()
             ->_sortArtists();
     }
-    private function _scanForever($dir){
-        $results = scandir($dir);
-        for($i = 0; $i < count($results);$i++){
-            if($dir != self::ROOTDIR){
-                $tester = $dir . "/" . $results[$i];
-            }else{
-                $tester = $dir . $results[$i];
-            }
-            if($results[$i] == "." || $results[$i] == ".."){
-                continue;
-            }elseif(is_file($tester)){
-                $fileInfo = pathinfo($tester);
-                if($fileInfo["extension"] == "mp3"){
-                    $this->songs[$this->songCount] = new Song();
-                    $this->songs[$this->songCount]->file_path = $this->songs[$this->songCount]->cleanFilePath($tester);
-                    $this->songCount++;
-                }elseif($fileInfo["basename"] == "cover.jpg"){
-                    $this->covers[] = $tester;
-                }
-            }elseif(is_dir($tester)){
-                $this->_scanForever($tester);
-            }else{
-                continue;
-            }
-        }
-        return $this;
+    protected function _interpretFile($absolutePath){
+      $fileInfo = pathinfo($absolutePath);
+      if($fileInfo['extension'] == 'mp3'){
+        $song = new Song();
+        $song->file_path = $song->cleanFilePath($absolutePath);
+        $this->songs[] = $song;
+      }elseif($fileInfo['extension'] == 'jpg'){
+        $this->possibleCovers[] = $absolutePath;
+      }
     }
     private function _getTags(){
         $i = 0;
