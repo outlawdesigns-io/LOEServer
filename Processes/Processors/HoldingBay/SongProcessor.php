@@ -43,7 +43,7 @@ class SongProcessor{
     }
     private function _buildAlbumDir(){
       $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
-      return preg_replace(HoldingBayCleaner::NONASCIIPATT,"",$albumDir);
+      return \LOE\Music\HoldingBayCleaner::buildCleanPath($albumDir);
     }
     private function _transfer(){
         if(!rename($this->sourceFile,$this->targetFile)){

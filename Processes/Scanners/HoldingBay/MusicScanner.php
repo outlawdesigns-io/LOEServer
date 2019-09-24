@@ -9,8 +9,7 @@ class MusicScanner extends FsScanner{
     const ROOTDIR = "/LOE/holding_bay/music";
 
     public $songs = array();
-    private $zips = array();
-    private $possibleCovers = array();
+    public $possibleCovers = array();
     public $albums = array();
     public $artists = array();
     private $unknownAlbum = array();

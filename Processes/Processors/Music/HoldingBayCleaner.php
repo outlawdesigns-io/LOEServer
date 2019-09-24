@@ -19,7 +19,7 @@ class HoldingBayCleaner{
   public function __construct(){
     $this->cleanedFiles = 0;
     $this->_scanner = \LOE\Factory::createScanner(\LOE\Song::TABLE);
-    $this->_cleanFiles()->_cleanUp();
+    $this->_cleanFiles()->_shiftImages()->_cleanUp();
   }
   protected function _cleanFiles(){
     foreach($this->_scanner->songs as $song){
@@ -34,6 +34,15 @@ class HoldingBayCleaner{
         $this->songs[] = $song;
         $this->_sourceDirs[] = dirname($source);
       }
+    }
+    return $this;
+  }
+  protected function _shiftImages(){
+    foreach($this->_scanner->possibleCovers as $image){
+      if(in_array(pathinfo($image)['basename'],AutoCovers::altNames)){
+        //alt cover name found. rename it to cover.jpg
+      }
+      //How to get image to correct dir??
     }
     return $this;
   }
