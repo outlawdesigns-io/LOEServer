@@ -3,6 +3,7 @@
 //todo how to clean up files and dirs???
 
 require_once __DIR__ . '/../../../Factory.php';
+require_once __DIR__ . '/AutoCovers.php';
 
 class HoldingBayCleaner{
 
@@ -39,7 +40,7 @@ class HoldingBayCleaner{
   }
   protected function _shiftImages(){
     foreach($this->_scanner->possibleCovers as $image){
-      if(in_array(pathinfo($image)['basename'],AutoCovers::altNames)){
+      if(in_array(pathinfo($image)['basename'],AutoCovers::$altNames)){
         //alt cover name found. rename it to cover.jpg
       }
       //How to get image to correct dir??
