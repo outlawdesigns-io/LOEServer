@@ -30,7 +30,7 @@ class MusicScanner extends FsScanner{
       if($fileInfo['extension'] == 'mp3'){
         $song->file_path = $song->cleanFilePath($absolutePath);
         $this->songs[] = $song;
-      }elseif($fileInfo['extension'] == 'jpg'){
+      }elseif(strtolower($fileInfo['extension']) == 'jpg'){
         $this->possibleCovers[] = $song->cleanFilePath($absolutePath);
       }else{
         $this->extraFiles[] = $song->cleanFilePath($absolutePath);
