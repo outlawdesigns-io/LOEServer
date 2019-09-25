@@ -9,7 +9,7 @@ class HoldingBayCleaner{
 
   const NONASCIIPATT = '/[^\x00-\x7F]/';
   const BADFILEPATT = '/[\:"*?<>|]/';
-  const PUNCTPATT = "/['!~`*^%$#@+]/";
+  const PUNCTPATT = "/['!~`*^%$#@+,]/";
 
   public $cleanedFiles;
   public $songs;
