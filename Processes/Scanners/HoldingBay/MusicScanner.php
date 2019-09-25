@@ -10,6 +10,7 @@ class MusicScanner extends FsScanner{
 
     public $songs = array();
     public $possibleCovers = array();
+    public $extraFiles = array();
     public $albums = array();
     public $artists = array();
     private $unknownAlbum = array();
@@ -25,13 +26,16 @@ class MusicScanner extends FsScanner{
     }
     protected function _interpretFile($absolutePath){
       $fileInfo = pathinfo($absolutePath);
+      $song = new Song();
       if($fileInfo['extension'] == 'mp3'){
-        $song = new Song();
         $song->file_path = $song->cleanFilePath($absolutePath);
         $this->songs[] = $song;
       }elseif($fileInfo['extension'] == 'jpg'){
-        $this->possibleCovers[] = $absolutePath;
+        $this->possibleCovers[] = $song->cleanFilePath($absolutePath);
+      }else{
+        $this->extraFiles[] = $song->cleanFilePath($absolutePath);
       }
+      return $this;
     }
     private function _getTags(){
         $i = 0;

@@ -12,7 +12,9 @@ class HoldingBayCleaner{
   const PUNCTPATT = "/['!~`*^%$#@+,]/";
 
   public $cleanedFiles;
-  public $songs;
+  public $songs = array();
+  public $images = array();
+  public $extraFiles = array();
 
   protected $_scanner;
   protected $_sourceDirs = array();
@@ -20,9 +22,9 @@ class HoldingBayCleaner{
   public function __construct(){
     $this->cleanedFiles = 0;
     $this->_scanner = \LOE\Factory::createScanner(\LOE\Song::TABLE);
-    $this->_cleanFiles()->_shiftImages()->_cleanUp();
+    $this->_cleanSongs()->_cleanImages()->_cleanUp();
   }
-  protected function _cleanFiles(){
+  protected function _cleanSongs(){
     foreach($this->_scanner->songs as $song){
       if(!self::isCleanPath($song->file_path)){
         $source = \LOE\LoeBase::WEBROOT . $song->file_path;
@@ -38,18 +40,40 @@ class HoldingBayCleaner{
     }
     return $this;
   }
-  protected function _shiftImages(){
+  protected function _cleanImages(){
     foreach($this->_scanner->possibleCovers as $image){
-      if(in_array(pathinfo($image)['basename'],AutoCovers::$altNames)){
-        //alt cover name found. rename it to cover.jpg
+      if(!self::isCleanPath($image)){
+        $source = \LOE\LoeBase::WEBROOT . $image;
+        $destination = \LOE\LoeBase::WEBROOT . self::buildCleanPath($image);
+        $this->_verifyPath(dirname($destination));
+        if(!rename($source,$destination)){
+          throw new \Exception(error_get_last()['message']);
+        }
+        $this->cleanedFiles++;
+        $this->images[] = $destination;
+        $this->_sourceDirs[] = dirname($source);
       }
-      //How to get image to correct dir??
     }
     return $this;
   }
+  protected function _cleanExtraFiles(){
+    foreach($this->_scanner->extraFiles as $file){
+      if(!self::isCleanPath($file)){
+        $source = \LOE\LoeBase::WEBROOT . $file;
+        $destination = \LOE\LoeBase::WEBROOT . self::buildCleanPath($file);
+        $this->_verifyPath(dirname($destination));
+        if(!rename($source,$destination)){
+          throw new \Exception(error_get_last()['message']);
+        }
+        $this->cleanedFiles++;
+        $this->extraFiles[] = $destination;
+        $this->_sourceDirs[] = dirname($source);
+      }
+    }
+  }
   protected function _cleanUp(){
     foreach($this->_sourceDirs as $dir){
-      if(\LOE\MusicScanner::isDirEmpty($dir)){
+      if($this->_scanner->isDirEmpty($dir)){
         $this->_scanner->cleanUp($dir);
       }
     }
