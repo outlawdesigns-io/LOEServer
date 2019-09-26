@@ -22,7 +22,7 @@ class HoldingBayCleaner{
   public function __construct(){
     $this->cleanedFiles = 0;
     $this->_scanner = \LOE\Factory::createScanner(\LOE\Song::TABLE);
-    $this->_cleanSongs()->_cleanImages()->_cleanUp();
+    $this->_cleanSongs()->_cleanImages()->_cleanExtraFiles()->_cleanUp();
   }
   protected function _cleanSongs(){
     foreach($this->_scanner->songs as $song){
@@ -35,7 +35,9 @@ class HoldingBayCleaner{
         }
         $this->cleanedFiles++;
         $this->songs[] = $song;
-        $this->_sourceDirs[] = dirname($source);
+        if(!in_array(dirname($source),$this->_sourceDirs)){
+          $this->_sourceDirs[] = dirname($source);
+        }
       }
     }
     return $this;
@@ -51,7 +53,9 @@ class HoldingBayCleaner{
         }
         $this->cleanedFiles++;
         $this->images[] = $destination;
-        $this->_sourceDirs[] = dirname($source);
+        if(!in_array(dirname($source),$this->_sourceDirs)){
+          $this->_sourceDirs[] = dirname($source);
+        }
       }
     }
     return $this;
@@ -67,9 +71,12 @@ class HoldingBayCleaner{
         }
         $this->cleanedFiles++;
         $this->extraFiles[] = $destination;
-        $this->_sourceDirs[] = dirname($source);
+        if(!in_array(dirname($source),$this->_sourceDirs)){
+          $this->_sourceDirs[] = dirname($source);
+        }
       }
     }
+    return $this;
   }
   protected function _cleanUp(){
     foreach($this->_sourceDirs as $dir){
