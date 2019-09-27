@@ -79,6 +79,7 @@ class HoldingBayCleaner{
     return $this;
   }
   protected function _cleanUp(){
+    rsort($this->_sourceDirs);
     foreach($this->_sourceDirs as $dir){
       if($this->_scanner->isDirEmpty($dir)){
         $this->_scanner->cleanUp($dir);
