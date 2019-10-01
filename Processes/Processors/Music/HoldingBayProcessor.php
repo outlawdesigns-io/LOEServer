@@ -14,7 +14,7 @@ class HoldingBayProcessor{
     private $targetFile;
 
     public function __construct($song){
-        $this->song = Factory::create('music');
+        $this->song = \LOE\Factory::create(Song::TABLE);
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
         $this->artistDir = self::DESTDIR . $this->song->artist . "/";

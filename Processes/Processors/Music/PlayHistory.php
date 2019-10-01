@@ -27,15 +27,15 @@ class PlayHistory{
   protected function _updatePlayHistory(){
     $results = $this->_webClient->search(self::REQEND,self::REQKEY,self::REQVAL);
     foreach($results as $reqObj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($reqObj->query));
+      $song = \LOE\Factory::search(Song::TABLE,'file_path',$this->_buildPath($reqObj->query));
       if(!count($song)){
         $this->exceptions[] = $this->_buildPath($reqObj->query);
         continue;
       }else{
         $song = $song[0];
       }
-      if(!\LOE\PlayedSong::recordExists($song->UID,$reqObj->requestDate)){
-        $playedSong = \LOE\Factory::create(\LOE\PlayedSong::TABLE);
+      if(!PlayedSong::recordExists($song->UID,$reqObj->requestDate)){
+        $playedSong = \LOE\Factory::create(PlayedSong::TABLE);
         $playedSong->songId = $song->UID;
         $playedSong->playDate = $reqObj->requestDate;
         $playedSong->ipAddress = $reqObj->ip_address;

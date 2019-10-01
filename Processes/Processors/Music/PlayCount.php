@@ -21,7 +21,7 @@ class PlayCount{
   protected function _updateCounts(){
     $songCounts = $this->_webClient->getLoeSongCounts();
     foreach($songCounts as $obj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($obj->query));
+      $song = \LOE\Factory::search(Song::TABLE,'file_path',$this->_buildPath($obj->query));
       if(!count($song)){
         $this->exceptions[] = $this->_buildPath($obj->query);
         continue;

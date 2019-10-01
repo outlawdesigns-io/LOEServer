@@ -115,10 +115,10 @@ class AutoCovers extends \LOE\FsScanner{
     public function autoFix(){
       return $this->_autoFix();
     }
-    public function isAltName($filename){
+    public static function isAltName($filename){
       return in_array($filename,self::$altNames);
     }
-    public function isAltMatch($filename){
+    public static function isAltMatch($filename){
       foreach(self::$altPatterns as $pattern){
         if(preg_match($pattern,$filename)){
           return true;
