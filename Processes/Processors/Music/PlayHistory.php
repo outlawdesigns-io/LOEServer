@@ -35,7 +35,7 @@ class PlayHistory{
         $song = $song[0];
       }
       if(!PlayedSong::recordExists($song->UID,$reqObj->requestDate)){
-        $playedSong = \LOE\Factory::create(PlayedSong::TABLE);
+        $playedSong = \LOE\Factory::createModel(Played::TABLE);
         $playedSong->songId = $song->UID;
         $playedSong->playDate = $reqObj->requestDate;
         $playedSong->ipAddress = $reqObj->ip_address;
