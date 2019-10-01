@@ -1,6 +1,7 @@
 <?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../Base.php';
+require_once __DIR__ . '/Song.php';
 
 class Played extends \LOE\Base{
 
@@ -43,10 +44,10 @@ class Played extends \LOE\Base{
   public static function counts($key,$date = null){
     $data = array();
     $GLOBALS['db']
-        ->database("LOE")
-        ->table("music music")
+        ->database(self::DB)
+        ->table(Song::TABLE . " music")
         ->select("count(played.UID) as count,music." . $key)
-        ->join("LOE.PlayedSong played","played.songId","=","music.UID");
+        ->join(self::TABLE . " played","played.songId","=","music.UID");
     if(!is_null($date)){
       $GLOBALS['db']->where("CAST(played.playDate as DATE)","=","'" . $date . "'");
     }
