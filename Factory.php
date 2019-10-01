@@ -175,7 +175,7 @@ class Factory{
    }
    public static function search($table,$key,$value){
        $data = array();
-       if($table == Movie::TABLE && $key == "genre"){
+       if($table == \LOE\Movie\Movie::TABLE && $key == "genre"){
          $ids1 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
          $ids2 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,"genre2",$value);
          $ids3 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,"genre3",$value);
@@ -185,7 +185,7 @@ class Factory{
          $ids = \Record::search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
        }
        foreach($ids as $id){
-         $data[] = self::create($table,$id);
+         $data[] = self::createModel($table,$id);
        }
        return $data;
    }
@@ -193,7 +193,7 @@ class Factory{
        $data = array();
        $ids = \Record::getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
        foreach($ids as $id){
-         $data[] = self::create($table,$id);
+         $data[] = self::createModel($table,$id);
        }
        return $data;
    }
@@ -202,7 +202,7 @@ class Factory{
    }
    public static function updatePlayHistory($objType,$username,$password){
        switch(strtolower($objType)){
-         case Song::TABLE:
+         case \LOE\Music\Song::TABLE:
            $obj = new \LOE\Music\PlayHistory($username,$password);
          break;
          default:
