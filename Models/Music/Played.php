@@ -27,6 +27,35 @@ class Played extends \LOE\Base{
     }
     return true;
   }
+  public static function dates(){
+    $data = array();
+    $results = $GLOBALS['db']
+        ->database(self::DB)
+        ->table(self::TABLE)
+        ->select("DISTINCT CAST(playDate as DATE) as playedDate")
+        ->orderBy("playDate desc")
+        ->get();
+    while($row = mysqli_fetch_assoc($results)){
+      $data[] = $row['playDate'];
+    }
+    return $data;
+  }
+  public static function counts($key,$date = null){
+    $data = array();
+    $GLOBALS['db']
+        ->database("LOE")
+        ->table("music music")
+        ->select("count(played.UID) as count,music." . $key)
+        ->join("LOE.PlayedSong played","played.songId","=","music.UID");
+    if(!is_null($date)){
+      $GLOBALS['db']->where("CAST(played.playDate as DATE)","=","'" . $date . "'");
+    }
+    $results = $GLOBALS['db']->groupBy("music." . $key)->orderBy("count desc")->get();
+    while($row = mysqli_fetch_assoc($results)){
+      $data[] = $row;
+    }
+    return $data;
+  }
   public static function count(){
     return parent::count(self::TABLE);
   }
