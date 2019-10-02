@@ -6,6 +6,7 @@ require_once __DIR__ . '/../Music/HoldingBayCleaner.php';
 class SongProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Music/';
+    const WEBPATTERN = '/http:\/\//';
 
     public $song;
     private $albumDir;
@@ -56,13 +57,23 @@ class SongProcessor{
         return $this;
     }
     private function _tryCover(){
+      if(!isset($this->song->cover_path)){
         $sourceFile = dirname($this->sourceFile) . "/cover.jpg";
         if(is_file($sourceFile) && !rename($sourceFile,$this->coverPath)){
-            $error = error_get_last();
-            $exceptionStr = 'Failed moving cover: ' . $error['message'];
-            throw new \Exception($exceptionStr);
+          throw new \Exception(error_get_last()['message']);
         }
-        return $this;
+      }elseif(!preg_replace(self::WEBPATTERN,$this->song->cover_path)){
+        $this->song->cover_path = Song::WEBROOT . $this->song->cover_path;
+        if(is_file($this->song->cover_path) && !rename($this->song->cover_path,$this->coverPath)){
+          throw new \Exception(error_get_last()['message']);
+        }
+      }else{
+        $file = file_get_contents($this->song->cover_path);
+        if(!file_put_contents($this->coverPath,$file)){
+          throw new \Exception(error_get_last()['message']);
+        }
+      }
+      return $this;
     }
     private function _cleanUp(){
         $dir = dirname($this->sourceFile);
