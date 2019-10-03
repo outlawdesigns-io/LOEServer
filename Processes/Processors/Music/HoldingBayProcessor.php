@@ -57,7 +57,7 @@ class HoldingBayProcessor{
         return $this;
     }
     private function _tryCover(){
-      if(!isset($this->song->cover_path) || is_null($this->song->cover_path) || $this->song->cover_path = ""){
+      if($this->song->cover_path == "" || !isset($this->song->cover_path) || is_null($this->song->cover_path)){
         $sourceFile = dirname($this->sourceFile) . "/cover.jpg";
         if(is_file($sourceFile) && !rename($sourceFile,$this->coverPath)){
           throw new \Exception(error_get_last()['message']);
