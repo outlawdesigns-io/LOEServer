@@ -6,7 +6,7 @@ ini_set('max_execution_time', 300);
 
 class HoldingBayScanner extends \LOE\FsScanner{
 
-    const ROOTDIR = "/LOE/holding_bay/music/";
+    const ROOTDIR = "/LOE/holding_bay/music";
 
     public $songs = array();
     public $possibleCovers = array();
