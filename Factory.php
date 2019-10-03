@@ -115,7 +115,7 @@ class Factory{
       return $obj;
     }
     public static function createFsScanner($type,$msgTo = null, $authToken = null){
-      switch(strtolower($type)){
+      switch(ucwords($type)){
         case \LOE\Movie\Movie::TABLE:
             $obj = new \LOE\Movie\FsHealthScanner($msgTo,$authToken);
             break;
@@ -134,7 +134,7 @@ class Factory{
       return $obj;
     }
     public static function createDbScanner($type,$msgTo = null, $authToken = null){
-      switch(strtolower($type)){
+      switch(ucwords($type)){
         case Movie::TABLE:
             $obj = new \LOE\Movie\DbHealthScanner($msgTo,$authToken);
             break;
@@ -154,7 +154,7 @@ class Factory{
     }
     public static function createHoldingBayProcessor($type,$inputObj){
         $obj = null;
-        switch(strtolower($type)){
+        switch(ucwords($type)){
             case \LOE\Movie\Movie::TABLE:
                 $obj = new \LOE\Movie\HoldingBayProcessor($inputObj);
                 break;
