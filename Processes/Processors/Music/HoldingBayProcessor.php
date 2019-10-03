@@ -1,10 +1,12 @@
 <?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../../Factory.php';
+require_once __DIR__ . '/HoldingBayCleaner.php';
 
 class HoldingBayProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Music/';
+    const WEBPATTERN = '/http:\/\//';
 
     public $song;
     private $albumDir;
@@ -18,7 +20,7 @@ class HoldingBayProcessor{
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
         $this->artistDir = self::DESTDIR . $this->song->artist . "/";
-        $this->albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
+        $this->albumDir = $this->_buildAlbumDir();
         $this->sourceFile = $this->song->file_path;
         $this->coverPath = $this->albumDir . "cover.jpg";
         $this->targetFile = $this->albumDir . pathinfo($this->song->file_path,PATHINFO_BASENAME);
@@ -40,6 +42,10 @@ class HoldingBayProcessor{
         }
         return $this;
     }
+    protected function _buildAlbumDir(){
+      $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
+      return HoldingBayCleaner::buildCleanPath($albumDir);
+    }
     private function _transfer(){
         if(!rename($this->sourceFile,$this->targetFile)){
             throw new \Exception('Failed to Transfer');
@@ -51,13 +57,23 @@ class HoldingBayProcessor{
         return $this;
     }
     private function _tryCover(){
+      if(!isset($this->song->cover_path)){
         $sourceFile = dirname($this->sourceFile) . "/cover.jpg";
         if(is_file($sourceFile) && !rename($sourceFile,$this->coverPath)){
-            $error = error_get_last();
-            $exceptionStr = 'Failed moving cover: ' . $error['message'];
-            throw new \Exception($exceptionStr);
+          throw new \Exception(error_get_last()['message']);
         }
-        return $this;
+      }elseif(!preg_match(self::WEBPATTERN,$this->song->cover_path)){
+        $this->song->cover_path = Song::WEBROOT . $this->song->cover_path;
+        if(is_file($this->song->cover_path) && !rename($this->song->cover_path,$this->coverPath)){
+          throw new \Exception(error_get_last()['message']);
+        }
+      }else{
+        $file = file_get_contents($this->song->cover_path);
+        if(!file_put_contents($this->coverPath,$file)){
+          throw new \Exception(error_get_last()['message']);
+        }
+      }
+      return $this;
     }
     private function _cleanUp(){
         $dir = dirname($this->sourceFile);
