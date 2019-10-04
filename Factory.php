@@ -60,6 +60,9 @@ class Factory{
       case \LOE\Music\Rating::TABLE:
         $obj = new \LOE\Music\Rating($UID);
         break;
+      case \LOE\Music\PlayList::TABLE:
+        $obj = new \LOE\Music\PlayList($UID);
+        break;
       case \LOE\Tv\Episode::TABLE:
         $obj = new \LOE\Tv\Episode($UID);
         break;
@@ -135,16 +138,16 @@ class Factory{
     }
     public static function createDbScanner($type,$msgTo = null, $authToken = null){
       switch(ucwords($type)){
-        case Movie::TABLE:
+        case \LOE\Movie\Movie::TABLE:
             $obj = new \LOE\Movie\DbHealthScanner($msgTo,$authToken);
             break;
-        case Episode::TABLE:
+        case \LOE\Tv\Episode::TABLE:
             $obj = new \LOE\Tv\DbHealthScanner($msgTo,$authToken);
             break;
-        case Song::TABLE:
+        case \LOE\Music\Song::TABLE:
             $obj = new \LOE\Music\DbHealthScanner($msgTo,$authToken);
             break;
-        case Anime::TABLE:
+        case \LOE\Anime\Anime::TABLE:
             $obj = new \LOE\Anime\DbHealthScanner($msgTo,$authToken);
             break;
         default:
@@ -172,6 +175,7 @@ class Factory{
    public static function browse($table,$key){
        $data = array();
        $ids = \Record::browse(Base::DB,$table,$key);
+       return $data;
    }
    public static function search($table,$key,$value){
        $data = array();
@@ -216,30 +220,10 @@ class Factory{
    public static function extractArchives($rootDir){
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
-   public static function count($type){
-     if(strtolower($type) == 'movies'){
-       $type = 'movie';
-     }elseif(strtolower($type) == 'docs'){
-       $type = 'doc';
-     }elseif(strtolower($type) == 'music'){
-       $type = 'song';
-     }elseif(strtolower($type) == 'tv'){
-       $type = 'episode';
-     }
-     $key = __NAMESPACE__ . "\\" . ucwords($type);
-     return $key::count();
+   public static function count($table){
+     return \Record::count(Base::DB,$table);
    }
-   public static function countOf($type,$key){
-     if(strtolower($type) == 'movies'){
-       $type = 'movie';
-     }elseif(strtolower($type) == 'docs'){
-       $type = 'doc';
-     }elseif(strtolower($type) == 'music'){
-       $type = 'song';
-     }elseif(strtolower($type) == 'tv'){
-       $type = 'episode';
-     }
-     $type = __NAMESPACE__ . "\\" . ucwords($type);
-     return $type::countOf($key);
+   public static function countOf($table,$key){
+     return \Record::countOf(Base::DB,$table,$key);
    }
 }

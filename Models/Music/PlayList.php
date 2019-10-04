@@ -29,4 +29,16 @@ class PlayList extends \LOE\Base{
       }
       return $data;
   }
+  public static function getAll($userId = null){
+    $data = array();
+    $GLOBALS['db']->database(self::DB)->table(self::TABLE)->select(self::PRIMARYKEY);
+    if(!is_null($userId)){
+      $GLOBALS['db']->where("UserId","=",$userId);
+    }
+    $results = $GLOBALS['db']->get();
+    while($row = mysqli_fetch_assoc($results)){
+      $data[] = new self($row[self::PRIMARYKEY]);
+    }
+    return $data;
+  }
 }
