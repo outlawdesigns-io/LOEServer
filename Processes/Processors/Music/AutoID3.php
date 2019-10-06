@@ -13,7 +13,7 @@ class AutoID3 extends \MessageClient{
     $this->_scan();
   }
   protected function _scan(){
-    $songs = \LOE\Song::getAll();
+    $songs = Song::getAll();
     foreach($songs as $song){
       if($song->verifyLocation()){
         try{

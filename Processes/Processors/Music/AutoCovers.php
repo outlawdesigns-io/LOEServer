@@ -32,7 +32,7 @@ class AutoCovers extends \LOE\FsScanner{
     );
 
     public function __construct($msgTo = null,$authToken = null){
-        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR)
+        $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR)
              ->_prunePossible();
         if(is_null($authToken) && !is_null($msgTo)){
           throw new \Exception(self::AUTHERR);
@@ -120,10 +120,10 @@ class AutoCovers extends \LOE\FsScanner{
     public function autoFix(){
       return $this->_autoFix();
     }
-    public function isAltName($filename){
+    public static function isAltName($filename){
       return in_array($filename,self::$altNames);
     }
-    public function isAltMatch($filename){
+    public static function isAltMatch($filename){
       foreach(self::$altPatterns as $pattern){
         if(preg_match($pattern,$filename)){
           return true;

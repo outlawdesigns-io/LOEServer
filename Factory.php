@@ -1,161 +1,204 @@
 <?php namespace LOE;
 
-require_once __DIR__ . '/Models/Movie.php';
-require_once __DIR__ . '/Models/Episode.php';
-require_once __DIR__ . '/Models/Song.php';
-require_once __DIR__ . '/Models/Doc.php';
-require_once __DIR__ . '/Models/Anime.php';
-require_once __DIR__ . '/Models/Comic.php';
-require_once __DIR__ . '/Models/PlayedSong.php';
+require_once __DIR__ . '/Models/Movie/Movie.php';
+require_once __DIR__ . '/Models/Movie/Played.php';
+require_once __DIR__ . '/Models/Movie/Rating.php';
+require_once __DIR__ . '/Models/Tv/Episode.php';
+require_once __DIR__ . '/Models/Tv/Played.php';
+require_once __DIR__ . '/Models/Tv/Rating.php';
+require_once __DIR__ . '/Models/Music/Song.php';
+require_once __DIR__ . '/Models/Music/Played.php';
+require_once __DIR__ . '/Models/Music/Rating.php';
+require_once __DIR__ . '/Models/Music/PlayList.php';
+require_once __DIR__ . '/Models/Doc/Doc.php';
+require_once __DIR__ . '/Models/Doc/Rating.php';
+require_once __DIR__ . '/Models/Anime/Anime.php';
+require_once __DIR__ . '/Models/Anime/Played.php';
+require_once __DIR__ . '/Models/Anime/Rating.php';
+require_once __DIR__ . '/Models/Comic/Comic.php';
+require_once __DIR__ . '/Models/Comic/Rating.php';
 require_once __DIR__ . '/Processes/Scanners/Anime/DbHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Movie/DbHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Music/DbHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Tv/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Comic/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Comic/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Movie/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Movie/HoldingBayScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Movie/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Music/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Music/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Music/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Tv/FsHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/HoldingBay/MovieScanner.php';
-require_once __DIR__ . '/Processes/Scanners/HoldingBay/TvScanner.php';
-require_once __DIR__ . '/Processes/Scanners/HoldingBay/MusicScanner.php';
-require_once __DIR__ . '/Processes/Scanners/HoldingBay/ComicScanner.php';
-require_once __DIR__ . '/Processes/Processors/HoldingBay/SongProcessor.php';
-require_once __DIR__ . '/Processes/Processors/HoldingBay/MovieProcessor.php';
-require_once __DIR__ . '/Processes/Processors/HoldingBay/EpisodeProcessor.php';
-require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
+require_once __DIR__ . '/Processes/Scanners/Tv/HoldingBayScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Tv/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayHistory.php';
+require_once __DIR__ . '/Processes/Processors/Movie/HoldingBayProcessor.php';
+require_once __DIR__ . '/Processes/Processors/Tv/HoldingBayProcessor.php';
+require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
+
 
 class Factory{
 
-    public static function create($type,$UID = null){
-        switch (strtolower($type)){
-            case "movies":
-                $obj = new Movie($UID);
-                break;
-            case "tv":
-                $obj = new Episode($UID);
-                break;
-            case "music":
-                $obj = new Song($UID);
-                break;
-            case "docs":
-                $obj = new Doc($UID);
-                break;
-            case "anime":
-                $obj = new Anime($UID);
-                break;
-            case "comic":
-                $obj = new Comic($UID);
-                break;
-            case "playedsong";
-                $obj = new PlayedSong($UID);
-                break;
-            default:
-                throw new \Exception('Invalid Object Type');
-        }
-        return $obj;
+  const BADOBJ = 'Invalid Object Type';
+
+  public static function createModel($type,$UID = null){
+    switch(ucwords($type)){
+      case \LOE\Movie\Movie::TABLE:
+        $obj = new \LOE\Movie\Movie($UID);
+        break;
+      case \LOE\Movie\Played::TABLE:
+        $obj = new \LOE\Movie\Played($UID);
+        break;
+      case \LOE\Movie\Rating::TABLE:
+        $obj = new \LOE\Movie\Rating($UID);
+        break;
+      case \LOE\Music\Song::TABLE:
+        $obj = new \LOE\Music\Song($UID);
+        break;
+      case \LOE\Music\Played::TABLE:
+        $obj = new \LOE\Music\Played($UID);
+        break;
+      case \LOE\Music\Rating::TABLE:
+        $obj = new \LOE\Music\Rating($UID);
+        break;
+      case \LOE\Music\PlayList::TABLE:
+        $obj = new \LOE\Music\PlayList($UID);
+        break;
+      case \LOE\Tv\Episode::TABLE:
+        $obj = new \LOE\Tv\Episode($UID);
+        break;
+      case \LOE\Tv\Played::TABLE:
+        $obj = new \LOE\Tv\Played($UID);
+        break;
+      case \LOE\Tv\Rating::TABLE:
+        $obj = new \LOE\Tv\Rating($UID);
+        break;
+      case \LOE\Anime\Anime::TABLE:
+        $obj = new \LOE\Anime\Anime($UID);
+        break;
+      case \LOE\Anime\Played::TABLE:
+        $obj = new \LOE\Anime\Played($UID);
+        break;
+      case \LOE\Anime\Rating::TABLE:
+        $obj = new \LOE\Anime\Rating($UID);
+        break;
+      case \LOE\Doc\Doc::TABLE:
+        $obj = new \LOE\Doc\Doc($UID);
+        break;
+      case \LOE\Doc\Rating::TABLE:
+        $obj = new \LOE\Doc\Rating($UID);
+        break;
+      case \LOE\Comic\Comic::TABLE:
+        $obj = new \LOE\Comic\Comic($UID);
+        break;
+      case \LOE\Comic\Rating::TABLE:
+        $obj = new \LOE\Comic\Rating($UID);
+      default:
+        throw new \Exception(self::BADOBJ);
+      }
+      return $obj;
     }
-    public static function createScanner($type){
-        $obj = null;
-        switch(strtolower($type)){
-            case 'movies':
-                $obj = new MovieScanner();
-                break;
-            case 'tv':
-                $obj = new TvScanner();
-                break;
-            case 'music':
-                $obj = new MusicScanner();
-                break;
-            case 'comic':
-                $obj = new ComicScanner();
-                break;
-            default:
-                throw new \Exception('Invalid Object Type');
-        }
-        return $obj;
+    public static function createHoldingBayScanner($type){
+      $obj = null;
+      switch(ucwords($type)){
+          case \LOE\Movie\Movie::TABLE:
+          $obj = new \LOE\Movie\HoldingBayScanner();
+        break;
+        case \LOE\Tv\Episode::TABLE:
+          $obj = new \LOE\Tv\HoldingBayScanner();
+          break;
+        case \LOE\Music\Song::TABLE:
+          $obj = new \LOE\Music\HoldingBayScanner();
+          break;
+        case \LOE\Comic\Comic::TABLE:
+          $obj = new \LOE\Comic\HoldingBayScanner();
+          break;
+        default:
+          throw new \Exception(self::BADOBJ);
+      }
+      return $obj;
     }
     public static function createFsScanner($type,$msgTo = null, $authToken = null){
-      switch(strtolower($type)){
-        case Movie::TABLE:
+      switch(ucwords($type)){
+        case \LOE\Movie\Movie::TABLE:
             $obj = new \LOE\Movie\FsHealthScanner($msgTo,$authToken);
             break;
-        case Episode::TABLE:
+        case \LOE\Tv\Episode::TABLE:
             $obj = new \LOE\Tv\FsHealthScanner($msgTo,$authToken);
             break;
-        case Song::TABLE:
+        case \LOE\Music\Song::TABLE:
             $obj = new \LOE\Music\FsHealthScanner($msgTo,$authToken);
             break;
-        case Comic::TABLE:
+        case \LOE\Comic\Comic::TABLE:
             $obj = new \LOE\Comic\FsHealthScanner($msgTo,$authToken);
             break;
         default:
-            throw new \Exception('Invalid Object Type');
+          throw new \Exception(self::BADOBJ);
       }
       return $obj;
     }
     public static function createDbScanner($type,$msgTo = null, $authToken = null){
-      switch(strtolower($type)){
-        case Movie::TABLE:
+      switch(ucwords($type)){
+        case \LOE\Movie\Movie::TABLE:
             $obj = new \LOE\Movie\DbHealthScanner($msgTo,$authToken);
             break;
-        case Episode::TABLE:
+        case \LOE\Tv\Episode::TABLE:
             $obj = new \LOE\Tv\DbHealthScanner($msgTo,$authToken);
             break;
-        case Song::TABLE:
+        case \LOE\Music\Song::TABLE:
             $obj = new \LOE\Music\DbHealthScanner($msgTo,$authToken);
             break;
-        case Anime::TABLE:
+        case \LOE\Anime\Anime::TABLE:
             $obj = new \LOE\Anime\DbHealthScanner($msgTo,$authToken);
             break;
         default:
-            throw new \Exception('Invalid Object Type');
+            throw new \Exception(self::BADOBJ);
       }
       return $obj;
     }
-    public static function createProcessor($type,$inputObj){
+    public static function createHoldingBayProcessor($type,$inputObj){
         $obj = null;
-        switch(strtolower($type)){
-            case 'movies':
-                $obj = new MovieProcessor($inputObj);
+        switch(ucwords($type)){
+            case \LOE\Movie\Movie::TABLE:
+                $obj = new \LOE\Movie\HoldingBayProcessor($inputObj);
                 break;
-            case 'tv':
-                $obj = new EpisodeProcessor($inputObj);
+            case \LOE\Tv\Episode::TABLE:
+                $obj = new \LOE\Tv\HoldingBayProcessor($inputObj);
                 break;
-            case 'music':
-                $obj = new SongProcessor($inputObj);
+            case \LOE\Music\Song::TABLE:
+                $obj = new \LOE\Music\HoldingBayProcessor($inputObj);
                 break;
             default:
-                throw new \Exception('Invalid Object Type');
+                throw new \Exception(self::BADOBJ);
         }
         return $obj;
     }
    public static function browse($table,$key){
        $data = array();
-       $ids = \Record::browse(LoeBase::DB,$table,$key);
+       $ids = \Record::browse(Base::DB,$table,$key);
+       return $data;
    }
    public static function search($table,$key,$value){
        $data = array();
-       if($table == Movie::TABLE && $key == "genre"){
-         $ids1 = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$key,$value);
-         $ids2 = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,"genre2",$value);
-         $ids3 = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,"genre3",$value);
+       if($table == \LOE\Movie\Movie::TABLE && $key == "genre"){
+         $ids1 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
+         $ids2 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,"genre2",$value);
+         $ids3 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,"genre3",$value);
          $ids = array_merge($ids1,$ids2);
          $ids = array_merge($ids3,$ids);
        }else{
-         $ids = \Record::search(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$key,$value);
+         $ids = \Record::search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
        }
        foreach($ids as $id){
-         $data[] = self::create($table,$id);
+         $data[] = self::createModel($table,$id);
        }
        return $data;
    }
    public static function recent($table,$limit){
        $data = array();
-       $ids = \Record::getRecent(LoeBase::DB,$table,LoeBase::PRIMARYKEY,$limit);
+       $ids = \Record::getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
        foreach($ids as $id){
-         $data[] = self::create($table,$id);
+         $data[] = self::createModel($table,$id);
        }
        return $data;
    }
@@ -164,7 +207,7 @@ class Factory{
    }
    public static function updatePlayHistory($objType,$username,$password){
        switch(strtolower($objType)){
-         case Song::TABLE:
+         case \LOE\Music\Song::TABLE:
            $obj = new \LOE\Music\PlayHistory($username,$password);
          break;
          default:
@@ -178,30 +221,10 @@ class Factory{
    public static function extractArchives($rootDir){
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
-   public static function count($type){
-     if(strtolower($type) == 'movies'){
-       $type = 'movie';
-     }elseif(strtolower($type) == 'docs'){
-       $type = 'doc';
-     }elseif(strtolower($type) == 'music'){
-       $type = 'song';
-     }elseif(strtolower($type) == 'tv'){
-       $type = 'episode';
-     }
-     $key = __NAMESPACE__ . "\\" . ucwords($type);
-     return $key::count();
+   public static function count($table){
+     return \Record::count(Base::DB,$table);
    }
-   public static function countOf($type,$key){
-     if(strtolower($type) == 'movies'){
-       $type = 'movie';
-     }elseif(strtolower($type) == 'docs'){
-       $type = 'doc';
-     }elseif(strtolower($type) == 'music'){
-       $type = 'song';
-     }elseif(strtolower($type) == 'tv'){
-       $type = 'episode';
-     }
-     $type = __NAMESPACE__ . "\\" . ucwords($type);
-     return $type::countOf($key);
+   public static function countOf($table,$key){
+     return \Record::countOf(Base::DB,$table,$key);
    }
 }

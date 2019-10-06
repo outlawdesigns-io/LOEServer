@@ -1,25 +1,25 @@
-<?php namespace LOE;
+<?php namespace LOE\Movie;
 
-require_once __DIR__ . '/../LoeBase.php';
+require_once __DIR__ . '/../../Base.php';
 
-class PlayedSong extends LoeBase{
+class Played extends \LOE\Base{
 
-  const TABLE = 'PlayedSong';
+  const TABLE = 'PlayedMovie';
 
   public $UID;
-  public $songId;
+  public $movieId;
   public $ipAddress;
   public $playDate;
 
   public function __construct($UID = null){
     parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
   }
-  public static function recordExists($songId,$playDate){
+  public static function recordExists($movieId,$playDate){
     $results = $GLOBALS['db']
         ->database(self::DB)
         ->table(self::TABLE)
         ->select(self::PRIMARYKEY)
-        ->where("songId","=",$songId)
+        ->where("movieId","=",$movieId)
         ->andWhere("playDate","=","'" . $playDate . "'")
         ->get();
     if(!mysqli_num_rows($results)){

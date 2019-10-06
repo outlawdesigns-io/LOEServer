@@ -23,20 +23,25 @@ class PlayHistory{
     }
   }
   protected function _buildPath($query){
-    return \LOE\LoeBase::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
+    return \LOE\Base::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
   }
   protected function _updatePlayHistory(){
     $results = $this->_webClient->search(self::REQEND,self::REQKEY,self::REQVAL);
     foreach($results as $reqObj){
-      $song = \LOE\Factory::search(\LOE\Song::TABLE,'file_path',$this->_buildPath($reqObj->query));
+      $song = \LOE\Factory::search(Song::TABLE,'file_path',$this->_buildPath($reqObj->query));
       if(!count($song)){
         $this->exceptions[] = $this->_buildPath($reqObj->query);
         continue;
       }else{
         $song = $song[0];
       }
+<<<<<<< HEAD
       if(!\LOE\PlayedSong::recordExists($song->UID,$reqObj->requestDate) && in_array($reqObj->responseCode,self::$responseCodes)){
         $playedSong = \LOE\Factory::create(\LOE\PlayedSong::TABLE);
+=======
+      if(!PlayedSong::recordExists($song->UID,$reqObj->requestDate)){
+        $playedSong = \LOE\Factory::createModel(Played::TABLE);
+>>>>>>> development
         $playedSong->songId = $song->UID;
         $playedSong->playDate = $reqObj->requestDate;
         $playedSong->ipAddress = $reqObj->ip_address;

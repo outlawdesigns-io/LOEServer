@@ -1,35 +1,33 @@
-<?php namespace LOE;
+<?php namespace LOE\Anime;
 
-require_once __DIR__ . '/../LoeBase.php';
+require_once __DIR__ . '/../../Base.php';
 
-class Episode extends LoeBase{
+class Anime extends \LOE\Base{
 
-    const TABLE = 'tv';
+    const TABLE = 'Anime';
 
     public $UID;
     public $show_title;
-    public $genre;
-    public $season_number;
-    public $season_year;
+    public $japanese_title;
+    public $type;
+    public $season;
     public $ep_number;
-    public $runtime;
+    public $ep_title;
+    public $run_time;
+    public $rating;
+    public $genre;
+    public $genre2;
+    public $genre3;
+    public $description;
+    public $release_date;
     public $cover_path;
     public $file_path;
-    public $ep_title;
 
     public function __construct($UID = null){
         parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
         $this->file_path = $this->_cleanFilePath($this->file_path);
         $this->cover_path = $this->_cleanFilePath($this->cover_path);
         $this->_cleanProperties();
-    }
-    public static function search($key,$value){
-        $data = array();
-        $ids = parent::search(self::DB,self::TABLE,self::PRIMARYKEY,$key,$value);
-        foreach($ids as $id){
-            $data[] = new self($id);
-        }
-        return $data;
     }
     public static function getAll(){
         $data = array();
@@ -45,5 +43,4 @@ class Episode extends LoeBase{
     public static function countOf($key){
       return parent::countOf(self::TABLE,$key);
     }
-
 }

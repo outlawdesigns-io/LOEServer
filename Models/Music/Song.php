@@ -1,11 +1,11 @@
-<?php namespace LOE;
+<?php namespace LOE\Music;
 
-require_once __DIR__ . '/../LoeBase.php';
-require_once __DIR__ . '/../Libs/Mp3Reader/Mp3Reader.php';
+require_once __DIR__ . '/../../Base.php';
+require_once __DIR__ . '/../../Libs/Mp3Reader/Mp3Reader.php';
 
-class Song extends LoeBase{
+class Song extends \LOE\Base{
 
-    const TABLE = 'music';
+    const TABLE = 'Song';
 
     public $UID;
     public $title;

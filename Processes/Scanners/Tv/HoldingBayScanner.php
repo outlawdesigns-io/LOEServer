@@ -1,8 +1,8 @@
-<?php namespace LOE;
+<?php namespace LOE\Tv;
 
 require_once __DIR__ . '/../../../Factory.php';
 
-class TvScanner{
+class HoldingBayScanner{
 
     const ROOTDIR = "/var/www/html/LOE/holding_bay/tv/";
     const LASTSLASHPAT = '/[^\/]+$/';
@@ -51,7 +51,7 @@ class TvScanner{
         return $this;
     }
     private function _buildEpisodeData($path){
-        $e = Factory::create('tv');
+        $e = \LOE\Factory::createModel(\LOE\Tv\Episode::TABLE);
         $e->file_path= $path;
         $e->UID = $this->episodeCount++;
         if(preg_match(self::LASTSLASHPAT,dirname(dirname($path)),$matches)){

@@ -1,8 +1,8 @@
-<?php namespace LOE;
+<?php namespace LOE\Tv;
 
 require_once __DIR__ . '/../../../Factory.php';
 
-class EpisodeProcessor{
+class HoldingBayProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Video/Tv/';
 
@@ -13,7 +13,7 @@ class EpisodeProcessor{
     private $targetFile;
 
     public function __construct($episode){
-        $this->episode = Factory::create('tv');
+        $this->episode = \LOE\Factory::createModel(Episode::TABLE);
         $this->episode->setFields($episode);
         $this->genreDir = self::DESTDIR . $this->episode->genre . '/';
         $this->showDir = $this->genreDir . $this->episode->show_title . '/';

@@ -9,9 +9,9 @@
 # DOW      Day Of Week     0-6
 # CMD      Command         Any command to be executed.
 ################################################################################################################################
-
-0 0 * * * php /var/www/html/LoeServer/Processes/Jobs/UpdateSongCounts.php > /tmp/songCount
-0 5 * * * php /var/www/html/LoeServer/Processes/Jobs/UpdateSongPlayHistory.php > /tmp/songHistory
-0 0 1 * * php /var/www/html/LoeServer/Processes/Jobs/DbHealthCheck.php {msgRecipient} > /tmp/dbCheck
-0 1 1 * * php /var/www/html/LoeServer/Processes/Jobs/FsHealthCheck.php {msgRecipient} > /tmp/fsCheck
-*/5 * * * * php /var/www/html/LoeServer/Processes/Jobs/extractArchives.php > /tmp/archiveErrors
+SHELL=/bin/bash
+0 0 * * * (time php /var/www/html/LoeServer/Processes/Jobs/UpdateSongCounts.php) >> /tmp/songCount 2>&1
+0 5 * * * (time php /var/www/html/LoeServer/Processes/Jobs/UpdateSongPlayHistory.php) >> /tmp/songHistory 2>&1
+0 0 1 * * (time php /var/www/html/LoeServer/Processes/Jobs/DbHealthCheck.php {msgRecipient}) >> /tmp/dbCheck 2>&1
+0 1 1 * * (time php /var/www/html/LoeServer/Processes/Jobs/FsHealthCheck.php {msgRecipient}) >> /tmp/fsCheck 2>&1
+*/5 * * * * (time php /var/www/html/LoeServer/Processes/Jobs/ExtractArchives.php) >> /tmp/archiveErrors 2>&1

@@ -1,9 +1,13 @@
-<?php namespace LOE;
+<?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../../Factory.php';
+<<<<<<< HEAD:Processes/Processors/HoldingBay/SongProcessor.php
 require_once __DIR__ . '/../Music/HoldingBayCleaner.php';
+=======
+require_once __DIR__ . '/HoldingBayCleaner.php';
+>>>>>>> development:Processes/Processors/Music/HoldingBayProcessor.php
 
-class SongProcessor{
+class HoldingBayProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Music/';
     const WEBPATTERN = '/http:\/\//';
@@ -16,7 +20,7 @@ class SongProcessor{
     private $targetFile;
 
     public function __construct($song){
-        $this->song = Factory::create('music');
+        $this->song = \LOE\Factory::createModel(Song::TABLE);
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
         $this->artistDir = self::DESTDIR . $this->song->artist . "/";
@@ -25,8 +29,8 @@ class SongProcessor{
         $this->coverPath = $this->albumDir . "cover.jpg";
         $this->targetFile = $this->albumDir . pathinfo($this->song->file_path,PATHINFO_BASENAME);
         $this->_verifyDestination()
-            ->_transfer()
             ->_tryCover()
+            ->_transfer()
             ->_cleanUp();
     }
     private function _verifyDestination(){
@@ -42,9 +46,15 @@ class SongProcessor{
         }
         return $this;
     }
+<<<<<<< HEAD:Processes/Processors/HoldingBay/SongProcessor.php
     private function _buildAlbumDir(){
       $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
       return \LOE\Music\HoldingBayCleaner::buildCleanPath($albumDir);
+=======
+    protected function _buildAlbumDir(){
+      $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
+      return HoldingBayCleaner::buildCleanPath($albumDir);
+>>>>>>> development:Processes/Processors/Music/HoldingBayProcessor.php
     }
     private function _transfer(){
         if(!rename($this->sourceFile,$this->targetFile)){
@@ -57,12 +67,20 @@ class SongProcessor{
         return $this;
     }
     private function _tryCover(){
+<<<<<<< HEAD:Processes/Processors/HoldingBay/SongProcessor.php
       if(!isset($this->song->cover_path)){
+=======
+      if($this->song->cover_path == "" || !isset($this->song->cover_path) || is_null($this->song->cover_path)){
+>>>>>>> development:Processes/Processors/Music/HoldingBayProcessor.php
         $sourceFile = dirname($this->sourceFile) . "/cover.jpg";
         if(is_file($sourceFile) && !rename($sourceFile,$this->coverPath)){
           throw new \Exception(error_get_last()['message']);
         }
+<<<<<<< HEAD:Processes/Processors/HoldingBay/SongProcessor.php
       }elseif(!preg_replace(self::WEBPATTERN,$this->song->cover_path)){
+=======
+      }elseif(!preg_match(self::WEBPATTERN,$this->song->cover_path)){
+>>>>>>> development:Processes/Processors/Music/HoldingBayProcessor.php
         $this->song->cover_path = Song::WEBROOT . $this->song->cover_path;
         if(is_file($this->song->cover_path) && !rename($this->song->cover_path,$this->coverPath)){
           throw new \Exception(error_get_last()['message']);

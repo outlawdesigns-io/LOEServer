@@ -1,14 +1,13 @@
-<?php namespace LOE;
+<?php namespace LOE\Movie;
 
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . "/../../../Libs/IMDB/Imdb.php";
 require_once __DIR__ . '/../FsScanner.php';
 
-class MovieScanner extends FsScanner{
+class HoldingBayScanner extends \LOE\FsScanner{
 
     const ROOTDIR = '/LOE/holding_bay/movies';
     const WEBROOTPATTERN = "/\/var\/www\/html/";
-    const MOVIES = 'movies';
     const YEARPATTERN1 = "/\(/";
     const YEARREPLACEMENT1 = "/\((.*)/";
     const YEARREPLACEMENT2 = "/[0-9]{4}(.*)/";
@@ -22,7 +21,7 @@ class MovieScanner extends FsScanner{
     private $knownExtensions = array("mp4","MP4","avi","AVI","mkv","MKV");
 
     public function __construct(){
-        $this->_scanForever(\LOE\LoeBase::WEBROOT . self::ROOTDIR);
+        $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR);
     }
     protected function _interpretFile($absolutePath){
       if(in_array(pathinfo($absolutePath)['extension'],$this->knownExtensions)){
@@ -47,7 +46,7 @@ class MovieScanner extends FsScanner{
             $this->exceptions[] = $titleStr;
         }else{
             $genres = explode(",",$searchResult->Genre);
-            $movie = Factory::create(self::MOVIES);
+            $movie = \LOE\Factory::createModel(\LOE\Movie\Movie::TABLE);
             $movie->title = $searchResult->Title;
             $movie->relyear = $searchResult->Year;
             $movie->rating = $searchResult->Rated;
