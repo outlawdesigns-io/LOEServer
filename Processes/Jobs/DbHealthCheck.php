@@ -16,14 +16,14 @@ $tables = array(
   \LOE\Anime::TABLE
 );
 try{
-  $authToken = \LOE\LoeFactory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
+  $authToken = \LOE\Factory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
 }catch(\Exception $e){
   echo $e->getMessage() . "\n";
   exit;
 }
 foreach($table as $table){
   try{
-    \LOE\LoeFactory::createDbScanner($table,$msgTo,$authToken);
+    \LOE\Factory::createDbScanner($table,$msgTo,$authToken);
   }catch(\Exception $e){
     echo $e->getMessage() . "\n";
   }

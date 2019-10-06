@@ -10,13 +10,13 @@ if(!isset($argv[1])){
   $msgTo = $argv[1];
 }
 $tables = array(
-  \LOE\Movie::TABLE,
-  \LOE\Episode::TABLE,
-  \LOE\Song::TABLE,
-  \LOE\Anime::TABLE
+  \LOE\Movie\Movie::TABLE,
+  \LOE\Tv\Episode::TABLE,
+  \LOE\Music\Song::TABLE,
+  \LOE\Anime\Anime::TABLE
 );
 try{
-  $authToken = \LOE\LoeFactory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
+  $authToken = \LOE\Factory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
 }catch(\Exception $e){
   echo $e->getMessage() . "\n";
   exit;
