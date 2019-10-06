@@ -1,10 +1,6 @@
 <?php namespace LOE\Music;
 
 //todo how to clean up files and dirs???
-<<<<<<< HEAD
-
-=======
->>>>>>> development
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . '/AutoCovers.php';
 
@@ -18,32 +14,20 @@ class HoldingBayCleaner{
   public $songs = array();
   public $images = array();
   public $extraFiles = array();
-<<<<<<< HEAD
 
-=======
->>>>>>> development
   protected $_scanner;
   protected $_sourceDirs = array();
 
   public function __construct(){
     $this->cleanedFiles = 0;
-<<<<<<< HEAD
-    $this->_scanner = \LOE\Factory::createScanner(\LOE\Song::TABLE);
-=======
     $this->_scanner = \LOE\Factory::createHoldingBayScanner(Song::TABLE);
->>>>>>> development
     $this->_cleanSongs()->_cleanImages()->_cleanExtraFiles()->_cleanUp();
   }
   protected function _cleanSongs(){
     foreach($this->_scanner->songs as $song){
       if(!self::isCleanPath($song->file_path)){
-<<<<<<< HEAD
-        $source = \LOE\LoeBase::WEBROOT . $song->file_path;
-        $song->file_path = \LOE\LoeBase::WEBROOT . self::buildCleanPath($song->file_path);
-=======
         $source = \LOE\Base::WEBROOT . $song->file_path;
         $song->file_path = \LOE\Base::WEBROOT . self::buildCleanPath($song->file_path);
->>>>>>> development
         $this->_verifyPath(dirname($song->file_path));
         if(!rename($source,$song->file_path)){
           throw new \Exception(error_get_last()['message']);
@@ -60,13 +44,8 @@ class HoldingBayCleaner{
   protected function _cleanImages(){
     foreach($this->_scanner->possibleCovers as $image){
       if(!self::isCleanPath($image)){
-<<<<<<< HEAD
-        $source = \LOE\LoeBase::WEBROOT . $image;
-        $destination = \LOE\LoeBase::WEBROOT . self::buildCleanPath($image);
-=======
         $source = \LOE\Base::WEBROOT . $image;
         $destination = \LOE\Base::WEBROOT . self::buildCleanPath($image);
->>>>>>> development
         $this->_verifyPath(dirname($destination));
         if(!rename($source,$destination)){
           throw new \Exception(error_get_last()['message']);
@@ -83,13 +62,8 @@ class HoldingBayCleaner{
   protected function _cleanExtraFiles(){
     foreach($this->_scanner->extraFiles as $file){
       if(!self::isCleanPath($file)){
-<<<<<<< HEAD
-        $source = \LOE\LoeBase::WEBROOT . $file;
-        $destination = \LOE\LoeBase::WEBROOT . self::buildCleanPath($file);
-=======
         $source = \LOE\Base::WEBROOT . $file;
         $destination = \LOE\Base::WEBROOT . self::buildCleanPath($file);
->>>>>>> development
         $this->_verifyPath(dirname($destination));
         if(!rename($source,$destination)){
           throw new \Exception(error_get_last()['message']);
