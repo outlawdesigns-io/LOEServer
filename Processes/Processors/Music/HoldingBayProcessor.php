@@ -25,8 +25,8 @@ class HoldingBayProcessor{
         $this->coverPath = $this->albumDir . "cover.jpg";
         $this->targetFile = $this->albumDir . pathinfo($this->song->file_path,PATHINFO_BASENAME);
         $this->_verifyDestination()
-            ->_transfer()
             ->_tryCover()
+            ->_transfer()
             ->_cleanUp();
     }
     private function _verifyDestination(){
@@ -63,6 +63,7 @@ class HoldingBayProcessor{
           throw new \Exception(error_get_last()['message']);
         }
       }elseif(!preg_match(self::WEBPATTERN,$this->song->cover_path)){
+        $this->song->cover_path = Song::WEBROOT . $this->song->cover_path;
         if(is_file($this->song->cover_path) && !rename($this->song->cover_path,$this->coverPath)){
           throw new \Exception(error_get_last()['message']);
         }
