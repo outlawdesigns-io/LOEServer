@@ -13,7 +13,7 @@ class HoldingBayProcessor{
     private $targetFile;
 
     public function __construct($episode){
-        $this->episode = Factory::create('tv');
+        $this->episode = \LOE\Factory::createModel(Episode::TABLE);
         $this->episode->setFields($episode);
         $this->genreDir = self::DESTDIR . $this->episode->genre . '/';
         $this->showDir = $this->genreDir . $this->episode->show_title . '/';

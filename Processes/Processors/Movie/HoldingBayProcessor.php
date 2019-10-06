@@ -5,7 +5,6 @@ require_once __DIR__ . '/../../../Factory.php';
 class HoldingBayProcessor{
 
     const LOE = 'LOE';
-    const MOVIES = 'movies';
     const ROOTDIR = "/var/www/html/LOE/Video/Movies/";
     const DBROOT = '/var/www/LOE/Video/Movies/';
     const SOURCE = '/var/www/html';
@@ -18,7 +17,7 @@ class HoldingBayProcessor{
     public function __construct($movie){
         $movie->title = preg_replace("/\'/","",$movie->title);
         $movie->description = preg_replace("/\'/","",$movie->description);
-        $this->movie = Factory::create(self::MOVIES);
+        $this->movie = \LOE\Factory::createModel(Movie::TABLE);
         $this->movie->setFields($movie);
         $this->targetDir = self::ROOTDIR . $this->_cleanDirPath($this->movie->title) . "/";
         $this->dbDir = self::DBROOT . $this->_cleanDirPath($this->movie->title) . "/";
@@ -57,7 +56,7 @@ class HoldingBayProcessor{
                 if(!$UID){
                     throw new \Exception('Target Dir Exists. Operation appears to not be recovery or remake');
                 }else{
-                    $this->movie = Factory::create(self::MOVIES,$UID);
+                    $this->movie = \LOE\Factory::createModel(Movie::TABLE,$UID);
                     return $this;
                 }
             }
@@ -110,6 +109,7 @@ class HoldingBayProcessor{
         $dir = preg_replace('/:/','',$dir);
         $dir = preg_replace('/!/','',$dir);
         $dir = preg_replace('/\//','',$dir);
+        $dir = preg_replace('/,/',"",$dir);
         //$dir = preg_replace('/\\/','',$dir);
         return $dir;
     }
