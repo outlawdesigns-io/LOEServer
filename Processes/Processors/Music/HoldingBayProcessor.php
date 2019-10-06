@@ -63,7 +63,6 @@ class HoldingBayProcessor{
           throw new \Exception(error_get_last()['message']);
         }
       }elseif(!preg_match(self::WEBPATTERN,$this->song->cover_path)){
-        $this->song->cover_path = Song::WEBROOT . $this->song->cover_path;
         if(is_file($this->song->cover_path) && !rename($this->song->cover_path,$this->coverPath)){
           throw new \Exception(error_get_last()['message']);
         }
