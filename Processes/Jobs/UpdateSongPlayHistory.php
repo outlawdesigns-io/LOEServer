@@ -7,6 +7,7 @@ try{
   $processor = \LOE\Factory::updatePlayHistory(\LOE\Music\Song::TABLE,ACCOUNT_USER,ACCOUNT_PASSWORD);
 }catch(\Exception $e){
   echo $e->getMessage() . "\n";
+  exit;
 }
 
 if(count($processor->exceptions)){
