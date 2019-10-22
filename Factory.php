@@ -206,7 +206,7 @@ class Factory{
        return new \LOE\Music\PlayCount($username,$password);
    }
    public static function updatePlayHistory($objType,$username,$password){
-       switch(strtolower($objType)){
+       switch(ucwords($objType)){
          case \LOE\Music\Song::TABLE:
            $obj = new \LOE\Music\PlayHistory($username,$password);
          break;
