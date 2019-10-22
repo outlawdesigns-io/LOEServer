@@ -4,7 +4,6 @@ require_once __DIR__ . '/../../../Factory.php';
 
 class HoldingBayProcessor{
 
-    const LOE = 'LOE';
     const ROOTDIR = "/var/www/html/LOE/Video/Movies/";
     const DBROOT = '/var/www/LOE/Video/Movies/';
     const SOURCE = '/var/www/html';
@@ -70,8 +69,8 @@ class HoldingBayProcessor{
     private function _isCrashRecovery(){
         $coverPath = $this->dbDir . "cover.jpg";
         $results = $GLOBALS['db']
-            ->database(self::LOE)
-            ->table(self::MOVIES)
+            ->database(Movie::DB)
+            ->table(Movie::TABLE)
             ->select("UID,file_path")
             ->where("cover_path","=","'" . $coverPath . "'")
             ->get();
