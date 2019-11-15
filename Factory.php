@@ -10,6 +10,7 @@ require_once __DIR__ . '/Models/Music/Song.php';
 require_once __DIR__ . '/Models/Music/Played.php';
 require_once __DIR__ . '/Models/Music/Rating.php';
 require_once __DIR__ . '/Models/Music/PlayList.php';
+require_once __DIR__ . '/Models/Music/RandomPlayList.php';
 require_once __DIR__ . '/Models/Doc/Doc.php';
 require_once __DIR__ . '/Models/Doc/Rating.php';
 require_once __DIR__ . '/Models/Anime/Anime.php';
