@@ -12,6 +12,7 @@ class RandomPlayList{
   public function __construct($genre = null,$maxSongs = 10){
     $this->_genre = $genre;
     $this->_maxSongs = $maxSongs;
+    $this->_build();
   }
   protected function _build(){
     for($i = 0; $i < $this->_maxSongs; $i++){
