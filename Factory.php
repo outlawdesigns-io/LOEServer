@@ -174,9 +174,7 @@ class Factory{
         return $obj;
     }
    public static function browse($table,$key){
-       $data = array();
-       $ids = \Record::browse(Base::DB,$table,$key);
-       return $data;
+       return \Record::browse(Base::DB,$table,$key);
    }
    public static function search($table,$key,$value){
        $data = array();
