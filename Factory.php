@@ -226,4 +226,15 @@ class Factory{
    public static function countOf($table,$key){
      return \Record::countOf(Base::DB,$table,$key);
    }
+   public static function createRandomPlayList($type,$genre,$limit){
+     $obj = null;
+     switch(ucwords($type)){
+       case \LOE\Music\Song::TABLE:
+         $obj = new \LOE\Music\RandomPlayList($genre,$limit);
+       break;
+       default:
+         throw new \Exception('Invalid Object Type');
+     }
+     return $obj;
+   }
 }
