@@ -92,4 +92,16 @@ class Song extends \LOE\Base{
     public static function countOf($key){
       return parent::countOf(self::TABLE,$key);
     }
+    public static function getRandom($genre = null){
+      $ids = array();
+      $GLOBALS['db']->database(self::DB)->table(self::TABLE)->select(self::PRIMARYKEY);
+      if(!is_null($genre)){
+        $GLOBALS['db']->where("genre","=","'" . $genre . "'");
+      }
+      $results = $GLOBALS['db']->get();
+      while($row = mysqli_fetch_assoc($results)){
+        $ids[] = $row[self::PRIMARYKEY];
+      }
+      return new Self($ids[mt_rand(0,count($ids))]);
+    }
 }
