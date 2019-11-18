@@ -16,6 +16,8 @@ class Episode extends \LOE\Base{
     public $cover_path;
     public $file_path;
     public $ep_title;
+    public $rating;
+    public $play_count;
 
     public function __construct($UID = null){
         parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);

@@ -18,6 +18,8 @@ class Movie extends \LOE\Base{
     public $file_path;
     public $cover_path;
     public $rating;
+    public $user_rating;
+    public $play_count;
 
     public function __construct($UID = null){
         parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
