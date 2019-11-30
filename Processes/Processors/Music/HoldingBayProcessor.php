@@ -19,7 +19,7 @@ class HoldingBayProcessor{
         $this->song = \LOE\Factory::createModel(Song::TABLE);
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
-        $this->artistDir = self::DESTDIR . $this->song->artist . "/";
+        $this->artistDir = HoldingBayCleaner::buildCleanPath(self::DESTDIR . $this->song->artist . "/");
         $this->albumDir = $this->_buildAlbumDir();
         $this->sourceFile = $this->song->file_path;
         $this->coverPath = $this->albumDir . "cover.jpg";
