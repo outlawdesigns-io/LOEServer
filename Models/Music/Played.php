@@ -57,6 +57,21 @@ class Played extends \LOE\Base{
     }
     return $data;
   }
+  public static function dailyAverage(){
+    $total = 0;
+    $days = 0;
+    $results = $GLOBALS['db']
+      ->database(self::DB)
+      ->table(self::TABLE)
+      ->select("cast(playDate as date) as date,count(*) as total")
+      ->groupBy("cast(playDate as date)")
+      ->get();
+    while($row = mysqli_fetch_assoc($results)){
+      $days++;
+      $total += $row['total'];
+    }
+    return $total / $days;
+  }
   public static function count(){
     return parent::count(self::TABLE);
   }
