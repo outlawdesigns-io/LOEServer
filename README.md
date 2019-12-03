@@ -13,18 +13,30 @@ LOE
 With tables:
 
 ```
-anime
-comics
-docs
-movies
-music
-tv
+Anime
+Comic
+Doc
+
+Movie
+PlayedMovie
+MovieRating
+MoviePlayList
+
+Song
+PlayedSong
+SongRating
+SongPlayList
+
+Episode
+PlayedEpisode
+EpisodeRating
+EpisodePlayList
 ```
 
-Connection details can be modified in:
+Database Connection details can be modified in:
 
 ```
-Libs/Record/Db/credentials.php
+__DIR__ . /Libs/Record/Db/credentials.php
 ```
 
 Expects LOE file system be be mounted at webroot.
@@ -37,8 +49,8 @@ Default webroot, is
 defined in
 
 ```
-./LoeBase.php
-LoeBase::WEBROOT
+__DIR__ /Base.php
+\LOE\Base::WEBROOT
 ```
 
 ### Structure
