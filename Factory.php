@@ -34,7 +34,11 @@ require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayHistory.php';
 require_once __DIR__ . '/Processes/Processors/Movie/HoldingBayProcessor.php';
+require_once __DIR__ . '/Processes/Processors/Movie/PlayCount.php';
+require_once __DIR__ . '/Processes/Processors/Movie/PlayHistory.php';
 require_once __DIR__ . '/Processes/Processors/Tv/HoldingBayProcessor.php';
+require_once __DIR__ . '/Processes/Processors/Tv/PlayCount.php';
+require_once __DIR__ . '/Processes/Processors/Tv/PlayHistory.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
 
 
@@ -201,13 +205,32 @@ class Factory{
        }
        return $data;
    }
-   public static function updateSongCounts($username,$password){
-       return new \LOE\Music\PlayCount($username,$password);
+   public static function updatePlayCounts($objType,$username,$password){
+       switch(ucwords($objType)){
+         case \LOE\Music\Song::TABLE:
+           $obj = new \LOE\Music\PlayCount($username,$password);
+         break;
+         case \LOE\Movie\Movie::TABLE:
+           $obj = new \LOE\Movie\PlayCount($username,$password);
+         break;
+         case \LOE\Tv\Episode::TABLE:
+           $obj = new \LOE\Tv\PlayCount($username,$password);
+         break;
+         default:
+           throw new \Exception('Invalid Object Type');
+       }
+       return $obj;
    }
    public static function updatePlayHistory($objType,$username,$password){
        switch(ucwords($objType)){
          case \LOE\Music\Song::TABLE:
            $obj = new \LOE\Music\PlayHistory($username,$password);
+         break;
+         case \LOE\Movie\Movie::TABLE:
+           $obj = new \LOE\Movie\PlayHistory($username,$password);
+         break;
+         case \LOE\Tv\Episode::TABLE:
+           $obj = new \LOE\Tv\PlayHistory($username,$password);
          break;
          default:
            throw new \Exception('Invalid Object Type');

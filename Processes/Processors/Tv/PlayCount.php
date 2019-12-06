@@ -1,4 +1,4 @@
-<?php namespace LOE\Movie;
+<?php namespace LOE\Tv;
 
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . '/../../../Libs/WebAccessClient/WebAccessClient.php';
@@ -19,19 +19,19 @@ class PlayCount{
     }
   }
   protected function _updateCounts(){
-    $movieCounts = $this->_webClient->getLoeMovieCounts();
-    foreach($movieCounts as $obj){
-      $movie = \LOE\Factory::search(Movie::TABLE,'file_path',$this->_buildPath($obj->query));
-      if(!count($movie)){
+    $episodeCounts = $this->_webClient->getLoeEpisodeCounts();
+    foreach($episodeCounts as $obj){
+      $episode = \LOE\Factory::search(Movie::TABLE,'file_path',$this->_buildPath($obj->query));
+      if(!count($episode)){
         $this->exceptions[] = $this->_buildPath($obj->query);
         continue;
       }else{
-        $movie = $movie[0];
+        $episode = $episode[0];
       }
-      $movie->file_path = \LOE\Base::WEBROOT . $movie->file_path;
-      $movie->cover_path = \LOE\Base::WEBROOT . $movie->cover_path;
-      $movie->play_count = $obj->downloads;
-      $movie->update();
+      $episode->file_path = \LOE\Base::WEBROOT . $episode->file_path;
+      $episode->cover_path = \LOE\Base::WEBROOT . $episode->cover_path;
+      $episode->play_count = $obj->downloads;
+      $episode->update();
     }
     return $this;
   }
