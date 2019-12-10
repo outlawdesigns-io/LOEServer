@@ -33,6 +33,7 @@ require_once __DIR__ . '/Processes/Scanners/Tv/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayHistory.php';
+require_once __DIR__ . '/Processes/Processors/Music/HoldingBayCleaner.php';
 require_once __DIR__ . '/Processes/Processors/Movie/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Movie/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/Movie/PlayHistory.php';
@@ -178,6 +179,16 @@ class Factory{
         }
         return $obj;
     }
+   public static function createHoldingBayCleaner($type){
+     $obj = null;
+     switch(ucwords($type)){
+       case \LOE\Music\Song::Table:
+         $obj = new \LOE\Music\HoldingBayCleaner();
+       break;
+       default:
+         throw new \Exception(self::BADOBJ);
+     }
+   }
    public static function browse($table,$key){
        return \Record::browse(Base::DB,$table,$key);
    }
