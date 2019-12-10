@@ -37,6 +37,18 @@ class Doc extends \LOE\Base{
     public static function countOf($key){
       return parent::countOf(self::TABLE,$key);
     }
+    public static function recordExists($absolutePath){
+      $results = $GLOBALS['db']
+        ->database(self::DB)
+        ->table(self::TABLE)
+        ->select(self::PRIMARYKEY)
+        ->where("file_path","=","'" . $absolutePath . "'")
+        ->get();
+      if(!mysqli_num_rows($results)){
+        return false;
+      }
+      return true;
+    }
     protected function _parseTags(){
         $tagStr = '';
         for($i = 0; $i < count($this->tags);$i++){

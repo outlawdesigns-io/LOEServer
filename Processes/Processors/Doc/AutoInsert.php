@@ -21,7 +21,7 @@ class AutoInsert extends \LOE\FsScanner{
 
   protected function _interpretFile($absolutePath){
     $pathInfo = pathinfo($absolutePath);
-    if(in_array($pathInfo['extension'],self::$fileTypes)){
+    if(in_array($pathInfo['extension'],self::$fileTypes) && !Doc::recordExists($absolutePath)){
         $doc = \LOE\Factory::createModel(Doc::TABLE);
         $doc->file_path = $absolutePath;
         $pieces = explode('/',$absolutePath);
