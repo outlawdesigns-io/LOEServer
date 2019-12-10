@@ -1,9 +1,8 @@
 <?php namespace LOE\Doc;
 
-//require_once __DIR__ . "/../../Scanners/FsScanner.php";
-require_once __DIR__ . '/../../Factory.php';
+require_once __DIR__ . '/../../../Factory.php';
 
-class AutoInsert{
+class AutoInsert extends \LOE\FsScanner{
 
   const ROOTDIR = '/LOE/Documents';
 
