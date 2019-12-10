@@ -182,7 +182,7 @@ class Factory{
    public static function createHoldingBayCleaner($type){
      $obj = null;
      switch(ucwords($type)){
-       case \LOE\Music\Song::Table:
+       case \LOE\Music\Song::TABLE:
          $obj = new \LOE\Music\HoldingBayCleaner();
        break;
        default:
