@@ -18,7 +18,6 @@ class AutoInsert extends \LOE\FsScanner{
   public function __construct(){
     $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR);
   }
-
   protected function _interpretFile($absolutePath){
     $pathInfo = pathinfo($absolutePath);
     if(in_array($pathInfo['extension'],self::$fileTypes) && !Doc::recordExists($absolutePath)){

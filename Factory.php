@@ -40,6 +40,7 @@ require_once __DIR__ . '/Processes/Processors/Movie/PlayHistory.php';
 require_once __DIR__ . '/Processes/Processors/Tv/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Tv/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/Tv/PlayHistory.php';
+require_once __DIR__ . '/Processes/Processors/Doc/AutoInsert.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
 
 
@@ -247,6 +248,16 @@ class Factory{
            throw new \Exception('Invalid Object Type');
        }
        return $obj;
+   }
+   public static function autoInsert($type){
+     switch(ucwords($type)){
+       case \LOE\Doc\Doc::TABLE:
+         $obj = new \LOE\Doc\AutoInsert();
+       break;
+       default:
+         throw new \Exception('Invalid Object Type');
+     }
+     return $obj;
    }
    public static function authenticate($username,$password){
      return \LOE\Movie\DbHealthScanner::authenticate($username,$password);
