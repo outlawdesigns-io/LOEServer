@@ -120,6 +120,9 @@ class Factory{
         case \LOE\Comic\Comic::TABLE:
           $obj = new \LOE\Comic\HoldingBayScanner();
           break;
+        case \LOE\Doc\Doc::TABLE:
+          $obj = new \LOE\Doc\HoldingBayScanner();
+        break;
         default:
           throw new \Exception(self::BADOBJ);
       }
@@ -229,7 +232,7 @@ class Factory{
            $obj = new \LOE\Tv\PlayCount($username,$password);
          break;
          default:
-           throw new \Exception('Invalid Object Type');
+           throw new \Exception(self::BADOBJ);
        }
        return $obj;
    }
@@ -245,7 +248,7 @@ class Factory{
            $obj = new \LOE\Tv\PlayHistory($username,$password);
          break;
          default:
-           throw new \Exception('Invalid Object Type');
+           throw new \Exception(self::BADOBJ);
        }
        return $obj;
    }
@@ -255,7 +258,7 @@ class Factory{
          $obj = new \LOE\Doc\AutoInsert();
        break;
        default:
-         throw new \Exception('Invalid Object Type');
+         throw new \Exception(self::BADOBJ);
      }
      return $obj;
    }
@@ -278,7 +281,7 @@ class Factory{
          $obj = new \LOE\Music\RandomPlayList($genre,$limit);
        break;
        default:
-         throw new \Exception('Invalid Object Type');
+         throw new \Exception(self::BADOBJ);
      }
      return $obj;
    }
