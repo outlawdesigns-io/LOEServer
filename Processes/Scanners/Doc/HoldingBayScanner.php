@@ -17,7 +17,7 @@ class HoldingBayScanner extends \LOE\FsScanner{
           $doc->file_path = $absolutePath;
           $pieces = explode('/',$absolutePath);
           for($i = 0; $i < count($pieces);$i++){
-              if($pieces[$i] == 'Documents'){
+              if($pieces[$i] == 'docs'){
                   $baseKey = $i;
               }
           }
