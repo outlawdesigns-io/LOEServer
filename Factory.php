@@ -3,6 +3,8 @@
 require_once __DIR__ . '/Models/Movie/Movie.php';
 require_once __DIR__ . '/Models/Movie/Played.php';
 require_once __DIR__ . '/Models/Movie/Rating.php';
+require_once __DIR__ . '/Models/Movie/PlayCountRun.php';
+require_once __DIR__ . '/Models/Movie/PlayHistoryRun.php';
 require_once __DIR__ . '/Models/Tv/Episode.php';
 require_once __DIR__ . '/Models/Tv/Played.php';
 require_once __DIR__ . '/Models/Tv/Rating.php';
@@ -11,6 +13,8 @@ require_once __DIR__ . '/Models/Music/Played.php';
 require_once __DIR__ . '/Models/Music/Rating.php';
 require_once __DIR__ . '/Models/Music/PlayList.php';
 require_once __DIR__ . '/Models/Music/RandomPlayList.php';
+require_once __DIR__ . '/Models/Music/PlayHistoryRun.php';
+require_once __DIR__ . '/Models/Music/PlayCountRun.php';
 require_once __DIR__ . '/Models/Doc/Doc.php';
 require_once __DIR__ . '/Models/Doc/Rating.php';
 require_once __DIR__ . '/Models/Anime/Anime.php';
@@ -236,6 +240,18 @@ class Factory{
        }
        return $obj;
    }
+   public static function createPlayCountRun($objType){
+     switch(ucwords($objType)){
+       case \LOE\Music\Song::TABLE:
+         $obj = new \LOE\Music\PlayCountRun();
+       break;
+       case \LOE\Movie\Movie::TABLE:
+         $obj = new \LOE\Movie\PlayCountRun();
+       break;
+       default:
+         throw new \Exception(self::BADOBJ);
+     }
+   }
    public static function updatePlayHistory($objType,$username,$password){
        switch(ucwords($objType)){
          case \LOE\Music\Song::TABLE:
@@ -251,6 +267,19 @@ class Factory{
            throw new \Exception(self::BADOBJ);
        }
        return $obj;
+   }
+   public static function createPlayHistoryRun($objType){
+     switch(ucwords($objType)){
+       case \LOE\Music\Song::TABLE:
+         $obj = new \LOE\Music\PlayHistoryRun();
+       break;
+       case \LOE\Movie\Movie::TABLE:
+         $obj = new \LOE\Movie\PlayHistoryRun();
+       break;
+       default:
+         throw new \Exception(self::BADOBJ);
+     }
+     return $obj;
    }
    public static function autoInsert($type){
      switch(ucwords($type)){

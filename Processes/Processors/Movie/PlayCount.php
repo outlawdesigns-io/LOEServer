@@ -9,8 +9,10 @@ class PlayCount{
 
   protected $_webClient;
   public $exceptions = array();
+  public $processedCount;
 
   public function __construct($username,$password){
+    $this->processedCount = 0;
     try{
       $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
       $this->_updateCounts();
@@ -32,6 +34,7 @@ class PlayCount{
       $movie->cover_path = \LOE\Base::WEBROOT . $movie->cover_path;
       $movie->play_count = $obj->downloads;
       $movie->update();
+      $this->processedCount++;
     }
     return $this;
   }

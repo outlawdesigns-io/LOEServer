@@ -11,10 +11,12 @@ class PlayHistory{
 
   protected $_webClient;
   public $exceptions = array();
+  public $processedCount;
   public static $responseCodes = array(202,206,304);
   public static $searchVals = array('.mp4','.mkv','.avi');
 
   public function __construct($username,$password){
+    $this->processedCount = 0;
     try{
       $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
       $this->_updatePlayHistory();
@@ -42,6 +44,7 @@ class PlayHistory{
           $playedMovie->playDate = $reqObj->requestDate;
           $playedMovie->ipAddress = $reqObj->ip_address;
           $playedMovie->create();
+          $this->processedCount++;
         }
       }
     }
