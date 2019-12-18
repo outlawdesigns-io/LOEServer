@@ -1,5 +1,10 @@
 <?php namespace LOE;
 
+require_once __DIR__ . '/Models/Model.php';
+require_once __DIR__ . '/Models/DbCheck.php';
+require_once __DIR__ . '/Models/FsCheck.php';
+require_once __DIR__ . '/Models/PlayCountRun.php';
+require_once __DIR__ . '/Models/PlayHistoryRun.php';
 require_once __DIR__ . '/Models/Movie/Movie.php';
 require_once __DIR__ . '/Models/Movie/Played.php';
 require_once __DIR__ . '/Models/Movie/Rating.php';
@@ -104,6 +109,22 @@ class Factory{
         break;
       case \LOE\Comic\Rating::TABLE:
         $obj = new \LOE\Comic\Rating($UID);
+        break;
+      case \LOE\Model::TABLE:
+        $obj = new \LOE\Model($UID);
+        break;
+      case \LOE\FsCheck::TABLE:
+        $obj = new \LOE\FsCheck($UID);
+        break;
+      case \LOE\DbCheck::TABLE:
+        $obj = new \LOE\DbCheck($UID);
+        break;
+      case \LOE\PlayCountRun::TABLE:
+        $obj = new \LOE\PlayCountRun($UID);
+        break;
+      case \LOE\PlayHistoryRun::TABLE:
+        $obj = new \LOE\PlayHistoryRun($UID);
+        break;
       default:
         throw new \Exception(self::BADOBJ);
       }
