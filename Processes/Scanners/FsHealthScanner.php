@@ -39,7 +39,7 @@ class FsHealthScanner extends FsScanner{
     return $this;
   }
   protected function _verifyDatabase(){
-    $className = $this->_model->namespace . $model->label;
+    $className = $this->_model->namespace . $this->_model->label;
     foreach($this->files as $file){
       if(!$className::recordExists($file)){
         $this->missing[] = preg_replace("/'/","",$file);
