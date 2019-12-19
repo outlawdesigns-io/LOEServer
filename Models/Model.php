@@ -11,6 +11,7 @@ class Model extends \LOE\Base{
   public $fsRoot;
   public $holdingBayRoot;
   public $fileExtensions = array();
+  public $namespace;
 
   public function __construct($UID = null){
     parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);

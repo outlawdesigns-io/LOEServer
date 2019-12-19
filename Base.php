@@ -54,11 +54,37 @@ class Base extends \Record{
         }
         return false;
     }
-    public static function count($objType){
-      return parent::count(self::DB,$objType);
+    public static function recordExists($absolutePath){
+      $GLOBALS['db']
+        ->database(self::DB)
+        ->table(static::TABLE)
+        ->select(static::PRIMARYKEY)
+        ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'");
+      try{
+        $results = $GLOBALS['db']->get();
+      }catch(\Exception $e){
+        echo $e->getMessage() . "\n";
+        echo $absolutePath . "\n";
+        return false;
+      }
+      if(!mysqli_num_rows($results)){
+        return false;
+      }
+      return true;
     }
-    public static function countOf($objType,$key){
-      return parent::countOf(self::DB,$objType,$key);
+    public static function count($objType){
+      return parent::count(self::DB,static::TABLE);
+    }
+    public static function countOf($key){
+      return parent::countOf(self::DB,static::TABLE,$key);
+    }
+    public static function getAll(){
+      $data = array();
+      $ids = parent::getAll(self::DB,static::TABLE,static::PRIMARYKEY);
+      foreach($ids as $id){
+          $data[] = new self($id);
+      }
+      return $data;
     }
     public function backup(){
         //todo implement backup solution

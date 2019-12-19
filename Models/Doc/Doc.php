@@ -23,32 +23,6 @@ class Doc extends \LOE\Base{
         $this->file_path = $this->_cleanFilePath($this->file_path);
         $this->_cleanProperties();
     }
-    public static function getAll(){
-        $data = array();
-        $ids = parent::getAll(self::DB,self::TABLE,self::PRIMARYKEY);
-        foreach($ids as $id){
-            $data[] = new self($id);
-        }
-        return $data;
-    }
-    public static function count(){
-      return parent::count(self::TABLE);
-    }
-    public static function countOf($key){
-      return parent::countOf(self::TABLE,$key);
-    }
-    public static function recordExists($absolutePath){
-      $results = $GLOBALS['db']
-        ->database(self::DB)
-        ->table(self::TABLE)
-        ->select(self::PRIMARYKEY)
-        ->where("file_path","=","'" . $absolutePath . "'")
-        ->get();
-      if(!mysqli_num_rows($results)){
-        return false;
-      }
-      return true;
-    }
     protected function _parseTags(){
         $tagStr = '';
         for($i = 0; $i < count($this->tags);$i++){

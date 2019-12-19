@@ -29,18 +29,4 @@ class Anime extends \LOE\Base{
         $this->cover_path = $this->_cleanFilePath($this->cover_path);
         $this->_cleanProperties();
     }
-    public static function getAll(){
-        $data = array();
-        $ids = parent::getAll(self::DB,self::TABLE,self::PRIMARYKEY);
-        foreach($ids as $id){
-            $data[] = new self($id);
-        }
-        return $data;
-    }
-    public static function count(){
-      return parent::count(self::TABLE);
-    }
-    public static function countOf($key){
-      return parent::countOf(self::TABLE,$key);
-    }
 }

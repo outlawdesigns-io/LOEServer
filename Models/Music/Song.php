@@ -73,14 +73,6 @@ class Song extends \LOE\Base{
         }
         return true;
     }
-    public static function getAll(){
-        $data = array();
-        $ids = parent::getAll(self::DB,self::TABLE,self::PRIMARYKEY);
-        foreach($ids as $id){
-            $data[] = new self($id);
-        }
-        return $data;
-    }
     public static function search($key,$value){
         $data = array();
         $ids = parent::search(self::DB,self::TABLE,self::PRIMARYKEY,$key,$value);
@@ -88,12 +80,6 @@ class Song extends \LOE\Base{
             $data[] = new self($id);
         }
         return $data;
-    }
-    public static function count(){
-      return parent::count(self::TABLE);
-    }
-    public static function countOf($key){
-      return parent::countOf(self::TABLE,$key);
     }
     public static function getRandom($genre = null){
       $ids = array();
