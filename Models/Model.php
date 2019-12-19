@@ -16,18 +16,19 @@ class Model extends \LOE\Base{
   public function __construct($UID = null){
     parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
   }
-  public static function getAll(){
-    $data = array();
-    $ids = parent::getAll(self::DB,self::TABLE,self::PRIMARYKEY);
-    foreach($ids as $id){
-      $data[] = new self($id);
+  public static function getByLabel($label){
+    $results = $GLOBALS['db']
+      ->database(self::DB)
+      ->table(self::TABLE)
+      ->select(self::PRIMARYKEY)
+      ->where('label','=',"'" . $label . "'")
+      ->get();
+    if(!mysqli_num_row($results)){
+      throw new \Exception('Invalid Model Label');
     }
-    return $data;
-  }
-  public static function count(){
-    return parent::count(self::TABLE);
-  }
-  public static function countOf($key){
-    return parent::countOf(self::TABLE,$key);
+    while($row = mysqli_fetch_assoc($results)){
+      $id = $row[self::PRIMARYKEY];
+    }
+    return new self($id);
   }
 }
