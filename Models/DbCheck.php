@@ -4,7 +4,7 @@ require_once __DIR__ . '/../Base.php';
 
 class DbCheck extends \LOE\Base{
 
-  const TABLE = 'FsCheck';
+  const TABLE = 'DbCheck';
 
   public $UID;
   public $modelId;

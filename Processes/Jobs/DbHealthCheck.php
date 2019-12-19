@@ -22,9 +22,21 @@ try{
   exit;
 }
 foreach($table as $table){
+  $startTime = microtime(true);
+  $model = \LOE\Model::getByLabel($table);
+  $run = \LOE\Factory::createModel('DbCheck');
+  $run->startTime = date("Y-m-d H:i:s");
+  $run->modelId = $model->UID;
   try{
-    \LOE\Factory::createDbScanner($table,$msgTo,$authToken);
+    $scanner = \LOE\Factory::createDbScanner($model,$msgTo,$authToken);
   }catch(\Exception $e){
     echo $e->getMessage() . "\n";
   }
+  $endTime = microtime(true);
+  $executionSeconds = $endTime - $startTime;
+  $run->endTime = date("Y-m-d H:i:s");
+  $run->runTime = $executionSeconds;
+  $run->recordCount = $scanner->recordCount;
+  $run->missingCount = count($scanner->missing);
+  $run->create();
 }

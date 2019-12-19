@@ -219,18 +219,6 @@ class Factory{
        }
        return $obj;
    }
-   public static function createPlayCountRun($objType){
-     switch(ucwords($objType)){
-       case \LOE\Music\Song::TABLE:
-         $obj = new \LOE\Music\PlayCountRun();
-       break;
-       case \LOE\Movie\Movie::TABLE:
-         $obj = new \LOE\Movie\PlayCountRun();
-       break;
-       default:
-         throw new \Exception(self::BADOBJ);
-     }
-   }
    public static function updatePlayHistory($objType,$username,$password){
        switch(ucwords($objType)){
          case \LOE\Music\Song::TABLE:

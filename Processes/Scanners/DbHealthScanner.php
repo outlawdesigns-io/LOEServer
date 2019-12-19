@@ -9,6 +9,7 @@ class DbHealthScanner extends \MessageClient{
   const MSGSUBJ = "Library of Everything Database Check";
 
   public $msgResponse;
+  public $recordCount;
   public $missing = array();
   protected $_objects = array();
   protected $_msgTo;
@@ -34,6 +35,7 @@ class DbHealthScanner extends \MessageClient{
     $className = $this->_model->namespace . $this->_model->label;
     $this->_objects = $className::getAll();
     $this->_recordCount = count($this->_objects);
+    $this->recordCount = $this->_recordCount;
     return $this;
   }
   protected function _buildMessageName(){
