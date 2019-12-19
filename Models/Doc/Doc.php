@@ -8,7 +8,7 @@ class Doc extends \LOE\Base{
 
     public $UID;
     public $title;
-    public $subTitle;
+    public $subtitle;
     public $author;
     public $pub_date;
     public $pub_type;
