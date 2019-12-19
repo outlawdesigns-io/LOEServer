@@ -72,7 +72,7 @@ class Base extends \Record{
       }
       return true;
     }
-    public static function count($objType){
+    public static function count(){
       return parent::count(self::DB,static::TABLE);
     }
     public static function countOf($key){
@@ -82,7 +82,7 @@ class Base extends \Record{
       $data = array();
       $ids = parent::getAll(self::DB,static::TABLE,static::PRIMARYKEY);
       foreach($ids as $id){
-          $data[] = new self($id);
+          $data[] = new static($id);
       }
       return $data;
     }
