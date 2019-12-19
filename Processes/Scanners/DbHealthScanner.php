@@ -17,7 +17,7 @@ class DbHealthScanner extends \MessageClient{
   protected $_model;
 
   public function __construct($model,$msgTo = null,$authToken = null){
-    $this->_model = $_model;
+    $this->_model = $model;
     $this->_msgTo = $msgTo;
     $this->_buildObjects()->_scan();
     if(is_null($authToken) && !is_null($msgTo)){
