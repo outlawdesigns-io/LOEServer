@@ -6,8 +6,6 @@ require_once __DIR__ . '/../../Factory.php';
 class FsHealthScanner extends FsScanner{
 
   const MSGSUBJ = "Library of Everything File System Check";
-  const PATHPATTERN = "/\/var\/www\/html\//";
-  const PATHREPLACE = "/var/www/";
 
   public $missing = array();
   public $files = array();
@@ -42,30 +40,11 @@ class FsHealthScanner extends FsScanner{
   }
   protected function _verifyDatabase(){
     foreach($this->files as $file){
-      $file = preg_replace(self::PATHPATTERN,self::PATHREPLACE,$file);
       if(!$this->_recordExists($file)){
         $this->missing[] = preg_replace("/'/","",$file);
       }
     }
     return $this;
-  }
-  protected function _recordExists($absolutePath){
-    $GLOBALS['db']
-                ->database(\LOE\Movie::DB)
-                ->table(\LOE\Movie::TABLE)
-                ->select(\LOE\Movie::PRIMARYKEY)
-                ->where("file_path","=","'" . preg_replace("/'/","",$absolutePath) . "'");
-    try{
-      $results = $GLOBALS['db']->get();
-    }catch(\Exception $e){
-      echo $e->getMessage() . "\n";
-      echo $absolutePath . "\n";
-      return false;
-    }
-    if(!mysqli_num_rows($results)){
-      return false;
-    }
-    return true;
   }
   protected function _calculateHealth(){
     return ((count($this->files) - count($this->missing)) / count($this->files)) * 100;
@@ -73,7 +52,7 @@ class FsHealthScanner extends FsScanner{
   protected function _buildMessage(){
     return array(
       "to"=>array($this->_msgTo),
-      "subject"=>self::MSGSUBJ . ": " . self::ROOTDIR . " " . round($this->_calculateHealth(),2) . "%",
+      "subject"=>self::MSGSUBJ . ": " . $this->_model->fsRoot . " " . round($this->_calculateHealth(),2) . "%",
       "msg_name"=>self::MSGNAME,
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m-d'),
@@ -82,13 +61,13 @@ class FsHealthScanner extends FsScanner{
   }
   protected function _fillMessageBody(){
     $str = "A file system consitency test has been completed for: ";
-    $str .= self::ROOTDIR . "<br>";
+    $str .= $this->_model->fsRoot . "<br>";
     if(count($this->missing)){
       sort($this->missing);
       $str .= "The following files cannot be accounted for:<br>";
       $str .= "<pre>" . print_r($this->missing,true) . "</pre>";
     }else{
-      $str .= "Congratulations! " . self::ROOTDIR . " is at 100% health!";
+      $str .= "Congratulations! " . $this->_model->fsRoot . " is at 100% health!";
     }
     return $str;
   }
