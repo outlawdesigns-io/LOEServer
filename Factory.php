@@ -23,18 +23,12 @@ require_once __DIR__ . '/Models/Anime/Played.php';
 require_once __DIR__ . '/Models/Anime/Rating.php';
 require_once __DIR__ . '/Models/Comic/Comic.php';
 require_once __DIR__ . '/Models/Comic/Rating.php';
-require_once __DIR__ . '/Processes/Scanners/Anime/DbHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Comic/FsHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/DbHealthScanner.php';
+require_once __DIR__ . '/Processes/Scanners/FsHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Comic/HoldingBayScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Movie/FsHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Movie/HoldingBayScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Movie/DbHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Music/FsHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Music/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Music/HoldingBayScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Tv/FsHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Tv/HoldingBayScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Tv/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/Music/PlayHistory.php';
@@ -149,43 +143,11 @@ class Factory{
       }
       return $obj;
     }
-    public static function createFsScanner($type,$msgTo = null, $authToken = null){
-      switch(ucwords($type)){
-        case \LOE\Movie\Movie::TABLE:
-            $obj = new \LOE\Movie\FsHealthScanner($msgTo,$authToken);
-            break;
-        case \LOE\Tv\Episode::TABLE:
-            $obj = new \LOE\Tv\FsHealthScanner($msgTo,$authToken);
-            break;
-        case \LOE\Music\Song::TABLE:
-            $obj = new \LOE\Music\FsHealthScanner($msgTo,$authToken);
-            break;
-        case \LOE\Comic\Comic::TABLE:
-            $obj = new \LOE\Comic\FsHealthScanner($msgTo,$authToken);
-            break;
-        default:
-          throw new \Exception(self::BADOBJ);
-      }
-      return $obj;
+    public static function createFsScanner($model,$msgTo = null, $authToken = null){
+      return new \LOE\FsHealthScanner($model,$msgTo,$authToken);
     }
-    public static function createDbScanner($type,$msgTo = null, $authToken = null){
-      switch(ucwords($type)){
-        case \LOE\Movie\Movie::TABLE:
-            $obj = new \LOE\Movie\DbHealthScanner($msgTo,$authToken);
-            break;
-        case \LOE\Tv\Episode::TABLE:
-            $obj = new \LOE\Tv\DbHealthScanner($msgTo,$authToken);
-            break;
-        case \LOE\Music\Song::TABLE:
-            $obj = new \LOE\Music\DbHealthScanner($msgTo,$authToken);
-            break;
-        case \LOE\Anime\Anime::TABLE:
-            $obj = new \LOE\Anime\DbHealthScanner($msgTo,$authToken);
-            break;
-        default:
-            throw new \Exception(self::BADOBJ);
-      }
-      return $obj;
+    public static function createDbScanner($model,$msgTo = null, $authToken = null){
+      return new \LOE\DbHealthScanner($model,$msgTo,$authToken);
     }
     public static function createHoldingBayProcessor($type,$inputObj){
         $obj = null;

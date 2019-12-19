@@ -54,7 +54,7 @@ class FsHealthScanner extends FsScanner{
     return array(
       "to"=>array($this->_msgTo),
       "subject"=>self::MSGSUBJ . ": " . $this->_model->fsRoot . " " . round($this->_calculateHealth(),2) . "%",
-      "msg_name"=>self::MSGNAME,
+      "msg_name"=>$this->_buildMessageName(),
       "body"=>$this->_fillMessageBody(),
       "flag"=>date('Y-m-d'),
       "sent_by"=>"LOE3:" . __FILE__

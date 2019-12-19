@@ -72,6 +72,14 @@ class Base extends \Record{
       }
       return true;
     }
+    public static function search($key,$value){
+      $data = array();
+      $ids = parent::search(self::DB,static::TABLE,static::PRIMARYKEY,$key,$value);
+      foreach($ids as $id){
+          $data[] = new self($id);
+      }
+      return $data;
+    }
     public static function count(){
       return parent::count(self::DB,static::TABLE);
     }

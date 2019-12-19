@@ -25,13 +25,5 @@ class Episode extends \LOE\Base{
         $this->cover_path = $this->_cleanFilePath($this->cover_path);
         $this->_cleanProperties();
     }
-    public static function search($key,$value){
-        $data = array();
-        $ids = parent::search(self::DB,self::TABLE,self::PRIMARYKEY,$key,$value);
-        foreach($ids as $id){
-            $data[] = new self($id);
-        }
-        return $data;
-    }
 
 }
