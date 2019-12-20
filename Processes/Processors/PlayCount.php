@@ -14,10 +14,9 @@ class PlayCount{
 
   public function __construct($model,$username,$password){
     $this->_model = $model;
-    $this->_getModels();
     try{
       $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
-      $this->_updateCounts();
+      $this->_getModels()->_updateCounts();
     }catch(\Exception $e){
       throw new \Exception($e->getMessage());
     }
