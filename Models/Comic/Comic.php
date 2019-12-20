@@ -8,7 +8,7 @@ class Comic extends \LOE\Base{
 
   public $UID;
   public $issue_number;
-  public $issue_titile;
+  public $issue_title;
   public $issue_cover_date;
   public $series_title;
   public $series_start_year;

@@ -8,23 +8,29 @@ if(!isset($argv[1])){
   exit;
 }else{
   $msgTo = $argv[1];
+  $models = \LOE\Model::getAll();
 }
-$tables = array(
-  \LOE\Movie\Movie::TABLE,
-  \LOE\Tv\Episode::TABLE,
-  \LOE\Music\Song::TABLE,
-  \LOE\Anime\Anime::TABLE
-);
 try{
   $authToken = \LOE\Factory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
 }catch(\Exception $e){
   echo $e->getMessage() . "\n";
   exit;
 }
-foreach($table as $table){
+foreach($models as $model){
+  $startTime = microtime(true);
+  $run = \LOE\Factory::createModel('FsCheck');
+  $run->startTime = date("Y-m-d H:i:s");
+  $run->modelId = $model->UID;
   try{
-    \LOE\LoeFactory::createFsScanner($table,$msgTo,$authToken);
+    \LOE\LoeFactory::createFsScanner($model,$msgTo,$authToken);
   }catch(\Exception $e){
     echo $e->getMessage() . "\n";
   }
+  $endTime = microtime(true);
+  $executionSeconds = $endTime - $startTime;
+  $run->endTime = date("Y-m-d H:i:s");
+  $run->runTime = $executionSeconds;
+  $run->recordCount = $scanner->recordCount;
+  $run->missingCount = count($scanner->missing);
+  $run->create();
 }
