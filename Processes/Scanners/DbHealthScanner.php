@@ -56,7 +56,7 @@ class DbHealthScanner extends \MessageClient{
   protected function _buildMessage(){
     return array(
       "to"=>array($this->_msgTo),
-      "subject"=>self::MSGSUBJ . ": " . strtoupper(\LOE\Movie::TABLE) . " " . round($this->_calculateHealth(),2) . "%",
+      "subject"=>self::MSGSUBJ . ": " . strtoupper($this->_model->label) . " " . round($this->_calculateHealth(),2) . "%",
       "body"=>$this->_fillMessageBody(),
       "msg_name"=>$this->_buildMessageName(),
       "flag"=>date('Y-m-d'),
