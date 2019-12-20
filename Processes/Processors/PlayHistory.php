@@ -1,0 +1,57 @@
+<?php namespace LOE;
+
+require_once __DIR__ . '/../../Factory.php';
+require_once __DIR__ . '/../../Libs/WebAccessClient/WebAccessClient.php';
+
+class PlayHistory{
+
+  const SPACEPATT = "/%20/";
+  const REQEND = 'request';
+  const REQKEY = 'query';
+  const TARGETFIELD = 'file_path';
+
+  protected $_webClient;
+  protected $_model;
+  public $exceptions = array();
+  public $processedCount;
+  public static $responseCodes = array(202,206,304);
+
+  public function __construct($model,$username,$password){
+    $this->_model = $model;
+    $this->processedCount = 0;
+    try{
+      $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
+      $this->_updatePlayHistory();
+    }catch(\Exception $e){
+      throw new \Exception($e->getMessage());
+    }
+  }
+  protected function _buildPath($query){
+    return Base::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
+  }
+  protected function _updatePlayHistory(){
+    $playedClass = $this->_model->namespace . 'Played';
+    foreach($this->_model->fileExtensions as $extension){
+      $results = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension);
+      foreach($results as $reqObj){
+        $model = Factory::search($this->_model->label,self::TARGETFIELD,$this->_buildPath($reqObj->query));
+        if(!count($model)){
+          $this->exceptions[] = $this->_buildPath($reqObj->query);
+          continue;
+        }else{
+          $model = $model[0];
+        }
+        if(!$playedClass::recordExists($model->UID,$reqObj->requestDate) && in_array($reqObj->responseCode,self::$responseCodes)){
+          $modelId = strtolower($this->_model->label) . 'Id';
+          $played = Factory::createModel($playedClass::TABLE);
+          $played->$modelId = $model->UID;
+          $played->playDate = $reqObj->requestDate;
+          $played->ipAddress = $reqObj->ip_address;
+          $played->create();
+          $this->processedCount++;
+        }
+      }
+    }
+    return $this;
+  }
+}
