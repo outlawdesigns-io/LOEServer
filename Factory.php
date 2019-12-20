@@ -259,7 +259,7 @@ class Factory{
      return $obj;
    }
    public static function authenticate($username,$password){
-     return \LOE\Movie\DbHealthScanner::authenticate($username,$password);
+     return \LOE\DbHealthScanner::authenticate($username,$password);
    }
    public static function extractArchives($rootDir){
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
