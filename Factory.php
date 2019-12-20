@@ -238,4 +238,7 @@ class Factory{
      }
      return $obj;
    }
+   public static function getModel($label){
+     return Model::getByLabel($label);
+   }
 }

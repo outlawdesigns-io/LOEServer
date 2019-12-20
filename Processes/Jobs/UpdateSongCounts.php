@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../Factory.php';
 require_once __DIR__ . '/AccountCredentials.php';
 
 $startTime = microtime(true);
-$model = \LOE\Model::getByLabel('Song');
+$model = \LOE\Factory::getModel('Song');
 $run = \LOE\Factory::createModel('PlayCountRun');
 $run->modelId = $model->UID;
 $run->startTime = date("Y-m-d H:i:s");
