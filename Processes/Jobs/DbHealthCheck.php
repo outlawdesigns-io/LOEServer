@@ -8,22 +8,16 @@ if(!isset($argv[1])){
   exit;
 }else{
   $msgTo = $argv[1];
+  $models = \LOE\Model::getAll();
 }
-$tables = array(
-  \LOE\Movie::TABLE,
-  \LOE\Episode::TABLE,
-  \LOE\Song::TABLE,
-  \LOE\Anime::TABLE
-);
 try{
   $authToken = \LOE\Factory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
 }catch(\Exception $e){
   echo $e->getMessage() . "\n";
   exit;
 }
-foreach($table as $table){
+foreach($models as $model){
   $startTime = microtime(true);
-  $model = \LOE\Model::getByLabel($table);
   $run = \LOE\Factory::createModel('DbCheck');
   $run->startTime = date("Y-m-d H:i:s");
   $run->modelId = $model->UID;
