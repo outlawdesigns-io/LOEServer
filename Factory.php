@@ -191,14 +191,6 @@ class Factory{
        }
        return $data;
    }
-   public static function recent($table,$limit){
-       $data = array();
-       $ids = \Record::getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
-       foreach($ids as $id){
-         $data[] = self::createModel($table,$id);
-       }
-       return $data;
-   }
    public static function updatePlayCounts($model,$username,$password){
      return new PlayCount($model,$username,$password);
    }
@@ -226,6 +218,14 @@ class Factory{
    }
    public static function countOf($table,$key){
      return \Record::countOf(Base::DB,$table,$key);
+   }
+   public static function recent($table,$limit){
+       $data = array();
+       $ids = \Record::getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
+       foreach($ids as $id){
+         $data[] = self::createModel($table,$id);
+       }
+       return $data;
    }
    public static function createRandomPlayList($type,$genre,$limit){
      $obj = null;

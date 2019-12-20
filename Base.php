@@ -76,7 +76,7 @@ class Base extends \Record{
       $data = array();
       $ids = parent::search(self::DB,static::TABLE,static::PRIMARYKEY,$key,$value);
       foreach($ids as $id){
-          $data[] = new self($id);
+          $data[] = new static($id);
       }
       return $data;
     }
@@ -91,6 +91,14 @@ class Base extends \Record{
       $ids = parent::getAll(self::DB,static::TABLE,static::PRIMARYKEY);
       foreach($ids as $id){
           $data[] = new static($id);
+      }
+      return $data;
+    }
+    public static function recent($limit){
+      $data = array();
+      $ids = parent::getRecent(self::DB,static::TABLE,$limit);
+      foreach($ids as $id){
+        $data[] = new static($id);
       }
       return $data;
     }
