@@ -23,7 +23,7 @@ class Model extends \LOE\Base{
       ->select(self::PRIMARYKEY)
       ->where('label','=',"'" . $label . "'")
       ->get();
-    if(!mysqli_num_row($results)){
+    if(!mysqli_num_rows($results)){
       throw new \Exception('Invalid Model Label');
     }
     while($row = mysqli_fetch_assoc($results)){
