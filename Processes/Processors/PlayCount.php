@@ -8,12 +8,14 @@ class PlayCount{
   const SPACEPATT = "/%20/";
 
   public $exceptions = array();
+  public $processedCount;
   protected $_webClient;
   protected $_model;
   protected $_modelCounts = array();
 
   public function __construct($model,$username,$password){
     $this->_model = $model;
+    $this->processedCount = 0;
     try{
       $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
       $this->_getModels()->_updateCounts();
@@ -50,6 +52,7 @@ class PlayCount{
       $model->cover_path = Base::WEBROOT . $model->cover_path;
       $model->play_count = $obj->listens;
       $model->update();
+      $this->processedCount++;
     }
     return $this;
   }
