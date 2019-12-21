@@ -13,6 +13,8 @@ class PlayCountRun extends \LOE\Base{
   public $runTime;
   public $exceptionCount;
   public $processedCount;
+  public $exceptionCaught;
+  public $exceptionMessage;
 
   public function __construct($UID = null){
     parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);

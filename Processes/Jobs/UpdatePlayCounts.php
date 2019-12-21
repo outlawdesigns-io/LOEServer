@@ -18,7 +18,8 @@ foreach($models as $model){
       print_r($processor->exceptions);
     }
   }catch(\Exception $e){
-    echo $e->getMessage() . "\n";
+    $run->exceptionCaught = 1;
+    $run->$exceptionMessage = $e->getMessage();
   }
   $endTime = microtime(true);
   $executionSeconds = $endTime - $startTime;
