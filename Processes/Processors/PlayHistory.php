@@ -12,6 +12,7 @@ class PlayHistory{
 
   protected $_webClient;
   protected $_model;
+  public $searchResults = array();
   public $exceptions = array();
   public $processedCount;
   public static $responseCodes = array(202,206,304);
@@ -32,8 +33,8 @@ class PlayHistory{
   protected function _updatePlayHistory(){
     $playedClass = $this->_model->namespace . 'Played';
     foreach($this->_model->fileExtensions as $extension){
-      $results = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension);
-      foreach($results as $reqObj){
+      $this->results = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension);
+      foreach($this->results as $reqObj){
         $model = Factory::search($this->_model->label,self::TARGETFIELD,$this->_buildPath($reqObj->query));
         if(!count($model)){
           $this->exceptions[] = $this->_buildPath($reqObj->query);

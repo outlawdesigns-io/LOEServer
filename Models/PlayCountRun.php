@@ -11,6 +11,7 @@ class PlayCountRun extends \LOE\Base{
   public $startTime;
   public $endTime;
   public $runTime;
+  public $searchResultCount;
   public $exceptionCount;
   public $processedCount;
   public $exceptionCaught;

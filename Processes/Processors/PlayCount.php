@@ -7,7 +7,9 @@ class PlayCount{
 
   const SPACEPATT = "/%20/";
 
+  public $searchResultCount;
   public $exceptions = array();
+  public $results = array();
   public $processedCount;
   protected $_webClient;
   protected $_model;
@@ -37,6 +39,7 @@ class PlayCount{
       default:
         throw new \Exception('Invalid Model');
     }
+    $this->searchResultCount = count($this->_modelCounts);
     return $this;
   }
   protected function _updateCounts(){
