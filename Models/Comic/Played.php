@@ -1,4 +1,4 @@
-<?php namespace LOE\Anime;
+<?php namespace LOE\Comic;
 
 require_once __DIR__ . '/../../Base.php';
 

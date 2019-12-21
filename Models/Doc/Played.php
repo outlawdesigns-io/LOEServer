@@ -1,4 +1,4 @@
-<?php namespace LOE\Movie;
+<?php namespace LOE\Doc;
 
 require_once __DIR__ . '/../../Base.php';
 
