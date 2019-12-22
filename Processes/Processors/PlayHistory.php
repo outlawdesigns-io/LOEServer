@@ -33,8 +33,8 @@ class PlayHistory{
   protected function _updatePlayHistory(){
     $playedClass = $this->_model->namespace . 'Played';
     foreach($this->_model->fileExtensions as $extension){
-      $this->results = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension);
-      foreach($this->results as $reqObj){
+      $this->searchResults = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension);
+      foreach($this->searchResults as $reqObj){
         $model = Factory::search($this->_model->label,self::TARGETFIELD,$this->_buildPath($reqObj->query));
         if(!count($model)){
           $this->exceptions[] = $this->_buildPath($reqObj->query);

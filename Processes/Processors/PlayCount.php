@@ -9,7 +9,6 @@ class PlayCount{
 
   public $searchResultCount;
   public $exceptions = array();
-  public $results = array();
   public $processedCount;
   protected $_webClient;
   protected $_model;
