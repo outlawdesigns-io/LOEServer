@@ -17,6 +17,7 @@ class PlayCount{
   public function __construct($model,$username,$password){
     $this->_model = $model;
     $this->processedCount = 0;
+    $this->searchResultCount = 0;
     try{
       $this->_webClient = new \WebAccessClient(\WebAccessClient::authenticate($username,$password)->token);
       $this->_getModels()->_updateCounts();
@@ -28,6 +29,7 @@ class PlayCount{
     foreach($this->_model->fileExtensions as $extension){
       $this->_modelCounts = array_merge($this->_modelCounts,$this->_webClient->getDocTypeCounts($extension));
     }
+    $this->searchResultCount = count($this->_modelCounts);
     return $this;
   }
   protected function _updateCounts(){
