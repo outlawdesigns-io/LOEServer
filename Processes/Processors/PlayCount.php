@@ -25,6 +25,12 @@ class PlayCount{
     }
   }
   protected function _getModels(){
+    foreach($this->_model->fileExtensions as $extension){
+      $this->_modelCounts = array_merge($this->_modelCounts,$this->_webClient->getDocTypeCounts($extension));
+    }
+    return $this;
+  }
+  protected function _getModels(){
     switch($this->_model->label){
       case 'Movie':
         $this->_modelCounts = $this->_webClient->getLoeMovieCounts();
