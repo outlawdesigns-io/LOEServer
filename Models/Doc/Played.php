@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../Base.php';
 
 class Played extends \LOE\Base{
 
-  const TABLE = 'PlayedMovie';
+  const TABLE = 'PlayedDoc';
 
   public $UID;
   public $docId;
