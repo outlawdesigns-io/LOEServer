@@ -41,7 +41,7 @@ class PlayCount{
       }
       $model->file_path = Base::WEBROOT . $model->file_path;
       $model->cover_path = Base::WEBROOT . $model->cover_path;
-      $model->play_count = $obj->listens;
+      $model->play_count = $obj->downloads;
       $model->update();
       $this->processedCount++;
     }
