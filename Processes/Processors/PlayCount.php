@@ -30,23 +30,6 @@ class PlayCount{
     }
     return $this;
   }
-  protected function _getModels(){
-    switch($this->_model->label){
-      case 'Movie':
-        $this->_modelCounts = $this->_webClient->getLoeMovieCounts();
-      break;
-      case 'Song':
-        $this->_modelCounts = $this->_webClient->getLoeSongCounts();
-      break;
-      case 'Episode':
-        $this->_modelCounts = $this->_webClient->getLoeEpisodeCounts();
-      break;
-      default:
-        throw new \Exception('Invalid Model');
-    }
-    $this->searchResultCount = count($this->_modelCounts);
-    return $this;
-  }
   protected function _updateCounts(){
     foreach($this->_modelCounts as $obj){
       $model = Factory::search($this->_model->label,'file_path',$this->_buildPath($obj->query));
