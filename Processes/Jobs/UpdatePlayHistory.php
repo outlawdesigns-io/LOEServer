@@ -20,7 +20,7 @@ foreach($models as $model){
     }
   }catch(\Exception $e){
     $run->exceptionCaught = 1;
-    $run->$exceptionMessage = $e->getMessage();
+    $run->exceptionMessage = $e->getMessage();
   }
   $endTime = microtime(true);
   $executionSeconds = $endTime - $startTime;
