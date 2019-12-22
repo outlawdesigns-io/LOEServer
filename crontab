@@ -10,8 +10,8 @@
 # CMD      Command         Any command to be executed.
 ################################################################################################################################
 SHELL=/bin/bash
-0 0 * * * (time php /var/www/html/LOEServer/Processes/Jobs/UpdateSongCounts.php) >> /tmp/songCount 2>&1
-0 5 * * * (time php /var/www/html/LOEServer/Processes/Jobs/UpdateSongPlayHistory.php) >> /tmp/songHistory 2>&1
+0 0 * * * (time php /var/www/html/LOEServer/Processes/Jobs/UpdatePlayCounts.php) >> /tmp/songCount 2>&1
+0 5 * * * (time php /var/www/html/LOEServer/Processes/Jobs/UpdatePlayHistory.php) >> /tmp/songHistory 2>&1
 0 0 1 * * (time php /var/www/html/LOEServer/Processes/Jobs/DbHealthCheck.php {msgRecipient}) >> /tmp/dbCheck 2>&1
 0 1 1 * * (time php /var/www/html/LOEServer/Processes/Jobs/FsHealthCheck.php {msgRecipient}) >> /tmp/fsCheck 2>&1
-*/5 * * * * (time php /var/www/html/LOEServer/Processes/Jobs/ExtractArchives.php) >> /tmp/archiveErrors 2>&1
+#*/5 * * * * (time php /var/www/html/LOEServer/Processes/Jobs/ExtractArchives.php) >> /tmp/archiveErrors 2>&1
