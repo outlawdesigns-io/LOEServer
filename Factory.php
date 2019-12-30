@@ -118,28 +118,10 @@ class Factory{
       }
       return $obj;
     }
-    public static function createHoldingBayScanner($type){
+    public static function createHoldingBayScanner($model){
       $obj = null;
-      switch(ucwords($type)){
-          case \LOE\Movie\Movie::TABLE:
-          $obj = new \LOE\Movie\HoldingBayScanner();
-        break;
-        case \LOE\Tv\Episode::TABLE:
-          $obj = new \LOE\Tv\HoldingBayScanner();
-          break;
-        case \LOE\Music\Song::TABLE:
-          $obj = new \LOE\Music\HoldingBayScanner();
-          break;
-        case \LOE\Comic\Comic::TABLE:
-          $obj = new \LOE\Comic\HoldingBayScanner();
-          break;
-        case \LOE\Doc\Doc::TABLE:
-          $obj = new \LOE\Doc\HoldingBayScanner();
-        break;
-        default:
-          throw new \Exception(self::BADOBJ);
-      }
-      return $obj;
+      $className = $model->namespace . "HoldingBayScanner()";
+      return new $className;
     }
     public static function createFsScanner($model,$msgTo = null, $authToken = null){
       return new \LOE\FsHealthScanner($model,$msgTo,$authToken);

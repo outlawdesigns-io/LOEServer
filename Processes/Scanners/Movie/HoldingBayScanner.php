@@ -5,7 +5,6 @@ require_once __DIR__ . "/../../../Libs/IMDB/Imdb.php";
 
 class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
-    const WEBROOTPATTERN = "/\/var\/www\/html/";
     const YEARPATTERN1 = "/\(/";
     const YEARREPLACEMENT1 = "/\((.*)/";
     const YEARREPLACEMENT2 = "/[0-9]{4}(.*)/";
@@ -29,7 +28,6 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
         try{
           $searchResult = \Imdb::search($titleStr);
         }catch(\Exception $e){
-          $this->exceptions[] = $titleStr . " " . $e->getMessage();
           $searchResult = false;
         }
         if(!$searchResult){
@@ -42,7 +40,6 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
           $movie->genre = $genres[0];
           $movie->genre2 = (isset($genres[1])) ? $genres[1] : null;
           $movie->genre3 = (isset($genres[2])) ? $genres[2] : null;
-          $movie->file_path = preg_replace(self::WEBROOTPATTERN,'',$result);
           $movie->director = $searchResult->Director;
           $movie->description = $searchResult->Plot;
           $movie->run_time = $searchResult->Runtime;
