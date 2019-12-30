@@ -24,7 +24,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
         $tags[] = $pieces[$i];
       }
       $doc->tags = $tags;
-      $titles = $this->_parseTitle($pathInfo['filename']);
+      $titles = $this->_parseTitle(\LOE\Base::WEBROOT . $pathInfo['filename']);
       $doc->title = $titles[0];
       if(count($titles) > 1){
         $doc->subTitle = $titles[1];
