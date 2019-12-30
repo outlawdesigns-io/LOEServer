@@ -10,7 +10,7 @@ class HoldingBayNotification{
   protected $_scanner;
 
   public function __construct(){
-    $this->_scanner = \LOE\Factory::createHoldingBayScanner('Song');
+    $this->_scanner = \LOE\Factory::createHoldingBayScanner(\LOE\Factory::getModel('Song'));
     $keys = array_keys($this->_scanner->albums);
     $album = $this->_scanner->albums[$keys[0]];
   }
