@@ -119,8 +119,8 @@ class Factory{
     }
     public static function createHoldingBayScanner($model){
       $obj = null;
-      $className = $model->namespace . "HoldingBayScanner()";
-      return new $className;
+      $className = $model->namespace . "HoldingBayScanner";
+      return new $className($model);
     }
     public static function createFsScanner($model,$msgTo = null, $authToken = null){
       return new \LOE\FsHealthScanner($model,$msgTo,$authToken);
