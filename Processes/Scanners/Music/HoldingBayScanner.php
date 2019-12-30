@@ -11,6 +11,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
     public function __construct($model){
       parent::__construct($model);
+      $this->_getTags()->_sortAlbums()->_sortArtists();
     }
     protected function _getTags(){
       $i = 0;
