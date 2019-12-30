@@ -6,8 +6,9 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
   public $docs = array();
 
-  public function __construct(){
-    $this->_scanForever(\LOE\Base::WEBROOT . self::ROOTDIR);
+  public function __construct($model){
+    parent::__construct($model);
+    $this->_gatherData();
   }
   protected function _gatherData(){
     foreach($this->targetModels as $doc){
