@@ -20,6 +20,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     }
     private function _buildEpisodeData(){
       foreach($this->targetModels as $e){
+        $path = \LOE\Base::WEBROOT . $e->file_path;
         $e->UID = $this->episodeCount++;
         if(preg_match(self::LASTSLASHPAT,dirname(dirname($path)),$matches)){
             $e->show_title = $matches[0];
