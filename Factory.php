@@ -27,7 +27,6 @@ require_once __DIR__ . '/Models/Comic/Rating.php';
 require_once __DIR__ . '/Models/Comic/Played.php';
 require_once __DIR__ . '/Processes/Scanners/DbHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/FsHealthScanner.php';
-require_once __DIR__ . '/Processes/Scanners/Comic/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Movie/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Music/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Tv/HoldingBayScanner.php';
