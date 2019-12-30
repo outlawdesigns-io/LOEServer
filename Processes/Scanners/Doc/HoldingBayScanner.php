@@ -1,9 +1,8 @@
 <?php namespace LOE\Doc;
 
-require_once __DIR__ . '/../../../Factory.php';
-require_once __DIR__ . '/../FsScanner.php';
+require_once __DIR__ . '/../HoldingBayScanner.php';
 
-class HoldingBayScanner extends \LOE\FsScanner{
+class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
   public $docs = array();
 
