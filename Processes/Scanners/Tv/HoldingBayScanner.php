@@ -13,7 +13,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
     protected $_episodeCount;
 
-    public function __construct(){
+    public function __construct($model){
       parent::__construct($model);
       $this->_episodeCount = 0;
       $this->_buildEpisodeData()->_sortShows();
