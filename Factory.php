@@ -30,6 +30,7 @@ require_once __DIR__ . '/Processes/Scanners/FsHealthScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Movie/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Music/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Tv/HoldingBayScanner.php';
+require_once __DIR__ . '/Processes/Scanners/Doc/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Processors/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/PlayHistory.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
