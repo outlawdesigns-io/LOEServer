@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../Factory.php';
 
 abstract class HoldingBayScanner extends FsScanner{
 
-  public $targetFiles = array();
+  public $targetModels = array();
   public $possibleCovers = array();
   public $extraFiles = array();
 
@@ -20,7 +20,7 @@ abstract class HoldingBayScanner extends FsScanner{
     $model = Factory::createModel($this->_model->label);
     if(in_array($fileInfo['extension'],$this->_model->fileExtensions)){
       $model->file_path = $model->cleanFilePath($absolutePath);
-      $this->targetFiles[] = $model;
+      $this->targetModels[] = $model;
     }elseif(strtolower($fileInfo['extension']) == 'jpg'){
       $this->possibleCovers[] = $model->cleanFilePath($absolutePath);
     }else{
