@@ -20,7 +20,7 @@ class HoldingBayCleaner{
 
   public function __construct(){
     $this->cleanedFiles = 0;
-    $this->_scanner = \LOE\Factory::createHoldingBayScanner(Song::TABLE);
+    $this->_scanner = \LOE\Factory::createHoldingBayScanner(\LOE\Factory::getModel(Song::TABLE));
     $this->_cleanSongs()->_cleanImages()->_cleanExtraFiles()->_cleanUp();
   }
   protected function _cleanSongs(){
