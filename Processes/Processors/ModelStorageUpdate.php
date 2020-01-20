@@ -14,7 +14,7 @@ class ModelStorageUpdate{
   public function __construct($model){
     $this->_model = $model;
     $this->_storageModel = Factory::createModel(self::TARGETMODEL);
-    $this->_storageModel->modelId = $this->_model->id;
+    $this->_storageModel->modelId = $this->_model->UID;
     $results = $this->_execShellCommand(Base::WEBROOT . $this->_model->fsRoot);
     $this->_storageModel->fs_size = $results[0];
     $this->_storageModel->fs_unit = $results[1];
