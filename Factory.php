@@ -4,6 +4,7 @@ require_once __DIR__ . '/Models/Model.php';
 require_once __DIR__ . '/Models/DbCheck.php';
 require_once __DIR__ . '/Models/FsCheck.php';
 require_once __DIR__ . '/Models/PlayCountRun.php';
+require_once __DIR__ . '/Models/PlayHistoryRun.php';
 require_once __DIR__ . '/Models/ModelStorage.php';
 require_once __DIR__ . '/Models/Movie/Movie.php';
 require_once __DIR__ . '/Models/Movie/Played.php';
