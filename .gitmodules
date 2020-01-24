@@ -19,3 +19,6 @@
 [submodule "Libs/WebAccessClient"]
 	path = Libs/WebAccessClient
 	url = https://github.com/outlawdesigns-io/WebAccessClient
+[submodule "Libs/MetalArchivesClient"]
+	path = Libs/MetalArchivesClient
+	url = https://github.com/outlawdesigns-io/MetalArchivesClient
