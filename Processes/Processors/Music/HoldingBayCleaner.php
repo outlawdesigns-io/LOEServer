@@ -24,7 +24,7 @@ class HoldingBayCleaner{
     $this->_cleanSongs()->_cleanImages()->_cleanExtraFiles()->_cleanUp();
   }
   protected function _cleanSongs(){
-    foreach($this->_scanner->songs as $song){
+    foreach($this->_scanner->targetModels as $song){
       if(!self::isCleanPath($song->file_path)){
         $source = \LOE\Base::WEBROOT . $song->file_path;
         $song->file_path = \LOE\Base::WEBROOT . self::buildCleanPath($song->file_path);
