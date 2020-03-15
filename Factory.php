@@ -5,6 +5,7 @@ require_once __DIR__ . '/Models/DbCheck.php';
 require_once __DIR__ . '/Models/FsCheck.php';
 require_once __DIR__ . '/Models/PlayCountRun.php';
 require_once __DIR__ . '/Models/PlayHistoryRun.php';
+require_once __DIR__ . '/Models/ModelStorage.php';
 require_once __DIR__ . '/Models/Movie/Movie.php';
 require_once __DIR__ . '/Models/Movie/Played.php';
 require_once __DIR__ . '/Models/Movie/Rating.php';
@@ -33,6 +34,7 @@ require_once __DIR__ . '/Processes/Scanners/Tv/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Scanners/Doc/HoldingBayScanner.php';
 require_once __DIR__ . '/Processes/Processors/PlayCount.php';
 require_once __DIR__ . '/Processes/Processors/PlayHistory.php';
+require_once __DIR__ . '/Processes/Processors/ModelStorageUpdate.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayCleaner.php';
 require_once __DIR__ . '/Processes/Processors/Movie/HoldingBayProcessor.php';
@@ -113,6 +115,9 @@ class Factory{
       case \LOE\PlayHistoryRun::TABLE:
         $obj = new \LOE\PlayHistoryRun($UID);
         break;
+      case \LOE\ModelStorage::TABLE:
+        $obj = new \LOE\ModelStorage($UID);
+        break;
       default:
         throw new \Exception(self::BADOBJ);
       }
@@ -180,6 +185,9 @@ class Factory{
    }
    public static function updatePlayHistory($model,$username,$password){
      return new PlayHistory($model,$username,$password);
+   }
+   public static function updateModelStorage($model){
+     return new ModelStorageUpdate($model);
    }
    public static function autoInsert($type){
      switch(ucwords($type)){
