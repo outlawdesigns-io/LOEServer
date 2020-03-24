@@ -11,6 +11,7 @@ class Played extends \LOE\Base{
   public $songId;
   public $ipAddress;
   public $playDate;
+  public $userId;
 
   public function __construct($UID = null){
     parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
