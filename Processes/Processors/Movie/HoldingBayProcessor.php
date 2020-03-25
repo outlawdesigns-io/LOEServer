@@ -109,6 +109,7 @@ class HoldingBayProcessor{
         $dir = preg_replace('/!/','',$dir);
         $dir = preg_replace('/\//','',$dir);
         $dir = preg_replace('/,/',"",$dir);
+        $dir = preg_replace('/\.../',"",$dir);
         //$dir = preg_replace('/\\/','',$dir);
         return $dir;
     }
