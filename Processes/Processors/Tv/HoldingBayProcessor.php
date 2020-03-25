@@ -18,7 +18,7 @@ class HoldingBayProcessor{
         $this->genreDir = self::DESTDIR . $this->episode->genre . '/';
         $this->showDir = $this->genreDir . $this->episode->show_title . '/';
         $this->seasonDir = $this->showDir . "Season " . $this->episode->season_number . "/";
-        $this->sourceFile = $this->episode->file_path;
+        $this->sourceFile = Episode::WEBROOT . $this->episode->file_path;
         $this->_buildTargetFile()
             ->_verifyDestination()
             ->_transfer()
