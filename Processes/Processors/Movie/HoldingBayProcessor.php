@@ -88,8 +88,8 @@ class HoldingBayProcessor{
     private function _isRemake(){
         $coverPath = $this->dbDir . "cover.jpg";
         $results = $GLOBALS['db']
-            ->database(self::LOE)
-            ->table(self::MOVIES)
+            ->database(Movie::DB)
+            ->table(Movie::TABLE)
             ->select("relyear")
             ->where("cover_path","=","'" . $coverPath . "'")
             ->get();
