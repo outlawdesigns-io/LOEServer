@@ -1,6 +1,7 @@
 <?php namespace LOE;
 
 require_once __DIR__ . '/Models/Model.php';
+require_once __DIR__ . '/Models/Share.php';
 require_once __DIR__ . '/Models/DbCheck.php';
 require_once __DIR__ . '/Models/FsCheck.php';
 require_once __DIR__ . '/Models/PlayCountRun.php';
@@ -232,5 +233,8 @@ class Factory{
    }
    public static function getModel($label){
      return Model::getByLabel($label);
+   }
+   public static function createShare($userId,$modelId,$objectId){
+     return Share::buildShare($userId,$modelId,$objectId);
    }
 }
