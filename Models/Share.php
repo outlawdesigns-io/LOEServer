@@ -57,6 +57,7 @@ class Share extends Base{
       "objectId"=>$share->objectId
     );
     $share->token = \JWT::encode($share->token,$share->secret);
+    $share->expiration_date = date('Y-m-d H:i:s',strtotime('+7 days'));
     return $share;
   }
   public static function getSecret($token){
