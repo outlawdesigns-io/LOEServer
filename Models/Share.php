@@ -47,11 +47,14 @@ class Share extends Base{
   }
   public static function buildShare($userId,$modelId,$objectId){
     $share = new self();
+    $share->userId = $userId;
+    $share->modelId = $modelId;
+    $share->objectId = $objectId;
     $share->secret = self::generateSecret();
     $share->token = array(
-      "userId"=>$userId,
-      "modelId"=>$modelId,
-      "objectId"=>$objectId
+      "userId"=>$share->userId,
+      "modelId"=>$share->modelId,
+      "objectId"=>$share->objectId
     );
     $share->token = \JWT::encode($share->token,$share->secret);
     return $share;
