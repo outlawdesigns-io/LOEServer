@@ -74,8 +74,8 @@ class Share extends Base{
   }
   public static function decodeToken($token,$secret){
     $data = \JWT::decode($token,$secret);
-    $model = Factory::createModel(Model::TABLE,$data['modelId']);
-    $object = Factory::createModel($model->label,$data['objectId']);
+    $model = Factory::createModel(Model::TABLE,$data->modelId);
+    $object = Factory::createModel($model->label,$data->objectId);
     return $object;
   }
 }
