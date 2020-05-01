@@ -66,7 +66,7 @@ class Share extends Base{
     while($row = mysqli_fetch_assoc($results)){
       $secret = $row['secret'];
     }
-    return $secret
+    return $secret;
   }
   public static function decodeToken($token,$secret){
     $data = \JWT::decode($token,$secret);
