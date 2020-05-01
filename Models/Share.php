@@ -59,7 +59,7 @@ class Share extends Base{
   public static function getSecret($token){
     $results = $GLOBALS['db']
       ->database(self::DB)
-      ->table(,self::TABLE)
+      ->table(self::TABLE)
       ->select('secret')
       ->where('token','=',"'" . $token . "'")
       ->get();
