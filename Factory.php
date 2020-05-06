@@ -18,6 +18,7 @@ require_once __DIR__ . '/Models/Music/Played.php';
 require_once __DIR__ . '/Models/Music/Rating.php';
 require_once __DIR__ . '/Models/Music/PlayList.php';
 require_once __DIR__ . '/Models/Music/RandomPlayList.php';
+require_once __DIR__ . '/Models/Music/Script.php';
 require_once __DIR__ . '/Models/Doc/Doc.php';
 require_once __DIR__ . '/Models/Doc/Rating.php';
 require_once __DIR__ . '/Models/Doc/Played.php';
@@ -70,6 +71,9 @@ class Factory{
         break;
       case \LOE\Music\PlayList::TABLE:
         $obj = new \LOE\Music\PlayList($UID);
+        break;
+      case \LOE\Music\Script::TABLE:
+      $obj = new \LOE\Music\Script($UID);
         break;
       case \LOE\Tv\Episode::TABLE:
         $obj = new \LOE\Tv\Episode($UID);
