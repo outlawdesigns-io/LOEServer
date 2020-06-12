@@ -1,7 +1,6 @@
 <?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../Base.php';
-require_once __DIR__ . '/../../Libs/Mp3Reader/Mp3Reader.php';
 
 class Script extends \LOE\Base{
 
