@@ -57,7 +57,10 @@ class HoldingBayAutoProcessor{
     return $this;
   }
   protected function _process(){
-    self::DEBUG ? print_r($this->_songs):false;
+    if(self::DEBUG){
+      print_r($this->_songs);
+    }
+    //self::DEBUG ? print_r($this->_songs):false;
     if(!self::DEBUG){
       foreach($this->_songs as $song){
         try{
