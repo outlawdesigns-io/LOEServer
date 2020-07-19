@@ -41,7 +41,7 @@ class HoldingBayAutoProcessor{
   protected function _parseSearchStrings(){
     $keys = array_keys($this->_albums);
     $this->_albumSearchStr = $keys[0];
-    $this->_artistSearchStr = $this->albums[$keys[0]][0]->artist;
+    $this->_artistSearchStr = $this->_albums[$keys[0]][0]->artist;
     return $this;
   }
   protected function _searchMetalArchives(){
