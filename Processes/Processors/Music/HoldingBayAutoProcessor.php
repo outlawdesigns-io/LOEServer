@@ -1,7 +1,7 @@
 <?php namespace LOE\Music;
 
 require_once __DIR__ . '/../../Scanners/Music/HoldingBayNotification.php';
-require_once __DIR__ . '/Libs/MetalArchivesClient/MetalArchivesClient.php';
+require_once __DIR__ . '/../../../Libs/MetalArchivesClient/MetalArchivesClient.php';
 
 class HoldingBayAutoProcessor{
 
