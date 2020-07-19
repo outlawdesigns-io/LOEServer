@@ -43,6 +43,7 @@ require_once __DIR__ . '/Processes/Processors/Movie/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Tv/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Doc/AutoInsert.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
+require_once __DIR__ . 'Processes/Processors/Music/HoldingBayAutoProcessor.php';
 
 
 class Factory{
