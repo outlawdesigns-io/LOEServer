@@ -12,31 +12,36 @@ class HoldingBayAutoProcessor{
   protected $_albumSearchStr;
   protected $_artistSearchStr;
   protected $_songs = array();
+  protected $_albums = array();
   public static $_releaseTypes = array('Demo','EP');
   public $exceptions = array();
 
   public function __construct(){
     $this->_maClient = new \MetalArchivesClient();
-    $this->_clean()
-      ->_parseSearchStrings()
-      ->_searchMetalArchives();
-    if(count($this->_songs)){
-      $this->_process();
+    $this->_clean();
+    foreach($this->albums as $label=>$songs){
+      $this->_parseSearchStrings();
+      $this->_searchMetalArchives();
+      if(count($this->_songs)){
+        $this->_process();
+      }
+      unset($this->albums[$label]);
     }
   }
   protected function _clean(){
     try{
       \LOE\Factory::createHoldingBayCleaner(Song::TABLE);
       $this->_scanner = \LOE\Factory::createHoldingBayScanner(\LOE\Factory::getModel(Song::TABLE));
+      $this->_albums = $this->_scanner->albums;
     }catch(\Exception $e){
       throw new \Exception($e->getMessage());
     }
     return $this;
   }
   protected function _parseSearchStrings(){
-    $keys = array_keys($this->_scanner->albums);
+    $keys = array_keys($this->_albums);
     $this->_albumSearchStr = $keys[0];
-    $this->_artistSearchStr = $this->_scanner->albums[$keys[0]][0]->artist;
+    $this->_artistSearchStr = $this->albums[$keys[0]][0]->artist;
     return $this;
   }
   protected function _searchMetalArchives(){
@@ -59,10 +64,7 @@ class HoldingBayAutoProcessor{
     return $this;
   }
   protected function _process(){
-    if(self::DEBUG){
-      print_r($this->_songs);
-    }
-    //self::DEBUG ? print_r($this->_songs):false;
+    self::DEBUG ? print_r($this->_songs):false;
     if(!self::DEBUG){
       foreach($this->_songs as $song){
         try{
