@@ -18,9 +18,11 @@ class HoldingBayAutoProcessor{
   public function __construct(){
     $this->_maClient = new \MetalArchivesClient();
     $this->_clean()
-         ->_parseSearchStrings()
-         ->_searchMetalArchives()
-         ->_process();
+      ->_parseSearchStrings()
+      ->_searchMetalArchives();
+    if(count($this->_songs)){
+      $this->_process();
+    }
   }
   protected function _clean(){
     try{
