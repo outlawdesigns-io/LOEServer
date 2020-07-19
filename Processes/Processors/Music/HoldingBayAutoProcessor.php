@@ -13,6 +13,7 @@ class HoldingBayAutoProcessor{
   protected $_artistSearchStr;
   protected $_songs = array();
   public static $_releaseTypes = array('Demo','EP');
+  public $exceptions = array();
 
   public function __construct(){
     $this->_maClient = new \MetalArchivesClient();
@@ -50,12 +51,13 @@ class HoldingBayAutoProcessor{
         $this->_songs[] = $song;
       }
     }else{
-      throw new \Exception('Too much uncertainty. Doing nothing');
+      $this->exceptions[] = $this->_albumSearchStr . " - " . $this->_artistSearchStr;
+      // throw new \Exception('Too much uncertainty. Doing nothing');
     }
     return $this;
   }
   protected function _process(){
-    print_r($this->_songs);
+    self::DEBUG ? print_r($this->_songs):false;
     if(!self::DEBUG){
       foreach($this->_songs as $song){
         try{
@@ -69,7 +71,7 @@ class HoldingBayAutoProcessor{
         try{
           \LOE\Factory::createHoldingBayProcessor('Song',$song);
         }catch(\Exception $e){
-          echo $e->getMessage() . "\n";
+          throw new \Exception($e->getMessage());
         }
       }
     }else{
