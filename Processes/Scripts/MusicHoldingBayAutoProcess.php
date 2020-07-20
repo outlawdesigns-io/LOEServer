@@ -7,6 +7,6 @@ try{
   $proc = new \LOE\Music\HoldingBayAutoProcessor();
   print_r($proc->exceptions);
 }catch(\Exception $e){
-  echo $e->getMessage();
+  echo $e->getMessage() . "\n";
   exit;
 }

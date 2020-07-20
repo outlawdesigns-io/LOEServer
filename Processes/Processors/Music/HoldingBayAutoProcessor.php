@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../../Libs/MetalArchivesClient/MetalArchivesClient.p
 
 class HoldingBayAutoProcessor{
 
-  const DEBUG = true;
+  const DEBUG = false;
 
   protected $_maClient;
   protected $_scanner;
