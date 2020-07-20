@@ -50,6 +50,7 @@ class HoldingBayAutoProcessor{
       $artist = $this->_maClient->searchArtist($this->_artistSearchStr);
     }catch(\Exception $e){
       $this->exceptions[] = $this->_albumSearchStr . " - " . $this->_artistSearchStr;
+      return $this;
     }
     if(!is_array($artist) && !is_array($album)){
       foreach($this->_scanner->albums[$this->_albumSearchStr] as $song){
