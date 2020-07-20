@@ -89,6 +89,7 @@ class HoldingBayAutoProcessor{
     }else{
       exit;
     }
+    $this->_songs = [];
     return $this;
   }
   protected function _parseReleaseType($albumStr,$releaseType){
