@@ -49,7 +49,12 @@ class HoldingBayAutoProcessor{
       $album = $this->_maClient->searchAlbum($this->_albumSearchStr,$this->_artistSearchStr);
       $artist = $this->_maClient->searchArtist($this->_artistSearchStr);
     }catch(\Exception $e){
-      $this->exceptions[] = $this->_albumSearchStr . " - " . $this->_artistSearchStr;
+      $exception = array(
+        "artist"=>$this->_artistSearchStr,
+        "album"=>$this->_albumSearchStr,
+        "reason"=>$e->getMessage()
+      );
+      $this->exceptions[] = $exception;
       return $this;
     }
     if(!is_array($artist) && !is_array($album)){
@@ -63,8 +68,12 @@ class HoldingBayAutoProcessor{
         $this->_songs[] = $song;
       }
     }else{
-      $this->exceptions[] = $this->_albumSearchStr . " - " . $this->_artistSearchStr;
-      // throw new \Exception('Too much uncertainty. Doing nothing');
+      $exception = array(
+        "artist"=>$this->_artistSearchStr,
+        "album"=>$this->_albumSearchStr,
+        "reason"=>"Too much uncertainty in MA results."
+      );
+      $this->exceptions[] =  $exception;
     }
     return $this;
   }
