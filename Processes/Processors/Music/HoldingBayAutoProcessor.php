@@ -45,8 +45,12 @@ class HoldingBayAutoProcessor{
     return $this;
   }
   protected function _searchMetalArchives(){
-    $album = $this->_maClient->searchAlbum($this->_albumSearchStr,$this->_artistSearchStr);
-    $artist = $this->_maClient->searchArtist($this->_artistSearchStr);
+    try{
+      $album = $this->_maClient->searchAlbum($this->_albumSearchStr,$this->_artistSearchStr);
+      $artist = $this->_maClient->searchArtist($this->_artistSearchStr);
+    }catch(\Exception $e){
+      $this->exceptions[] = $this->_albumSearchStr . " - " . $this->_artistSearchStr;
+    }
     if(!is_array($artist) && !is_array($album)){
       foreach($this->_scanner->albums[$this->_albumSearchStr] as $song){
         $song->publisher = $album->recordLabel;
