@@ -103,7 +103,7 @@ class HoldingBayAutoProcessor{
   }
   protected function _parseReleaseType($albumStr,$releaseType){
     if(in_array($releaseType,self::$_releaseTypes)){
-      $albumStr .= '[' . $releaseType . ']';
+      $albumStr .= ' [' . $releaseType . ']';
     }
     return $albumStr;
   }
