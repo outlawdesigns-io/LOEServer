@@ -37,7 +37,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   }
   protected function _buildFromPath(){
     for($i = 0; $i < count($this->targetModels); $i++){
-      $fileName = pathinfo($comic->file_path)['filename'];
+      $fileName = pathinfo($this->targetModels[$i]->file_path)['filename'];
       $this->targetModels[$i]->UID = $i;
       $this->targetModels[$i]->issue_number = $this->_parseIssueNumber($fileName);
       $this->targetModels[$i]->issue_title = $this->_parseIssueName($fileName);
