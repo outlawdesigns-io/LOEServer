@@ -16,7 +16,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
   public function __construct($model){
     parent::__construct($model);
-    $this->_buildFromPath();
+    $this->_buildFromPath()->_appendFromComicVine();
   }
   protected function _parseIssueName($fileName){
     if(preg_match(self::TITLEPAT,$fileName,$matches)){
