@@ -15,6 +15,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
   public function __construct($model){
     parent::__construct($model);
+    $this->_buildFromPath();
   }
   protected function _parseIssueName($fileName){
     if(preg_match(self::TITLEPAT,$fileName,$matches)){
@@ -34,7 +35,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     }
     return false;
   }
-  protected _build(){
+  protected function _buildFromPath(){
     for($i = 0; $i < count($this->targetModels); $i++){
       $fileName = pathinfo($comic->file_path)['filename'];
       $this->targetModels[$i]->UID = $i;
