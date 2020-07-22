@@ -48,11 +48,36 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   }
   protected function _appendFromComicVine(){
     foreach($this->targetModels as $comic){
-      if(!empty($comic->issue_title) && !empty($comic->issue_cover_date)){
-        $results = \ComicVine::search($comic->issue_title);
+      if(!empty($comic->issue_title) && !empty($comic->issue_cover_date) && $volume = $this->_parseVolumes(\ComicVine::search($comic->issue_title),$comic)){
+        $comic->series_title = (string)$volume->results->name;
+        $comic->series_start_year = (int)$volume->results->start_year;
+        $comic->series_description = strip_tags((string)$volume->results->description);
+        $comic->publisher = (string)$volume->results->publisher->name;
+        if($issueDetails = $this->_parseIssues($volume->results->issues->issue,$comic)){
+          $comic->issue_title = (string)$issueDetails->results->name;
+          $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
+          $comic->story_arc = (string)$issueDetails->results->story_arc_credits->story_arc->name;
+          $comic->issue_description = strip_tags((string)$issueDetails->results->description);
+        }
       }
     }
     return $this;
+  }
+  protected function _parseVolumes($searchResults,$comic){
+    foreach($searchResults->results->volume as $possibleVolume){
+      if($comic->issue_cover_date == (int)$possibleVolume->start_year){
+        return \ComicVine::followURI($possibleVolume->api_detail_url);
+      }
+    }
+    return false;
+  }
+  protected function _parseIssues($issues,$comic){
+    foreach($issues as $issue){
+      if((int)$issue->issue_number == $comic->issue_number){
+        return \ComicVine::followURI($issue->api_detail_url);
+      }
+    }
+    return false;
   }
 }
 
