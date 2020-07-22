@@ -39,8 +39,9 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     for($i = 0; $i < count($this->targetModels); $i++){
       $fileName = pathinfo($this->targetModels[$i]->file_path)['filename'];
       $this->targetModels[$i]->UID = $i;
-      $this->targetModels[$i]->issue_number = $this->_parseIssueNumber($fileName);
       $this->targetModels[$i]->issue_title = $this->_parseIssueName($fileName);
+      $this->targetModels[$i]->issue_number = $this->_parseIssueNumber($this->targetModels[$i]->issue_title);
+      $this->targetModels[$i]->issue_cover_date = $this->_parseIssueYear($fileName);
     }
     return $this;
   }
