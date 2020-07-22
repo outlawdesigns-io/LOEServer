@@ -1,6 +1,7 @@
 <?php namespace LOE\Comic;
 
 require_once __DIR__ . '/../HoldingBayScanner.php';
+require_once __DIR__ . '/../../../Libs/ComicVine/ComicVine.php';
 
 class HoldingBayScanner extends \LOE\HoldingBayScanner{
 
@@ -31,7 +32,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   }
   protected function _parseIssueNumber($fileName){
     if(preg_match(self::ISSUEPAT,$fileName,$matches)){
-      return $matches[0];
+      return (int)$matches[0];
     }
     return false;
   }
@@ -42,6 +43,14 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
       $this->targetModels[$i]->issue_title = $this->_parseIssueName($fileName);
       $this->targetModels[$i]->issue_number = $this->_parseIssueNumber($this->targetModels[$i]->issue_title);
       $this->targetModels[$i]->issue_cover_date = $this->_parseIssueYear($fileName);
+    }
+    return $this;
+  }
+  protected function _appendFromComicVine(){
+    foreach($this->targetModels as $comic){
+      if(!empty($comic->issue_title) && !empty($comic->issue_cover_date)){
+        $results = \ComicVine::search($comic->issue_title);
+      }
     }
     return $this;
   }
