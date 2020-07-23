@@ -156,6 +156,7 @@ class Factory{
                 break;
             case \LOE\Comic\Comic::TABLE:
                 $obj = new \LOE\Comic\HoldingBayProcessor($inputObj);
+                break;
             default:
                 throw new \Exception(self::BADOBJ);
         }
