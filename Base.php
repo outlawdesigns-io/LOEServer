@@ -5,6 +5,10 @@ require_once __DIR__ . '/Libs/Record/Record.php';
 
 class Base extends \Record{
 
+    const NONASCIIPATT = '/[^\x00-\x7F]/';
+    const BADFILEPATT = '/[\:"*?<>|]/';
+    const PUNCTPATT = "/['!~`*^%$#@+,]/";
+
     const DB = 'LOE';
     const PRIMARYKEY = 'UID';
     const FILEPATT = '/^.*(?=(\/LOE))/';
@@ -53,6 +57,18 @@ class Base extends \Record{
             return $fileSize;
         }
         return false;
+    }
+    public static function buildCleanPath($absolutePath){
+        $absolutePath = preg_replace(self::NONASCIIPATT,"",$absolutePath);
+        $absolutePath = preg_replace(self::BADFILEPATT,"",$absolutePath);
+        $absolutePath = preg_replace(self::PUNCTPATT,"",$absolutePath);
+        return $absolutePath;
+    }
+    public static function isCleanPath($absolutePath){
+        if(preg_match(self::NONASCIIPATT,$absolutePath) || preg_match(self::BADFILEPATT,$absolutePath) || preg_match(self::PUNCTPATT,$absolutePath)){
+          return false;
+        }
+        return true;
     }
     public static function recordExists($absolutePath){
       $GLOBALS['db']

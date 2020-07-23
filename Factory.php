@@ -42,6 +42,7 @@ require_once __DIR__ . '/Processes/Processors/Music/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayCleaner.php';
 require_once __DIR__ . '/Processes/Processors/Movie/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Tv/HoldingBayProcessor.php';
+require_once __DIR__ . '/Processes/Processors/Comic/HoldingBayProcessor.php';
 require_once __DIR__ . '/Processes/Processors/Doc/AutoInsert.php';
 require_once __DIR__ . '/Processes/Processors/HoldingBay/ArchiveExtractor.php';
 require_once __DIR__ . '/Processes/Processors/Music/HoldingBayAutoProcessor.php';
@@ -153,6 +154,8 @@ class Factory{
             case \LOE\Music\Song::TABLE:
                 $obj = new \LOE\Music\HoldingBayProcessor($inputObj);
                 break;
+            case \LOE\Comic\Comice::TABLE:
+                $obj = new \LOE\Comic\HoldingBayProcessor($inputObj);
             default:
                 throw new \Exception(self::BADOBJ);
         }

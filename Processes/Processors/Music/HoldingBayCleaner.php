@@ -25,9 +25,9 @@ class HoldingBayCleaner{
   }
   protected function _cleanSongs(){
     foreach($this->_scanner->targetModels as $song){
-      if(!self::isCleanPath($song->file_path)){
-        $source = \LOE\Base::WEBROOT . $song->file_path;
-        $song->file_path = \LOE\Base::WEBROOT . self::buildCleanPath($song->file_path);
+      if(!Song::isCleanPath($song->file_path)){
+        $source = Song::WEBROOT . $song->file_path;
+        $song->file_path = Song::WEBROOT . Song::buildCleanPath($song->file_path);
         $this->_verifyPath(dirname($song->file_path));
         if(!rename($source,$song->file_path)){
           throw new \Exception(error_get_last()['message']);
@@ -43,9 +43,9 @@ class HoldingBayCleaner{
   }
   protected function _cleanImages(){
     foreach($this->_scanner->possibleCovers as $image){
-      if(!self::isCleanPath($image)){
-        $source = \LOE\Base::WEBROOT . $image;
-        $destination = \LOE\Base::WEBROOT . self::buildCleanPath($image);
+      if(!Song::isCleanPath($image)){
+        $source = Song::WEBROOT . $image;
+        $destination = Song::WEBROOT . Song::buildCleanPath($image);
         $this->_verifyPath(dirname($destination));
         if(!rename($source,$destination)){
           throw new \Exception(error_get_last()['message']);
@@ -61,9 +61,9 @@ class HoldingBayCleaner{
   }
   protected function _cleanExtraFiles(){
     foreach($this->_scanner->extraFiles as $file){
-      if(!self::isCleanPath($file)){
-        $source = \LOE\Base::WEBROOT . $file;
-        $destination = \LOE\Base::WEBROOT . self::buildCleanPath($file);
+      if(!Song::isCleanPath($file)){
+        $source = Song::WEBROOT . $file;
+        $destination = Song::WEBROOT . Song::buildCleanPath($file);
         $this->_verifyPath(dirname($destination));
         if(!rename($source,$destination)){
           throw new \Exception(error_get_last()['message']);
@@ -98,17 +98,5 @@ class HoldingBayCleaner{
       }
     }
     return $this;
-  }
-  public static function buildCleanPath($absolutePath){
-    $absolutePath = preg_replace(self::NONASCIIPATT,"",$absolutePath);
-    $absolutePath = preg_replace(self::BADFILEPATT,"",$absolutePath);
-    $absolutePath = preg_replace(self::PUNCTPATT,"",$absolutePath);
-    return $absolutePath;
-  }
-  public static function isCleanPath($absolutePath){
-    if(preg_match(self::NONASCIIPATT,$absolutePath) || preg_match(self::BADFILEPATT,$absolutePath) || preg_match(self::PUNCTPATT,$absolutePath)){
-      return false;
-    }
-    return true;
   }
 }

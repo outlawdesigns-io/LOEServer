@@ -57,7 +57,8 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
           $comic->issue_title = (string)$issueDetails->results->name;
           $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
           $comic->story_arc = (string)$issueDetails->results->story_arc_credits->story_arc->name;
-          $comic->issue_description = strip_tags((string)$issueDetails->results->description);
+          // $comic->issue_description = strip_tags((string)$issueDetails->results->description);
+          $comic->issue_description = strip_tags(str_replace(array("<br />","<br>","<br/>"),"\n",(string)$issueDetails->results->description));
         }
       }
     }
@@ -80,27 +81,3 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     return false;
   }
 }
-
-/*
-foreach target Model
-  parse Title and Year
-  Search for Title.
-  Loop through results.
-  Use Year to confirm correct result.
-
-
-  public $UID;
-  public $issue_number;
-  public $issue_title;
-  public $issue_cover_date;
-  public $series_title;
-  public $series_start_year;
-  public $series_end_year;
-  public $publisher;
-  public $story_arc;
-  public $issue_description;
-  public $series_description;
-  public $issue_type;
-  public $file_path;
-
-*/
