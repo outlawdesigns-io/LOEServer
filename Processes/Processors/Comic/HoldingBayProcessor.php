@@ -23,7 +23,7 @@ class HoldingBayProcessor{
     public function __construct($comic){
         $this->comic = \LOE\Factory::createModel(Comic::TABLE);
         $this->comic->setFields($comic);
-        $this->Comic->file_path = Comic::WEBROOT . $this->song->file_path;
+        $this->comic->file_path = Comic::WEBROOT . $this->comic->file_path;
         $this->publisherDir = Comic::buildCleanPath(Comic::WEBROOT . self::DESTDIR . $this->comic->publisher . '/');
         $this->seriesDir = $this->_buildVolumeDir();
         $this->sourceFile = $this->comic->file_path;
