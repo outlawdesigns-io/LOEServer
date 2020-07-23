@@ -14,8 +14,11 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   public $unknownAlbum = array();
   public $unknownArtist = array();
 
+  protected $_apiRequests;
+
   public function __construct($model){
     parent::__construct($model);
+    $this->_apiRequests = 0;
     $this->_buildFromPath()->_appendFromComicVine();
   }
   protected function _parseIssueName($fileName){
@@ -48,7 +51,8 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   }
   protected function _appendFromComicVine(){
     foreach($this->targetModels as $comic){
-      if(!empty($comic->issue_title) && !empty($comic->issue_cover_date) && $volume = $this->_parseVolumes(\ComicVine::search($comic->issue_title),$comic)){
+      //
+      if($this->_notEmpty($comic) && $volume = $this->_parseVolumes($this->_performSearch($comic->issue_title),$comic) && ($this->_apiRequests < \ComicVine::RATELIMIT - 2)){
         $comic->series_title = (string)$volume->results->name;
         $comic->series_start_year = (int)$volume->results->start_year;
         $comic->series_description = strip_tags((string)$volume->results->description);
@@ -64,9 +68,20 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     }
     return $this;
   }
+  protected function _notEmpty($comic){
+    if(!empty($comic->issue_title) && !empty($comic->issue_cover_date)){
+      return true;
+    }
+    return false;
+  }
+  protected function _peformSearch($title){
+    $this->_apiRequests++;
+    return \ComicVine::search($title);
+  }
   protected function _parseVolumes($searchResults,$comic){
     foreach($searchResults->results->volume as $possibleVolume){
       if($comic->issue_cover_date == (int)$possibleVolume->start_year){
+        $this->_apiRequests++;
         return \ComicVine::followURI($possibleVolume->api_detail_url);
       }
     }
@@ -75,6 +90,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   protected function _parseIssues($issues,$comic){
     foreach($issues as $issue){
       if((int)$issue->issue_number == $comic->issue_number){
+        $this->_apiRequests++;
         return \ComicVine::followURI($issue->api_detail_url);
       }
     }
