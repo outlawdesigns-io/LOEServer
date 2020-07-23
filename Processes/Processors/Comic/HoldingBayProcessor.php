@@ -1,7 +1,6 @@
 <?php namespace LOE\Comic;
 
 require_once __DIR__ . '/../../../Factory.php';
-require_once __DIR__ . '/HoldingBayCleaner.php';
 
 class HoldingBayProcessor{
 
@@ -50,7 +49,7 @@ class HoldingBayProcessor{
     }
     protected function _buildVolumeDir(){
       $volumeDir = $this->publisherDir . $this->comic->series_title . " (" . $this->comic->series_start_year . ")/";
-      return HoldingBayCleaner::buildCleanPath($volumeDir);
+      return Comic::buildCleanPath($volumeDir);
     }
     protected function _buildFileName(){
       $fileName = '';
