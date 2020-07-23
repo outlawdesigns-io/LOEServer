@@ -44,7 +44,7 @@ class HoldingBayProcessor{
     }
     protected function _buildAlbumDir(){
       $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";
-      return HoldingBayCleaner::buildCleanPath($albumDir);
+      return Song::buildCleanPath($albumDir);
     }
     private function _transfer(){
         if(!rename($this->sourceFile,$this->targetFile)){
