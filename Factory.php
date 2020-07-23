@@ -154,7 +154,7 @@ class Factory{
             case \LOE\Music\Song::TABLE:
                 $obj = new \LOE\Music\HoldingBayProcessor($inputObj);
                 break;
-            case \LOE\Comic\Comice::TABLE:
+            case \LOE\Comic\Comic::TABLE:
                 $obj = new \LOE\Comic\HoldingBayProcessor($inputObj);
             default:
                 throw new \Exception(self::BADOBJ);
