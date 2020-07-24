@@ -74,7 +74,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     }
     return false;
   }
-  protected function _peformSearch($title){
+  protected function _performSearch($title){
     $this->_apiRequests++;
     return \ComicVine::search($title);
   }
