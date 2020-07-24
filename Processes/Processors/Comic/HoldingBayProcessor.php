@@ -29,10 +29,10 @@ class HoldingBayProcessor{
         $this->sourceFile = $this->comic->file_path;
         //$this->coverPath = $this->albumDir . "cover.jpg";
         $this->targetFile = $this->seriesDir . $this->_buildFileName();
-        $this->_verifyDestination()
+        $this->_verifyDestination();
             //->_tryCover()
-            ->_transfer()
-            ->_cleanUp();
+            //->_transfer()
+            //->_cleanUp();
     }
     private function _verifyDestination(){
         if(!is_dir($this->publisherDir) && !mkdir($this->publisherDir)){
@@ -67,7 +67,7 @@ class HoldingBayProcessor{
         }else{
             $this->comic->file_path = $this->targetFile;
             //$this->song->cover_path = $this->coverPath;
-            //$this->comic->create();
+            $this->comic->create();
         }
         return $this;
     }
