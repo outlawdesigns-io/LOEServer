@@ -67,7 +67,7 @@ class HoldingBayProcessor{
         }else{
             $this->comic->file_path = $this->targetFile;
             //$this->song->cover_path = $this->coverPath;
-            $this->comic->create();
+            //$this->comic->create();
         }
         return $this;
     }
