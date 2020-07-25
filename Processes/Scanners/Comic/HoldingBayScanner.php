@@ -51,7 +51,6 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   }
   protected function _appendFromComicVine(){
     foreach($this->targetModels as $comic){
-      //
       if($this->_notEmpty($comic) && $volume = $this->_parseVolumes($this->_performSearch($comic->issue_title),$comic)){
         $comic->series_title = (string)$volume->results->name;
         $comic->series_start_year = (int)$volume->results->start_year;

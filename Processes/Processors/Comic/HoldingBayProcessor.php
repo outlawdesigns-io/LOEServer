@@ -31,8 +31,8 @@ class HoldingBayProcessor{
         $this->targetFile = $this->seriesDir . $this->_buildFileName();
         $this->_verifyDestination();
             //->_tryCover()
-            //->_transfer()
-            //->_cleanUp();
+            ->_transfer()
+            ->_cleanUp();
     }
     private function _verifyDestination(){
         if(!is_dir($this->publisherDir) && !mkdir($this->publisherDir)){
