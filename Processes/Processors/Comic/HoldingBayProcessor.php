@@ -29,7 +29,7 @@ class HoldingBayProcessor{
         $this->sourceFile = $this->comic->file_path;
         //$this->coverPath = $this->albumDir . "cover.jpg";
         $this->targetFile = $this->seriesDir . $this->_buildFileName();
-        $this->_verifyDestination();
+        $this->_verifyDestination()
             //->_tryCover()
             ->_transfer()
             ->_cleanUp();
