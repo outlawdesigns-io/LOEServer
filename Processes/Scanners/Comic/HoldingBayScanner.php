@@ -39,6 +39,15 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     }
     return false;
   }
+  protected function _buildIssueNumber($number){
+    $numZeros = 3 - strlen($number);
+    $str = '';
+    for($i = 0; $i < $numZeros; $i++){
+      $str .= '0';
+    }
+    $str .= $number;
+    return $str;
+  }
   protected function _buildFromPath(){
     for($i = 0; $i < count($this->targetModels); $i++){
       $fileName = pathinfo($this->targetModels[$i]->file_path)['filename'];
@@ -60,6 +69,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
           $comic->issue_title = (string)$issueDetails->results->name;
           $comic->issue_cover_date = (string)$issueDetails->results->cover_date;
           $comic->story_arc = (string)$issueDetails->results->story_arc_credits->story_arc->name;
+          $comic->issue_number = $this->_buildIssueNumber($comic->issue_number);
           // $comic->issue_description = strip_tags((string)$issueDetails->results->description);
           $comic->issue_description = strip_tags(str_replace(array("<br />","<br>","<br/>"),"\n",(string)$issueDetails->results->description));
         }
