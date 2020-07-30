@@ -39,6 +39,12 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     }
     return false;
   }
+  protected function _parsePublisher($absolutePath){
+    if(dirname($absolutePath) == Comic::WEBROOT . $this->_model->holdingBayRoot){
+      return false;
+    }
+    return basename(dirname($absolutePath));
+  }
   protected function _buildIssueNumber($number){
     $numZeros = 3 - strlen($number);
     $str = '';
@@ -55,6 +61,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
       $this->targetModels[$i]->issue_title = $this->_parseIssueName($fileName);
       $this->targetModels[$i]->issue_number = $this->_parseIssueNumber($this->targetModels[$i]->issue_title);
       $this->targetModels[$i]->issue_cover_date = $this->_parseIssueYear($fileName);
+      $this->targetModels[$i]->publisher = $this->_parsePublisher($this->targetModels[$i]->file_path);
     }
     return $this;
   }
@@ -78,7 +85,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     return $this;
   }
   protected function _notEmpty($comic){
-    if(!empty($comic->issue_title) && !empty($comic->issue_cover_date)){
+    if(!empty($comic->issue_title) && !empty($comic->issue_cover_date) && !empty($comic->publisher)){
       return true;
     }
     return false;
@@ -89,7 +96,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
   }
   protected function _parseVolumes($searchResults,$comic){
     foreach($searchResults->results->volume as $possibleVolume){
-      if($comic->issue_cover_date == (int)$possibleVolume->start_year){
+      if($comic->issue_cover_date == (int)$possibleVolume->start_year && $comic->publisher == (string)$possibleVolume->publisher->name){
         $this->_apiRequests++;
         return \ComicVine::followURI($possibleVolume->api_detail_url);
       }
