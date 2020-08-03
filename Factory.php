@@ -171,6 +171,7 @@ class Factory{
        default:
          throw new \Exception(self::BADOBJ);
      }
+     return $obj;
    }
    public static function browse($table,$key){
        return \Record::browse(Base::DB,$table,$key);
