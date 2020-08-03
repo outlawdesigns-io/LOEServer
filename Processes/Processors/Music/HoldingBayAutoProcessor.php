@@ -84,7 +84,7 @@ class HoldingBayAutoProcessor{
         $song->artist_country = $artist->country;
         $song->cover_path = dirname($song->file_path) . '/cover.jpg';
         $song->track_number = (int)$song->track_number;
-        $song->album = $this->_parseReleaseType($song->album,$album->releaseType);
+        $song->album = $this->_parseReleaseType(trim(preg_replace(self::PARENPATTERN,"",$song->album),$album->releaseType);
         $this->_songs[] = $song;
       }
     }else{
