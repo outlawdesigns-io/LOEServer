@@ -3,11 +3,6 @@
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . '/../../../Libs/MetalArchivesClient/MetalArchivesClient.php';
 
-/*
-AutoCovers::$altNames
-AutoCovers::$altPatterns
-*/
-
 class HoldingBayAutoProcessor{
 
   const DEBUG = false;
@@ -28,18 +23,36 @@ class HoldingBayAutoProcessor{
       $this->_parseSearchStrings();
       $this->_searchMetalArchives();
       if(count($this->_songs)){
-        $this->_process();
+        $this->_preProcess();
       }
       unset($this->_albums[$label]);
     }
   }
   protected function _clean(){
     try{
-      \LOE\Factory::createHoldingBayCleaner(Song::TABLE);
+      $this->_performAutoCover(\LOE\Factory::createHoldingBayCleaner(Song::TABLE));
       $this->_scanner = \LOE\Factory::createHoldingBayScanner(\LOE\Factory::getModel(Song::TABLE));
       $this->_albums = $this->_scanner->albums;
     }catch(\Exception $e){
       throw new \Exception($e->getMessage());
+    }
+    return $this;
+  }
+  protected function _performAutoCover($cleaner){
+    foreach($cleaner->images as $img){
+      if(AutoCovers::isAltName(basename($img)) || AutoCovers::isAltMatch(basename($img))){
+        try{
+          $this->_moveCoverImage($img);
+        }catch(\Exception $e){
+          throw new \Exception($e->getMessage());
+        }
+      }
+    }
+    return $this;
+  }
+  protected function _moveCoverImage($absolutePath){
+    if(!rename($absolutePath,dirname($absolutePath) . '/cover.jpg')){
+      throw new \Exception(error_get_last()['message']);
     }
     return $this;
   }
@@ -83,25 +96,25 @@ class HoldingBayAutoProcessor{
     return $this;
   }
   protected function _process(){
+    foreach($this->_songs as $song){
+      $hbCover = dirname($song->file_path) . '/cover.jpg';
+      $finalCover = $song->cover_path;
+      if(exists($hbCover) || exists($finalCover)){
+        try{
+          \LOE\Factory::createHoldingBayProcessor('Song',$song);
+        }catch(\Exception $e){
+          throw new \Exception($e->getMessage());
+        }
+      }
+    }
+    return $this;
+  }
+  protected function _preProcess(){
     self::DEBUG ? print_r($this->_songs):false;
     if(!self::DEBUG){
-      foreach($this->_songs as $song){
-        try{
-          \LOE\Factory::createHoldingBayProcessor('Song',$song);
-        }catch(\Exception $e){
-          throw new \Exception($e->getMessage());
-        }
-      }
+      $this->_process();
     }elseif(self::DEBUG && (readline("Approve? (y/n)") == 'y')){
-      foreach($this->_songs as $song){
-        try{
-          \LOE\Factory::createHoldingBayProcessor('Song',$song);
-        }catch(\Exception $e){
-          throw new \Exception($e->getMessage());
-        }
-      }
-    }else{
-      exit;
+      $this->_process();
     }
     $this->_songs = [];
     return $this;
