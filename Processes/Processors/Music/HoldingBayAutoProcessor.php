@@ -40,9 +40,9 @@ class HoldingBayAutoProcessor{
   }
   protected function _performAutoCover($cleaner){
     foreach($cleaner->images as $img){
-      if(AutoCovers::isAltName(basename($img)) || AutoCovers::isAltMatch(basename($img))){
+      if(AutoCovers::isAltName(basename(Song::WEBROOT . $img)) || AutoCovers::isAltMatch(basename(Song::WEBROOT . $img))){
         try{
-          $this->_moveCoverImage($img);
+          $this->_moveCoverImage(Song::WEBROOT . $img);
         }catch(\Exception $e){
           throw new \Exception($e->getMessage());
         }
@@ -97,8 +97,8 @@ class HoldingBayAutoProcessor{
   }
   protected function _process(){
     foreach($this->_songs as $song){
-      $hbCover = dirname($song->file_path) . '/cover.jpg';
-      $finalCover = $song->cover_path;
+      $hbCover = Song::WEBROOT . dirname($song->file_path) . '/cover.jpg';
+      $finalCover = Song::WEBROOT . $song->cover_path;
       if(is_file($hbCover) || is_file($finalCover)){
         try{
           \LOE\Factory::createHoldingBayProcessor('Song',$song);
