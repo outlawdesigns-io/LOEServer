@@ -39,6 +39,8 @@ class HoldingBayAutoProcessor{
     return $this;
   }
   protected function _performAutoCover($cleaner){
+    print_r($cleaner);
+    exit;
     foreach($cleaner->images as $img){
       if(AutoCovers::isAltName(basename(Song::WEBROOT . $img)) || AutoCovers::isAltMatch(basename(Song::WEBROOT . $img))){
         try{
@@ -97,14 +99,10 @@ class HoldingBayAutoProcessor{
   }
   protected function _process(){
     foreach($this->_songs as $song){
-      $hbCover = Song::WEBROOT . dirname($song->file_path) . '/cover.jpg';
-      $finalCover = Song::WEBROOT . $song->cover_path;
-      if(is_file($hbCover) || is_file($finalCover)){
-        try{
-          \LOE\Factory::createHoldingBayProcessor('Song',$song);
-        }catch(\Exception $e){
-          throw new \Exception($e->getMessage());
-        }
+      try{
+        \LOE\Factory::createHoldingBayProcessor('Song',$song);
+      }catch(\Exception $e){
+        throw new \Exception($e->getMessage());
       }
     }
     return $this;
