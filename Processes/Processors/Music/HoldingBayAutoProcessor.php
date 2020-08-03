@@ -30,22 +30,17 @@ class HoldingBayAutoProcessor{
   }
   protected function _clean(){
     try{
-      //$this->_performAutoCover(\LOE\Factory::createHoldingBayCleaner(Song::TABLE));
+      \LOE\Factory::createHoldingBayCleaner(Song::TABLE);
       $this->_scanner = \LOE\Factory::createHoldingBayScanner(\LOE\Factory::getModel(Song::TABLE));
       $this->_albums = $this->_scanner->albums;
+      $this->_performAutoCover();
     }catch(\Exception $e){
       throw new \Exception($e->getMessage());
     }
     return $this;
   }
-  protected function _performAutoCover($cleaner){
-    /*
-    todo cleaner->images is no good.
-    better off with $this->_scanner->possibleCovers
-    */
-    print_r($cleaner);
-    exit;
-    foreach($cleaner->images as $img){
+  protected function _performAutoCover(){
+    foreach($this->_scanner->possibleCovers as $img){
       if(AutoCovers::isAltName(basename(Song::WEBROOT . $img)) || AutoCovers::isAltMatch(basename(Song::WEBROOT . $img))){
         try{
           $this->_moveCoverImage(Song::WEBROOT . $img);
