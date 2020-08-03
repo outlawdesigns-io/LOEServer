@@ -18,6 +18,7 @@ class Comic extends \LOE\Base{
   public $issue_description;
   public $series_description;
   public $issue_type;
+  public $reading_order_pos;
   public $file_path;
 
   public function __construct($UID = null){
