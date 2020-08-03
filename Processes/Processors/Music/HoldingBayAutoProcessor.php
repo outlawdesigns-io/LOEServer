@@ -99,7 +99,7 @@ class HoldingBayAutoProcessor{
     foreach($this->_songs as $song){
       $hbCover = dirname($song->file_path) . '/cover.jpg';
       $finalCover = $song->cover_path;
-      if(exists($hbCover) || exists($finalCover)){
+      if(is_file($hbCover) || is_file($finalCover)){
         try{
           \LOE\Factory::createHoldingBayProcessor('Song',$song);
         }catch(\Exception $e){
