@@ -6,6 +6,7 @@ require_once __DIR__ . '/../../../Libs/MetalArchivesClient/MetalArchivesClient.p
 class HoldingBayAutoProcessor{
 
   const DEBUG = false;
+  const PARENPATT = '/\(.*/';
 
   protected $_maClient;
   protected $_scanner;
@@ -59,7 +60,7 @@ class HoldingBayAutoProcessor{
   }
   protected function _parseSearchStrings(){
     $keys = array_keys($this->_albums);
-    $this->_albumSearchStr = $keys[0];
+    $this->_albumSearchStr = trim(preg_replace(self::PARENPATT,"",$keys[0]));
     $this->_artistSearchStr = $this->_albums[$keys[0]][0]->artist;
     return $this;
   }
