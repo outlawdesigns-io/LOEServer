@@ -5,7 +5,8 @@ require_once __DIR__ . '/../../../Factory.php';
 class HoldingBayProcessor{
 
     const ROOTDIR = "/var/www/html/LOE/Video/Movies/";
-    const DBROOT = '/var/www/LOE/Video/Movies/';
+    // const DBROOT = '/var/www/LOE/Video/Movies/';
+    const DBROOT = '/var/www/html/LOE/Video/Movies/';
     const SOURCE = '/var/www/html';
     const RECOVCODE = 'N/A';
 
