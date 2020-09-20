@@ -8,6 +8,7 @@ class Base extends \Record{
     const NONASCIIPATT = '/[^\x00-\x7F]/';
     const BADFILEPATT = '/[\:"*?<>|]/';
     const PUNCTPATT = "/['!~`*^%$#@+,]/";
+    const TRIDOT = '/[\.]{3}/';
 
     const DB = 'LOE';
     const PRIMARYKEY = 'UID';
@@ -62,6 +63,7 @@ class Base extends \Record{
         $absolutePath = preg_replace(self::NONASCIIPATT,"",$absolutePath);
         $absolutePath = preg_replace(self::BADFILEPATT,"",$absolutePath);
         $absolutePath = preg_replace(self::PUNCTPATT,"",$absolutePath);
+        $absolutePath = preg_replace(self::TRIDOT,"",$absolutePath);
         return $absolutePath;
     }
     public static function isCleanPath($absolutePath){
