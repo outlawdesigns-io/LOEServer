@@ -12,12 +12,14 @@ class PlayHistory{
 
   protected $_webClient;
   protected $_model;
+  protected $_limitDate;
   public $searchResults = array();
   public $exceptions = array();
   public $processedCount;
   public static $responseCodes = array(202,206,304);
 
   public function __construct($model,$username,$password){
+    $this->_limitDate = date('Y-m-01');
     $this->_model = $model;
     $this->processedCount = 0;
     try{
@@ -33,7 +35,8 @@ class PlayHistory{
   protected function _updatePlayHistory(){
     $playedClass = $this->_model->namespace . 'Played';
     foreach($this->_model->fileExtensions as $extension){
-      $this->searchResults = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension);
+      //We are cheating the _webClient by injecting into search's $value parameter
+      $this->searchResults = $this->_webClient->search(self::REQEND,self::REQKEY,'.' . $extension . '/' . $this->_limitDate);
       foreach($this->searchResults as $reqObj){
         $model = Factory::search($this->_model->label,self::TARGETFIELD,$this->_buildPath($reqObj->query));
         if(!count($model)){
