@@ -28,6 +28,8 @@ class Song extends \LOE\Base{
     public $rating;
     public $artist_city;
     public $artist_state;
+    public $artist_uuid;
+    public $album_uuid;
 
     public function __construct($UID = null){
         parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
