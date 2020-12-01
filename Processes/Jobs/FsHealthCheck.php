@@ -22,7 +22,7 @@ foreach($models as $model){
   $run->startTime = date("Y-m-d H:i:s");
   $run->modelId = $model->UID;
   try{
-    \LOE\LoeFactory::createFsScanner($model,$msgTo,$authToken);
+    \LOE\Factory::createFsScanner($model,$msgTo,$authToken);
   }catch(\Exception $e){
     echo $e->getMessage() . "\n";
   }
