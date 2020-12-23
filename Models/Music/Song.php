@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../../Base.php';
 require_once __DIR__ . '/../../Libs/Mp3Reader/Mp3Reader.php';
+require_once __DIR__ . '/Length.php';
 
 class Song extends \LOE\Base{
 
@@ -64,6 +65,10 @@ class Song extends \LOE\Base{
           }
         }
         return $data;
+    }
+    public function getLength(){
+      $length = new Length(self::WEBROOT . $this->file_path);
+      return $length->getDuration();
     }
     protected function _writeMp3Tags(){
         $path = self::WEBROOT . $this->file_path;
