@@ -17,7 +17,7 @@ function _getIds(){
   }
   return $data;
 }
-
+$ids = _getIds();
 foreach($ids as $id){
   $model = \LOE\Factory::createModel('Song',$id);
   $tags = $model->getMp3Tags();
