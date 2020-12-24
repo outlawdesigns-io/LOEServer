@@ -7,13 +7,13 @@ require_once __DIR__ . '/../../Factory.php';
 function _getIds(){
   $data = array();
   $results = $GLOBALS['db']
-    ->database(Music\Song::DB)
-    ->table(Music\Song::TABLE)
-    ->select(Music\Song::PRIMARYKEY)
+    ->database(\LOE\Music\Song::DB)
+    ->table(\LOE\Music\Song::TABLE)
+    ->select(\LOE\Music\Song::PRIMARYKEY)
     ->where('title','regexp',"'[^ -~]'")
     ->get();
   while($row = mysqli_fetch_assoc($results)){
-    $data[] = $row[Music\Song::PRIMARYKEY];
+    $data[] = $row[\LOE\Music\Song::PRIMARYKEY];
   }
   return $data;
 }
