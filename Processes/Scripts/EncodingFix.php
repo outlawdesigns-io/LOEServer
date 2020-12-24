@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/Factory.php';
+require_once __DIR__ . '/../../Factory.php';
 
 //$ids = file('uids');
 // $ids = array(80454,80455,80456,80457,80458,80459,80460,80461,80462,80463);
