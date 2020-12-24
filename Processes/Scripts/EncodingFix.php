@@ -2,22 +2,8 @@
 
 require_once __DIR__ . '/../../Factory.php';
 
-//$ids = file('uids');
-// $ids = array(80454,80455,80456,80457,80458,80459,80460,80461,80462,80463);
-function _getIds(){
-  $data = array();
-  $results = $GLOBALS['db']
-    ->database(\LOE\Music\Song::DB)
-    ->table(\LOE\Music\Song::TABLE)
-    ->select(\LOE\Music\Song::PRIMARYKEY)
-    ->where('title','regexp',"'[^ -~]'")
-    ->get();
-  while($row = mysqli_fetch_assoc($results)){
-    $data[] = $row[\LOE\Music\Song::PRIMARYKEY];
-  }
-  return $data;
-}
-$ids = _getIds();
+// $ids = file('uids');
+$ids = array(98541,98547,98606,99046,99212,99717,99719);
 foreach($ids as $id){
   $model = \LOE\Factory::createModel('Song',$id);
   try{
