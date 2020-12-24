@@ -20,9 +20,14 @@ function _getIds(){
 $ids = _getIds();
 foreach($ids as $id){
   $model = \LOE\Factory::createModel('Song',$id);
-  $tags = $model->getMp3Tags();
-  //$model->artist = html_entity_decode($tags['artist']);
+  try{
+    $tags = $model->getMp3Tags();
+  }catch(\Exception $e){
+    echo $e->getMessage() . "\n";
+    continue;
+  }
   $model->title = html_entity_decode($tags['title']);
+  // $model->artist = html_entity_decode($tags['artist']);
   //$model->album = html_entity_decode($tags['album']);
   echo $model->title . " | " . $model->album . "\n";
   $model->update();
