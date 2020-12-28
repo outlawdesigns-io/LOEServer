@@ -8,6 +8,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
     public $artists = array();
     public $unknownAlbum = array();
     public $unknownArtist = array();
+    public $exceptions = array();
 
     public function __construct($model){
       parent::__construct($model);
@@ -17,7 +18,11 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
       $i = 0;
       foreach($this->targetModels as $song){
         $song->UID = $i++;
-        $tags = $song->getMp3Tags();
+        try{
+          $tags = $song->getMp3Tags();
+        }catch(\Exception $e){
+          $this->exceptions[] = $song->file_path;
+        }
         foreach($tags as $key=>$value){
           $song->$key = html_entity_decode($value);
         }
