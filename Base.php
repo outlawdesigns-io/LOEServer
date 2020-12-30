@@ -30,7 +30,7 @@ class Base extends \Record{
             if($obj->name != self::PRIMARYKEY){
               $key = $obj->name;
               $this->$key = html_entity_decode($this->$key);
-              $this->$key = utf8_encode($this->$key);
+              //$this->$key = utf8_encode($this->$key);
             }
         }
         return $this;
