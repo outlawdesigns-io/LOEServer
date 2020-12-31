@@ -22,6 +22,7 @@ class HoldingBayScanner extends \LOE\HoldingBayScanner{
           $tags = $song->getMp3Tags();
         }catch(\Exception $e){
           $this->exceptions[] = $song->file_path;
+          unset($this->targetModels[$i-1]);
         }
         foreach($tags as $key=>$value){
           $song->$key = html_entity_decode($value);
