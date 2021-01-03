@@ -11,7 +11,7 @@ foreach($models as $model){
   $run->modelId = $model->UID;
   $run->startTime = date("Y-m-d H:i:s");
   try{
-    $processor = \LOE\Factory::updatePlayHistory($model,ACCOUNT_USER,ACCOUNT_PASSWORD);
+    $processor = \LOE\Factory::updatePlayHistory($model,'Y-m-01',ACCOUNT_USER,ACCOUNT_PASSWORD);
     $run->searchResultCount = count($processor->searchResults);
     $run->exceptionCount = count($processor->exceptions);
     $run->processedCount = $processor->processedCount;

@@ -18,8 +18,8 @@ class PlayHistory{
   public $processedCount;
   public static $responseCodes = array(202,206,304);
 
-  public function __construct($model,$username,$password){
-    $this->_limitDate = date('Y-m-01');
+  public function __construct($model,$limitDate,$username,$password){
+    $this->_limitDate = date($limitDate);
     $this->_model = $model;
     $this->processedCount = 0;
     try{

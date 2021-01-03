@@ -195,8 +195,8 @@ class Factory{
    public static function updatePlayCounts($model,$username,$password){
      return new PlayCount($model,$username,$password);
    }
-   public static function updatePlayHistory($model,$username,$password){
-     return new PlayHistory($model,$username,$password);
+   public static function updatePlayHistory($model,$limitDate,$username,$password){
+     return new PlayHistory($model,$limitDate,$username,$password);
    }
    public static function updateModelStorage($model){
      return new ModelStorageUpdate($model);
