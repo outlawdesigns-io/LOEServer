@@ -15,9 +15,9 @@ class HoldingBayProcessor{
     public function __construct($episode){
         $this->episode = \LOE\Factory::createModel(Episode::TABLE);
         $this->episode->setFields($episode);
-        $this->genreDir = self::DESTDIR . $this->episode->genre . '/';
-        $this->showDir = $this->genreDir . $this->episode->show_title . '/';
-        $this->seasonDir = $this->showDir . "Season " . $this->episode->season_number . "/";
+        $this->genreDir = Episode::buildCleanPath(self::DESTDIR . $this->episode->genre . '/');
+        $this->showDir = Episode::buildCleanPath($this->genreDir . $this->episode->show_title . '/');
+        $this->seasonDir = Episode::buildCleanPath($this->showDir . "Season " . $this->episode->season_number . "/");
         $this->sourceFile = Episode::WEBROOT . $this->episode->file_path;
         $this->_buildTargetFile()
             ->_verifyDestination()
