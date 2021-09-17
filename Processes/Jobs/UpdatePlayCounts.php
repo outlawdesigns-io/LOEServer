@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../../Factory.php';
-require_once __DIR__ . '/AccountCredentials.php';
 
 $models = \LOE\Model::getAll();
 
@@ -11,7 +10,7 @@ foreach($models as $model){
   $run->modelId = $model->UID;
   $run->startTime = date("Y-m-d H:i:s");
   try{
-    $processor = \LOE\Factory::updatePlayCounts($model,ACCOUNT_USER,ACCOUNT_PASSWORD);
+    $processor = \LOE\Factory::updatePlayCounts($model,getenv('OD_ACCOUNT_USER'),getenv('OD_ACCOUNT_PASS'));
     $run->searchResultCount = $processor->searchResultCount;
     $run->exceptionCount = count($processor->exceptions);
     $run->processedCount = $processor->processedCount;

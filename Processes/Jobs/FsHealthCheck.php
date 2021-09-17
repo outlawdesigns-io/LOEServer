@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../../Factory.php';
-require_once __DIR__ . '/AccountCredentials.php';
 
 if(!isset($argv[1])){
   echo "Must provide message recipient\n";
@@ -11,7 +10,7 @@ if(!isset($argv[1])){
   $models = \LOE\Model::getAll();
 }
 try{
-  $authToken = \LOE\Factory::authenticate(ACCOUNT_USER,ACCOUNT_PASSWORD)->token;
+  $authToken = \LOE\Factory::authenticate(getenv('OD_ACCOUNT_USER'),getenv('OD_ACCOUNT_PASS'))->token;
 }catch(\Exception $e){
   echo $e->getMessage() . "\n";
   exit;
