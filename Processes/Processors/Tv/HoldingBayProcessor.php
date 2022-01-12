@@ -28,7 +28,7 @@ class HoldingBayProcessor{
     private function _buildTargetFile(){
         $pathInfo = pathinfo($this->sourceFile);
         $extension = $pathInfo['extension'];
-        $this->targetFile = $this->seasonDir . $this->episode->ep_number . ' - ' . $this->episode->ep_title . '.' . $extension;
+        $this->targetFile = $this->seasonDir . $this->episode->ep_number . ' - ' . Episode::buildCleanPath($this->episode->ep_title) . '.' . $extension;
         return $this;
     }
     private function _verifyDestination(){
