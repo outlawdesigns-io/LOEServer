@@ -90,10 +90,10 @@ class HoldingBayProcessor{
     private function _cleanUp(){
         $seasonDir = dirname($this->sourceFile);
         $showDir = dirname($seasonDir);
-        if(count(scandir($dir)) == 2 && !rmdir($seasonDir)){
+        if(count(scandir($seasonDir)) == 2 && !rmdir($seasonDir)){
           throw new \Exception(error_get_last()['message']);
         }
-        if(count(scandir($dir)) == 2 && !rmdir($showDir)){
+        if(count(scandir($showDir)) == 2 && !rmdir($showDir)){
           throw new \Exception(error_get_last()['message']);
         }
         return $this;
