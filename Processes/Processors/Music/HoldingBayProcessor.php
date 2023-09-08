@@ -3,6 +3,21 @@
 require_once __DIR__ . '/../../../Factory.php';
 require_once __DIR__ . '/HoldingBayCleaner.php';
 
+/*
+How to handle uuid management?
+buildAlbumDir -> check database for this string
+if(exists){
+  apply album_uuid and artist_uuid to this song
+}elseif(artistdir exists in db){
+  (there's an exception here where 2 artists of the same name come into play) <-- I think this logic is sound; you're just confused because it negates the anticipated bracket approach...no it doesn't, we still need to identify and split 2 artists of the same name...
+  generate album_uuid and apply artist_uuid
+}else{
+  generate new uuids
+}
+
+None of the above handles the two artist in the same dir problem...
+*/
+
 class HoldingBayProcessor{
 
     const DESTDIR = '/var/www/html/LOE/Music/';
@@ -19,7 +34,7 @@ class HoldingBayProcessor{
         $this->song = \LOE\Factory::createModel(Song::TABLE);
         $this->song->setFields($song);
         $this->song->file_path = Song::WEBROOT . $this->song->file_path;
-        $this->artistDir = Song::buildCleanPath(self::DESTDIR . $this->song->artist . "/");
+        $this->artistDir = $this->_buildArtistDir();
         $this->albumDir = $this->_buildAlbumDir();
         $this->sourceFile = $this->song->file_path;
         $this->coverPath = $this->albumDir . "cover.jpg";
@@ -41,6 +56,10 @@ class HoldingBayProcessor{
             throw new \Exception($exceptionStr);
         }
         return $this;
+    }
+    protected function _buildArtistDir(){
+      $artistDir = Song::buildCleanPath(self::DESTDIR . $this->song->artist . "/");
+      return $artistDir;
     }
     protected function _buildAlbumDir(){
       $albumDir = $this->artistDir . $this->song->album . " (" . $this->song->year . ")/";

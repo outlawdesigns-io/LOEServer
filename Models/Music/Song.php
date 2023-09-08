@@ -92,4 +92,26 @@ class Song extends \LOE\Base{
       }
       return new Self($ids[mt_rand(0,count($ids))]);
     }
+    public static function getUuid($dirPath,$uuidOption = 'album'){
+      switch($uuidOption){
+        case 'album':
+          $targetKey = 'album_uuid';
+        break;
+        case 'artist':
+          $targetKey = 'artist_uuid';
+        break;
+        default:
+          throw new \Exception('Invalid uuidOption provided.');
+      }
+      $results = $GLOBALS['db']->database(self::DB)->table(self::TABLE)->select($targetKey)->where("file_path","like","'" . $dirPath . "%'")->get();
+      while($row = mysqli_fetch_assoc($results)){
+        return $row[$targetKey];
+      }
+    }
+    public static function getAlbumUuid($albumPath){
+      return self::getUuid($albumPath);
+    }
+    public static function getArtistUuid($artistPath){
+      return self::getUuid($artistPath,'artist');
+    }
 }

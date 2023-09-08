@@ -50,6 +50,9 @@ class PlayCount{
     return $this;
   }
   protected function _buildPath($query){
-    return Base::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
+    //we've gone back and forth with use of WEBROOT.
+    //removed because most records weren't matching.
+    return "/LOE" . preg_replace(self::SPACEPATT," ",$query);
+    //return Base::WEBROOT . "/LOE" . preg_replace(self::SPACEPATT," ",$query);
   }
 }

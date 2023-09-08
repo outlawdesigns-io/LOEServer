@@ -29,8 +29,9 @@ class Base extends \Record{
         foreach($data as $obj){
             if($obj->name != self::PRIMARYKEY){
               $key = $obj->name;
-              $this->$key = html_entity_decode($this->$key);
-              //$this->$key = utf8_encode($this->$key);
+              if(!is_array($this->$key)){
+                $this->$key = html_entity_decode($this->$key);  
+              }
             }
         }
         return $this;
