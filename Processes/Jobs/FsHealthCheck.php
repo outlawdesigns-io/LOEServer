@@ -21,7 +21,7 @@ foreach($models as $model){
   $run->startTime = date("Y-m-d H:i:s");
   $run->modelId = $model->UID;
   try{
-    \LOE\Factory::createFsScanner($model,$msgTo,$authToken);
+    $scanner = \LOE\Factory::createFsScanner($model,$msgTo,$authToken);
   }catch(\Exception $e){
     echo $e->getMessage() . "\n";
   }
@@ -29,7 +29,7 @@ foreach($models as $model){
   $executionSeconds = $endTime - $startTime;
   $run->endTime = date("Y-m-d H:i:s");
   $run->runTime = $executionSeconds;
-  $run->recordCount = $scanner->recordCount;
+  $run->recordCount = count($scanner->files);
   $run->missingCount = count($scanner->missing);
   $run->create();
 }
