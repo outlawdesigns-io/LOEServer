@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../Base.php';
 
-class Played extends \LOE\Base{
+class Played extends \Record{
 
   const TABLE = 'PlayedDoc';
 

@@ -1,6 +1,7 @@
 [submodule "Libs/Record"]
 	path = Libs/Record
 	url = https://github.com/outlawdesigns-io/Record
+	branch = version8
 [submodule "Libs/MessageClient"]
 	path = Libs/MessageClient
 	url = https://github.com/outlawdesigns-io/MessageClient
