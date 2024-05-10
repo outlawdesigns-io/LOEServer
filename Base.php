@@ -118,7 +118,7 @@ class Base extends \Record{
     }
     public static function recent($limit){
       $data = array();
-      $ids = parent::_getRecent(self::DB,static::TABLE,$limit);
+      $ids = parent::_getRecent(self::DB,static::TABLE,static::PRIMARYKEY,$limit);
       foreach($ids as $id){
         $data[] = new static($id);
       }
