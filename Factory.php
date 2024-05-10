@@ -174,23 +174,12 @@ class Factory{
      return $obj;
    }
    public static function browse($table,$key){
-       return \Record::browse(Base::DB,$table,$key);
+     $model = self::createModel($table);
+     return $model::browse($key);
    }
    public static function search($table,$key,$value){
-       $data = array();
-       if($table == \LOE\Movie\Movie::TABLE && $key == "genre"){
-         $ids1 = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
-         $ids2 = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,"genre2",$value);
-         $ids3 = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,"genre3",$value);
-         $ids = array_merge($ids1,$ids2);
-         $ids = array_merge($ids3,$ids);
-       }else{
-         $ids = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
-       }
-       foreach($ids as $id){
-         $data[] = self::createModel($table,$id);
-       }
-       return $data;
+     $model = self::createModel($table);
+     return $model::search($key,$value);
    }
    public static function updatePlayCounts($model,$username,$password){
      return new PlayCount($model,$username,$password);
@@ -218,18 +207,16 @@ class Factory{
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
    public static function count($table){
-     return \Record::_count(Base::DB,$table);
+     $model = self::createModel($table);
+     return $model::count();
    }
    public static function countOf($table,$key){
-     return \Record::_countOf(Base::DB,$table,$key);
+     $model = self::createModel($table);
+     return $model::countOf($key);
    }
    public static function recent($table,$limit){
-       $data = array();
-       $ids = \Record::_getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
-       foreach($ids as $id){
-         $data[] = self::createModel($table,$id);
-       }
-       return $data;
+     $model = self::createModel($table);
+     return $model::recent($limit);
    }
    public static function createRandomPlayList($type,$genre,$limit){
      $obj = null;

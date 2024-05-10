@@ -99,6 +99,9 @@ class Base extends \Record{
       }
       return $data;
     }
+    public static function browse($key){
+      return parent::_browse(self::DB,static::TABLE,$key);
+    }
     public static function count(){
       return parent::_count(self::DB,static::TABLE);
     }

@@ -49,11 +49,7 @@ class Movie extends \LOE\Base{
             }
             return $data;
         }
-        $ids = parent::search(self::DB,self::TABLE,self::PRIMARYKEY,$key,$value);
-        foreach($ids as $id){
-            $data[] = new self($id);
-        }
-        return $data;
+        return parent::search($key,$value);
     }
 
 }
