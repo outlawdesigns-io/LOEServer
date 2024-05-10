@@ -179,13 +179,13 @@ class Factory{
    public static function search($table,$key,$value){
        $data = array();
        if($table == \LOE\Movie\Movie::TABLE && $key == "genre"){
-         $ids1 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
-         $ids2 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,"genre2",$value);
-         $ids3 = \Record::search(Base::DB,$table,Base::PRIMARYKEY,"genre3",$value);
+         $ids1 = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
+         $ids2 = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,"genre2",$value);
+         $ids3 = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,"genre3",$value);
          $ids = array_merge($ids1,$ids2);
          $ids = array_merge($ids3,$ids);
        }else{
-         $ids = \Record::search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
+         $ids = \Record::_search(Base::DB,$table,Base::PRIMARYKEY,$key,$value);
        }
        foreach($ids as $id){
          $data[] = self::createModel($table,$id);
@@ -218,14 +218,14 @@ class Factory{
      return new \LOE\HoldingBay\ArchiveExtractor($rootDir);
    }
    public static function count($table){
-     return \Record::count(Base::DB,$table);
+     return \Record::_count(Base::DB,$table);
    }
    public static function countOf($table,$key){
-     return \Record::countOf(Base::DB,$table,$key);
+     return \Record::_countOf(Base::DB,$table,$key);
    }
    public static function recent($table,$limit){
        $data = array();
-       $ids = \Record::getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
+       $ids = \Record::_getRecent(Base::DB,$table,Base::PRIMARYKEY,$limit);
        foreach($ids as $id){
          $data[] = self::createModel($table,$id);
        }
