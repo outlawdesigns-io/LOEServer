@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../Base.php';
 
 class Played extends \Record{
 
+  const DB = \LOE\Base::DB;
+  const PRIMARYKEY = \LOE\Base::PRIMARYKEY;
   const TABLE = 'PlayedEpisode';
 
   public $UID;

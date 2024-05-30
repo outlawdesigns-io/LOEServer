@@ -5,8 +5,8 @@ require_once __DIR__ . '/Song.php';
 
 class Played extends \Record{
 
-  const DB = LOE\Base::DB;
-  const PRIMARYKEY = LOE\Base::PRIMARYKEY;
+  const DB = \LOE\Base::DB;
+  const PRIMARYKEY = \LOE\Base::PRIMARYKEY;
   const TABLE = 'PlayedSong';
 
   public $UID;
