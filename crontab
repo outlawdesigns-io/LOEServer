@@ -11,6 +11,7 @@
 ################################################################################################################################
 SHELL=/bin/bash
 TZ="America/Chicago"
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 0 0 * * * /opt/scripts/cronWrapper.sh 6 "(time /usr/local/bin/php /var/www/html/Libs/LOEServer/Processes/Jobs/UpdatePlayCounts.php)" "/tmp/songCount"
 0 5 * * * /opt/scripts/cronWrapper.sh 7 "(time /usr/local/bin/php /var/www/html/Libs/LOEServer/Processes/Jobs/UpdatePlayHistory.php)" "/tmp/songHistory"
 0 0 1 * * /opt/scripts/cronWrapper.sh 8 "(time /usr/local/bin/php /var/www/html/Libs/LOEServer/Processes/Jobs/DbHealthCheck.php {msgRecipient})" "/tmp/dbCheck"
