@@ -16,6 +16,14 @@ class Played extends \Record{
   public function __construct($UID = null){
     parent::__construct(LOE\Base::DB,self::TABLE,LOE\Base::PRIMARYKEY,$UID);
   }
+  public static function search($key,$value){
+    $data = array();
+    $ids = parent::_search(self::DB,static::TABLE,static::PRIMARYKEY,$key,$value);
+    foreach($ids as $id){
+        $data[] = new self($id);
+    }
+    return $data;
+  }
   public static function recordExists($movieId,$playDate){
     $results = $GLOBALS['db']
         ->database(self::DB)
