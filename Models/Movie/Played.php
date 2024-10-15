@@ -14,7 +14,7 @@ class Played extends \Record{
   public $playDate;
 
   public function __construct($UID = null){
-    parent::__construct(LOE\Base::DB,self::TABLE,LOE\Base::PRIMARYKEY,$UID);
+    parent::__construct(self::DB,self::TABLE,self::PRIMARYKEY,$UID);
   }
   public static function search($key,$value){
     $data = array();
